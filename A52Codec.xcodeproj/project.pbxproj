@@ -1,0 +1,547 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F508127A0A21251C0092BF70 /* ACSimpleCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F51A93080287A1A201000102 /* ACSimpleCodec.cpp */; };
+		F508127C0A21251F0092BF70 /* ACSimpleCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93090287A1A201000102 /* ACSimpleCodec.h */; };
+		F5BDAC870A20A00000FF4884 /* ACBaseCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93010287A1A201000102 /* ACBaseCodec.h */; };
+		F5BDAC880A20A00000FF4884 /* ACCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93030287A1A201000102 /* ACCodec.h */; };
+		F5BDAC8F0A20A00000FF4884 /* ACShepA52Codec.h in Headers */ = {isa = PBXBuildFile; fileRef = 6535B19206694BFC00059066 /* ACShepA52Codec.h */; };
+		F5BDAC900A20A00000FF4884 /* ACShepA52Decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 6535B19406694BFC00059066 /* ACShepA52Decoder.h */; };
+		F5BDAC910A20A00000FF4884 /* CAConditionalMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 658FF1CA06694E7B003F9757 /* CAConditionalMacros.h */; };
+		F5BDAC920A20A00000FF4884 /* CAStreamBasicDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 658FF1CF06694E95003F9757 /* CAStreamBasicDescription.h */; };
+		F5BDAC930A20A00000FF4884 /* GetCodecBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A9B063204D728440070DEF0 /* GetCodecBundle.h */; };
+		F5BDAC960A20A00000FF4884 /* ACBaseCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F51A93000287A1A201000102 /* ACBaseCodec.cpp */; };
+		F5BDAC970A20A00000FF4884 /* ACCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F51A93020287A1A201000102 /* ACCodec.cpp */; };
+		F5BDAC980A20A00000FF4884 /* AudioCodecComponentGlue.c in Sources */ = {isa = PBXBuildFile; fileRef = 07EF4C2804F19AA700CA25C5 /* AudioCodecComponentGlue.c */; };
+		F5BDAC990A20A00000FF4884 /* ACShepA52Codec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6535B19006694BFC00059066 /* ACShepA52Codec.cpp */; };
+		F5BDAC9A0A20A00000FF4884 /* ACShepA52Codec.exp in Sources */ = {isa = PBXBuildFile; fileRef = 6535B19106694BFC00059066 /* ACShepA52Codec.exp */; };
+		F5BDAC9C0A20A00000FF4884 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 658FF1ED06694F4F003F9757 /* CAStreamBasicDescription.cpp */; };
+		F5BDAC9D0A20A00000FF4884 /* GetCodecBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A9B063104D728440070DEF0 /* GetCodecBundle.cpp */; };
+		F5BDAC9F0A20A00000FF4884 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A548EC0287A16D01000102 /* CoreServices.framework */; };
+		F5BDACA00A20A00000FF4884 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07DBCC4D04F56F9100CA25C5 /* Carbon.framework */; };
+		F5BDACA10A20A00000FF4884 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0724C23C05B4963A00AC8248 /* AudioUnit.framework */; };
+		F5BDACA20A20A00000FF4884 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65CB364E066A1FA900A75A43 /* CoreAudio.framework */; };
+		F5BDACA60A20A00000FF4884 /* ACShepA52DecoderPublic.r in Rez */ = {isa = PBXBuildFile; fileRef = 6535B19606694BFC00059066 /* ACShepA52DecoderPublic.r */; };
+		F5BDACD10A20A03200FF4884 /* a52.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACBC0A20A03200FF4884 /* a52.h */; };
+		F5BDACD20A20A03200FF4884 /* attributes.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACBD0A20A03200FF4884 /* attributes.h */; };
+		F5BDACD30A20A03200FF4884 /* audio_out.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACBE0A20A03200FF4884 /* audio_out.h */; };
+		F5BDACD70A20A03200FF4884 /* mm_accel.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACC20A20A03200FF4884 /* mm_accel.h */; };
+		F5BDACD90A20A03200FF4884 /* tendra.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACC40A20A03200FF4884 /* tendra.h */; };
+		F5BDACDA0A20A03200FF4884 /* a52_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACC60A20A03200FF4884 /* a52_internal.h */; };
+		F5BDACDB0A20A03200FF4884 /* bit_allocate.c in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACC70A20A03200FF4884 /* bit_allocate.c */; };
+		F5BDACDC0A20A03200FF4884 /* bitstream.c in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACC80A20A03200FF4884 /* bitstream.c */; };
+		F5BDACDD0A20A03200FF4884 /* bitstream.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACC90A20A03200FF4884 /* bitstream.h */; };
+		F5BDACDF0A20A03200FF4884 /* downmix.c in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACCB0A20A03200FF4884 /* downmix.c */; };
+		F5BDACE00A20A03200FF4884 /* imdct.c in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACCC0A20A03200FF4884 /* imdct.c */; };
+		F5BDACE30A20A03200FF4884 /* parse.c in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACCF0A20A03200FF4884 /* parse.c */; };
+		F5BDACE40A20A03200FF4884 /* tables.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACD00A20A03200FF4884 /* tables.h */; };
+		F5BDACFB0A20A11D00FF4884 /* ACShepA52Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACFA0A20A11D00FF4884 /* ACShepA52Decoder.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0724C23C05B4963A00AC8248 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
+		07DBCC4D04F56F9100CA25C5 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		07EF4C2804F19AA700CA25C5 /* AudioCodecComponentGlue.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = AudioCodecComponentGlue.c; sourceTree = SOURCE_ROOT; };
+		0A9B063104D728440070DEF0 /* GetCodecBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = GetCodecBundle.cpp; sourceTree = "<group>"; };
+		0A9B063204D728440070DEF0 /* GetCodecBundle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GetCodecBundle.h; sourceTree = "<group>"; };
+		6535B19006694BFC00059066 /* ACShepA52Codec.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ACShepA52Codec.cpp; sourceTree = "<group>"; };
+		6535B19106694BFC00059066 /* ACShepA52Codec.exp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.exports; path = ACShepA52Codec.exp; sourceTree = "<group>"; };
+		6535B19206694BFC00059066 /* ACShepA52Codec.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ACShepA52Codec.h; sourceTree = "<group>"; };
+		6535B19306694BFC00059066 /* ACShepA52Decoder.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp; fileEncoding = 30; path = ACShepA52Decoder.cpp; sourceTree = "<group>"; };
+		6535B19406694BFC00059066 /* ACShepA52Decoder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ACShepA52Decoder.h; sourceTree = "<group>"; };
+		6535B19606694BFC00059066 /* ACShepA52DecoderPublic.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = ACShepA52DecoderPublic.r; sourceTree = "<group>"; };
+		6549E1B7084D104B00118297 /* CAException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAException.h; sourceTree = "<group>"; };
+		6549E1B8084D104B00118297 /* CAMutex.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CAMutex.cpp; sourceTree = "<group>"; };
+		6549E1B9084D104B00118297 /* CAMutex.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAMutex.h; sourceTree = "<group>"; };
+		6549E1CD084D108700118297 /* CAHostTimeBase.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CAHostTimeBase.cpp; sourceTree = "<group>"; };
+		6549E1CE084D108700118297 /* CAHostTimeBase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAHostTimeBase.h; sourceTree = "<group>"; };
+		658FF1CA06694E7B003F9757 /* CAConditionalMacros.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAConditionalMacros.h; sourceTree = "<group>"; };
+		658FF1CF06694E95003F9757 /* CAStreamBasicDescription.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAStreamBasicDescription.h; sourceTree = "<group>"; };
+		658FF1D806694EAD003F9757 /* CADebugMacros.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CADebugMacros.h; sourceTree = "<group>"; };
+		658FF1DD06694ED6003F9757 /* CADebugPrintf.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CADebugPrintf.h; sourceTree = "<group>"; };
+		658FF1E406694F01003F9757 /* CASampleTools.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CASampleTools.h; sourceTree = "<group>"; };
+		658FF1ED06694F4F003F9757 /* CAStreamBasicDescription.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CAStreamBasicDescription.cpp; sourceTree = "<group>"; };
+		658FF1F206694F67003F9757 /* CALogMacros.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CALogMacros.h; sourceTree = "<group>"; };
+		65CB364E066A1FA900A75A43 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
+		F50815870A2161180092BF70 /* XCAResources.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = XCAResources.r; sourceTree = "<group>"; };
+		F51A93000287A1A201000102 /* ACBaseCodec.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ACBaseCodec.cpp; sourceTree = "<group>"; };
+		F51A93010287A1A201000102 /* ACBaseCodec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACBaseCodec.h; sourceTree = "<group>"; };
+		F51A93020287A1A201000102 /* ACCodec.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ACCodec.cpp; sourceTree = "<group>"; };
+		F51A93030287A1A201000102 /* ACCodec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACCodec.h; sourceTree = "<group>"; };
+		F51A93040287A1A201000102 /* ACCodecDispatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACCodecDispatch.h; sourceTree = "<group>"; };
+		F51A93050287A1A201000102 /* ACCodecDispatchTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACCodecDispatchTypes.h; sourceTree = "<group>"; };
+		F51A93060287A1A201000102 /* ACComponentResources.r */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = ACComponentResources.r; sourceTree = "<group>"; };
+		F51A93070287A1A201000102 /* ACConditionalMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACConditionalMacros.h; sourceTree = "<group>"; };
+		F51A93080287A1A201000102 /* ACSimpleCodec.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ACSimpleCodec.cpp; sourceTree = "<group>"; };
+		F51A93090287A1A201000102 /* ACSimpleCodec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACSimpleCodec.h; sourceTree = "<group>"; };
+		F5A548EC0287A16D01000102 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		F5BDACAC0A20A00000FF4884 /* Info-A52Codec__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Info-A52Codec__Upgraded_.plist"; sourceTree = "<group>"; };
+		F5BDACAD0A20A00000FF4884 /* A52Codec.component */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = A52Codec.component; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5BDACBC0A20A03200FF4884 /* a52.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = a52.h; sourceTree = "<group>"; };
+		F5BDACBD0A20A03200FF4884 /* attributes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = attributes.h; sourceTree = "<group>"; };
+		F5BDACBE0A20A03200FF4884 /* audio_out.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = audio_out.h; sourceTree = "<group>"; };
+		F5BDACC20A20A03200FF4884 /* mm_accel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = mm_accel.h; sourceTree = "<group>"; };
+		F5BDACC40A20A03200FF4884 /* tendra.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tendra.h; sourceTree = "<group>"; };
+		F5BDACC60A20A03200FF4884 /* a52_internal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = a52_internal.h; sourceTree = "<group>"; };
+		F5BDACC70A20A03200FF4884 /* bit_allocate.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = bit_allocate.c; sourceTree = "<group>"; };
+		F5BDACC80A20A03200FF4884 /* bitstream.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = bitstream.c; sourceTree = "<group>"; };
+		F5BDACC90A20A03200FF4884 /* bitstream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = bitstream.h; sourceTree = "<group>"; };
+		F5BDACCB0A20A03200FF4884 /* downmix.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = downmix.c; sourceTree = "<group>"; };
+		F5BDACCC0A20A03200FF4884 /* imdct.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = imdct.c; sourceTree = "<group>"; };
+		F5BDACCF0A20A03200FF4884 /* parse.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = parse.c; sourceTree = "<group>"; };
+		F5BDACD00A20A03200FF4884 /* tables.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tables.h; sourceTree = "<group>"; };
+		F5BDACFA0A20A11D00FF4884 /* ACShepA52Decoder.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ACShepA52Decoder.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F5BDAC9E0A20A00000FF4884 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5BDAC9F0A20A00000FF4884 /* CoreServices.framework in Frameworks */,
+				F5BDACA00A20A00000FF4884 /* Carbon.framework in Frameworks */,
+				F5BDACA10A20A00000FF4884 /* AudioUnit.framework in Frameworks */,
+				F5BDACA20A20A00000FF4884 /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		651243230832A21E0014F742 /* Base Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F51A93030287A1A201000102 /* ACCodec.h */,
+				F51A93020287A1A201000102 /* ACCodec.cpp */,
+				F51A93010287A1A201000102 /* ACBaseCodec.h */,
+				F51A93000287A1A201000102 /* ACBaseCodec.cpp */,
+				F51A93090287A1A201000102 /* ACSimpleCodec.h */,
+				F51A93080287A1A201000102 /* ACSimpleCodec.cpp */,
+			);
+			name = "Base Classes";
+			sourceTree = "<group>";
+		};
+		6535B18F06694BFC00059066 /* A52 */ = {
+			isa = PBXGroup;
+			children = (
+				6535B19206694BFC00059066 /* ACShepA52Codec.h */,
+				6535B19006694BFC00059066 /* ACShepA52Codec.cpp */,
+				F5BDACFA0A20A11D00FF4884 /* ACShepA52Decoder.cpp */,
+				6535B19406694BFC00059066 /* ACShepA52Decoder.h */,
+				6535B19306694BFC00059066 /* ACShepA52Decoder.cpp */,
+				6535B19106694BFC00059066 /* ACShepA52Codec.exp */,
+				6535B19606694BFC00059066 /* ACShepA52DecoderPublic.r */,
+				F50815870A2161180092BF70 /* XCAResources.r */,
+			);
+			path = A52;
+			sourceTree = "<group>";
+		};
+		658FF1C406694E5E003F9757 /* PublicUtility */ = {
+			isa = PBXGroup;
+			children = (
+				6549E1CD084D108700118297 /* CAHostTimeBase.cpp */,
+				6549E1CE084D108700118297 /* CAHostTimeBase.h */,
+				6549E1B7084D104B00118297 /* CAException.h */,
+				6549E1B8084D104B00118297 /* CAMutex.cpp */,
+				6549E1B9084D104B00118297 /* CAMutex.h */,
+				658FF1F206694F67003F9757 /* CALogMacros.h */,
+				658FF1ED06694F4F003F9757 /* CAStreamBasicDescription.cpp */,
+				658FF1E406694F01003F9757 /* CASampleTools.h */,
+				658FF1DD06694ED6003F9757 /* CADebugPrintf.h */,
+				658FF1D806694EAD003F9757 /* CADebugMacros.h */,
+				658FF1CF06694E95003F9757 /* CAStreamBasicDescription.h */,
+				658FF1CA06694E7B003F9757 /* CAConditionalMacros.h */,
+			);
+			path = PublicUtility;
+			sourceTree = "<group>";
+		};
+		F51A92FF0287A1A201000102 /* ACPublic */ = {
+			isa = PBXGroup;
+			children = (
+				651243230832A21E0014F742 /* Base Classes */,
+				0A9B063204D728440070DEF0 /* GetCodecBundle.h */,
+				0A9B063104D728440070DEF0 /* GetCodecBundle.cpp */,
+				F51A93040287A1A201000102 /* ACCodecDispatch.h */,
+				F51A93050287A1A201000102 /* ACCodecDispatchTypes.h */,
+				F51A93060287A1A201000102 /* ACComponentResources.r */,
+				F51A93070287A1A201000102 /* ACConditionalMacros.h */,
+			);
+			path = ACPublic;
+			sourceTree = "<group>";
+		};
+		F5A548DA02879EB701000102 = {
+			isa = PBXGroup;
+			children = (
+				F5A548EA0287A13101000102 /* Source */,
+				F5A548EB0287A13A01000102 /* Frameworks */,
+				F5A548E802879F3901000102 /* Products */,
+				F5BDACAC0A20A00000FF4884 /* Info-A52Codec__Upgraded_.plist */,
+			);
+			sourceTree = "<group>";
+		};
+		F5A548E802879F3901000102 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5BDACAD0A20A00000FF4884 /* A52Codec.component */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F5A548EA0287A13101000102 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				6535B18F06694BFC00059066 /* A52 */,
+				07EF4C2804F19AA700CA25C5 /* AudioCodecComponentGlue.c */,
+				658FF1C406694E5E003F9757 /* PublicUtility */,
+				F51A92FF0287A1A201000102 /* ACPublic */,
+				F5BDACB70A20A01C00FF4884 /* liba52 */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		F5A548EB0287A13A01000102 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				65CB364E066A1FA900A75A43 /* CoreAudio.framework */,
+				0724C23C05B4963A00AC8248 /* AudioUnit.framework */,
+				F5A548EC0287A16D01000102 /* CoreServices.framework */,
+				07DBCC4D04F56F9100CA25C5 /* Carbon.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F5BDACB70A20A01C00FF4884 /* liba52 */ = {
+			isa = PBXGroup;
+			children = (
+				F5BDACBB0A20A03200FF4884 /* include */,
+				F5BDACC50A20A03200FF4884 /* liba52 */,
+			);
+			name = liba52;
+			sourceTree = "<group>";
+		};
+		F5BDACBB0A20A03200FF4884 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				F5BDACBC0A20A03200FF4884 /* a52.h */,
+				F5BDACBD0A20A03200FF4884 /* attributes.h */,
+				F5BDACBE0A20A03200FF4884 /* audio_out.h */,
+				F5BDACC20A20A03200FF4884 /* mm_accel.h */,
+				F5BDACC40A20A03200FF4884 /* tendra.h */,
+			);
+			name = include;
+			path = liba52/include;
+			sourceTree = "<group>";
+		};
+		F5BDACC50A20A03200FF4884 /* liba52 */ = {
+			isa = PBXGroup;
+			children = (
+				F5BDACC60A20A03200FF4884 /* a52_internal.h */,
+				F5BDACC70A20A03200FF4884 /* bit_allocate.c */,
+				F5BDACC80A20A03200FF4884 /* bitstream.c */,
+				F5BDACC90A20A03200FF4884 /* bitstream.h */,
+				F5BDACCB0A20A03200FF4884 /* downmix.c */,
+				F5BDACCC0A20A03200FF4884 /* imdct.c */,
+				F5BDACCF0A20A03200FF4884 /* parse.c */,
+				F5BDACD00A20A03200FF4884 /* tables.h */,
+			);
+			name = liba52;
+			path = liba52/liba52;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F5BDAC860A20A00000FF4884 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5BDAC870A20A00000FF4884 /* ACBaseCodec.h in Headers */,
+				F5BDAC880A20A00000FF4884 /* ACCodec.h in Headers */,
+				F5BDAC8F0A20A00000FF4884 /* ACShepA52Codec.h in Headers */,
+				F5BDAC900A20A00000FF4884 /* ACShepA52Decoder.h in Headers */,
+				F5BDAC910A20A00000FF4884 /* CAConditionalMacros.h in Headers */,
+				F5BDAC920A20A00000FF4884 /* CAStreamBasicDescription.h in Headers */,
+				F5BDAC930A20A00000FF4884 /* GetCodecBundle.h in Headers */,
+				F5BDACD10A20A03200FF4884 /* a52.h in Headers */,
+				F5BDACD20A20A03200FF4884 /* attributes.h in Headers */,
+				F5BDACD30A20A03200FF4884 /* audio_out.h in Headers */,
+				F5BDACD70A20A03200FF4884 /* mm_accel.h in Headers */,
+				F5BDACD90A20A03200FF4884 /* tendra.h in Headers */,
+				F5BDACDA0A20A03200FF4884 /* a52_internal.h in Headers */,
+				F5BDACDD0A20A03200FF4884 /* bitstream.h in Headers */,
+				F5BDACE40A20A03200FF4884 /* tables.h in Headers */,
+				F508127C0A21251F0092BF70 /* ACSimpleCodec.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5BDACA70A20A00000FF4884 /* Build configuration list for PBXNativeTarget "A52Codec (Upgraded)" */;
+			buildPhases = (
+				F5BDAC860A20A00000FF4884 /* Headers */,
+				F5BDAC940A20A00000FF4884 /* Resources */,
+				F5BDAC950A20A00000FF4884 /* Sources */,
+				F5BDAC9E0A20A00000FF4884 /* Frameworks */,
+				F5BDACA40A20A00000FF4884 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "A52Codec (Upgraded)";
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = AudioCodecSDK;
+			productReference = F5BDACAD0A20A00000FF4884 /* A52Codec.component */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F5A548DE02879EB701000102 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = F5BDACAF0A20A00100FF4884 /* Build configuration list for PBXProject "A52Codec" */;
+			hasScannedForEncodings = 1;
+			mainGroup = F5A548DA02879EB701000102;
+			productRefGroup = F5A548E802879F3901000102 /* Products */;
+			projectDirPath = "";
+			targets = (
+				F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F5BDAC940A20A00000FF4884 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		F5BDACA40A20A00000FF4884 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5BDACA60A20A00000FF4884 /* ACShepA52DecoderPublic.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F5BDAC950A20A00000FF4884 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5BDAC960A20A00000FF4884 /* ACBaseCodec.cpp in Sources */,
+				F5BDAC970A20A00000FF4884 /* ACCodec.cpp in Sources */,
+				F5BDAC980A20A00000FF4884 /* AudioCodecComponentGlue.c in Sources */,
+				F5BDAC990A20A00000FF4884 /* ACShepA52Codec.cpp in Sources */,
+				F5BDAC9A0A20A00000FF4884 /* ACShepA52Codec.exp in Sources */,
+				F5BDAC9C0A20A00000FF4884 /* CAStreamBasicDescription.cpp in Sources */,
+				F5BDAC9D0A20A00000FF4884 /* GetCodecBundle.cpp in Sources */,
+				F5BDACDB0A20A03200FF4884 /* bit_allocate.c in Sources */,
+				F5BDACDC0A20A03200FF4884 /* bitstream.c in Sources */,
+				F5BDACDF0A20A03200FF4884 /* downmix.c in Sources */,
+				F5BDACE00A20A03200FF4884 /* imdct.c in Sources */,
+				F5BDACE30A20A03200FF4884 /* parse.c in Sources */,
+				F5BDACFB0A20A11D00FF4884 /* ACShepA52Decoder.cpp in Sources */,
+				F508127A0A21251C0092BF70 /* ACSimpleCodec.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F5BDACA80A20A00000FF4884 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_CARBON=1";
+				HEADER_SEARCH_PATHS = (
+					liba52/include,
+					.,
+					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
+				);
+				INFOPLIST_FILE = "Info-A52Codec__Upgraded_.plist";
+				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
+				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
+				PRODUCT_NAME = A52Codec;
+				PROFILING_CODE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = component;
+			};
+			name = Release;
+		};
+		F5BDACA90A20A00000FF4884 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TARGET_CARBON=1",
+					"CoreAudio_Debug=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					liba52/include,
+					.,
+					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
+				);
+				INFOPLIST_FILE = "Info-A52Codec__Upgraded_.plist";
+				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
+				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
+				PRODUCT_NAME = A52Codec;
+				PROFILING_CODE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = component;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		F5BDACAA0A20A00000FF4884 /* Development-Unoptimized */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TARGET_CARBON=1",
+					"CoreAudio_Debug=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					liba52/include,
+					.,
+					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
+				);
+				INFOPLIST_FILE = "Info-A52Codec__Upgraded_.plist";
+				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
+				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
+				PRODUCT_NAME = A52Codec;
+				PROFILING_CODE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = component;
+			};
+			name = "Development-Unoptimized";
+		};
+		F5BDACAB0A20A00000FF4884 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
+				);
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_CARBON=1";
+				HEADER_SEARCH_PATHS = (
+					liba52/include,
+					.,
+					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
+				);
+				INFOPLIST_FILE = "Info-A52Codec__Upgraded_.plist";
+				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
+				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
+				PRODUCT_NAME = A52Codec;
+				PROFILING_CODE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = component;
+			};
+			name = Default;
+		};
+		F5BDACB00A20A00100FF4884 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+		F5BDACB10A20A00100FF4884 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Development;
+		};
+		F5BDACB20A20A00100FF4884 /* Development-Unoptimized */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = "Development-Unoptimized";
+		};
+		F5BDACB30A20A00100FF4884 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F5BDACA70A20A00000FF4884 /* Build configuration list for PBXNativeTarget "A52Codec (Upgraded)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5BDACA80A20A00000FF4884 /* Release */,
+				F5BDACA90A20A00000FF4884 /* Development */,
+				F5BDACAA0A20A00000FF4884 /* Development-Unoptimized */,
+				F5BDACAB0A20A00000FF4884 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		F5BDACAF0A20A00100FF4884 /* Build configuration list for PBXProject "A52Codec" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5BDACB00A20A00100FF4884 /* Release */,
+				F5BDACB10A20A00100FF4884 /* Development */,
+				F5BDACB20A20A00100FF4884 /* Development-Unoptimized */,
+				F5BDACB30A20A00100FF4884 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F5A548DE02879EB701000102 /* Project object */;
+}

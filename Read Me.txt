@@ -1,0 +1,15 @@
+A52Codec 1.6
+by Graham Booker <gbooker@users.sourceforge.net>
+
+Based on A52Codec 1.5
+by Shepmaster <shepmaster@applesolutions.com>
+
+This is an A/52 / AC-3 AudioCodec for the CoreAudio framework in Mac OS X. Install it by copying A52Codec.component into:
+
+/Library/Audio/Plug-Ins/Components
+
+or
+
+~/Library/Audio/Plug-Ins/Components
+
+The source code is included. A52Codec is based on liba52: http://liba52.sourceforge.net/  liba52 source is included with only a pre-made config.h and slight modifications to a52.h to make it work with C++.
