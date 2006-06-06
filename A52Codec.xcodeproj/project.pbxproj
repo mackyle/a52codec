@@ -52,7 +52,6 @@
 		6535B19006694BFC00059066 /* ACShepA52Codec.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ACShepA52Codec.cpp; sourceTree = "<group>"; };
 		6535B19106694BFC00059066 /* ACShepA52Codec.exp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.exports; path = ACShepA52Codec.exp; sourceTree = "<group>"; };
 		6535B19206694BFC00059066 /* ACShepA52Codec.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ACShepA52Codec.h; sourceTree = "<group>"; };
-		6535B19306694BFC00059066 /* ACShepA52Decoder.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp; fileEncoding = 30; path = ACShepA52Decoder.cpp; sourceTree = "<group>"; };
 		6535B19406694BFC00059066 /* ACShepA52Decoder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ACShepA52Decoder.h; sourceTree = "<group>"; };
 		6535B19606694BFC00059066 /* ACShepA52DecoderPublic.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = ACShepA52DecoderPublic.r; sourceTree = "<group>"; };
 		6549E1B7084D104B00118297 /* CAException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAException.h; sourceTree = "<group>"; };
@@ -133,7 +132,6 @@
 				6535B19006694BFC00059066 /* ACShepA52Codec.cpp */,
 				F5BDACFA0A20A11D00FF4884 /* ACShepA52Decoder.cpp */,
 				6535B19406694BFC00059066 /* ACShepA52Decoder.h */,
-				6535B19306694BFC00059066 /* ACShepA52Decoder.cpp */,
 				6535B19106694BFC00059066 /* ACShepA52Codec.exp */,
 				6535B19606694BFC00059066 /* ACShepA52DecoderPublic.r */,
 				F50815870A2161180092BF70 /* XCAResources.r */,

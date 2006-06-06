@@ -13,3 +13,5 @@ or
 ~/Library/Audio/Plug-Ins/Components
 
 The source code is available.  See http://trac.cod3r.com/a52codec for more information.
+
+Some parts of this component are copyright Apple Computer Inc.  See the accompanied Apple License.txt.  The remainder of this component falls under the GNU General Public License.  See Copying.txt
