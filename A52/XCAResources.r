@@ -45,10 +45,10 @@
 
 
 /* How do I do this properly... anybody? */
-#if defined(BUILD_UNIVERSAL)
+//#if defined(BUILD_UNIVERSAL)
   #define TARGET_CPU_PPC 1
   #define TARGET_CPU_X86 1
-#endif
+//#endif
 
 
 #ifndef GEN_MISSING

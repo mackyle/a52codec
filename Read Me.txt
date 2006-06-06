@@ -12,4 +12,4 @@ or
 
 ~/Library/Audio/Plug-Ins/Components
 
-The source code is included. A52Codec is based on liba52: http://liba52.sourceforge.net/  liba52 source is included with only a pre-made config.h and slight modifications to a52.h to make it work with C++.
+The source code is available.  See http://trac.cod3r.com/a52codec for more information.
