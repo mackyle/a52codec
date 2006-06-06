@@ -20,7 +20,6 @@
 		F5BDAC970A20A00000FF4884 /* ACCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F51A93020287A1A201000102 /* ACCodec.cpp */; };
 		F5BDAC980A20A00000FF4884 /* AudioCodecComponentGlue.c in Sources */ = {isa = PBXBuildFile; fileRef = 07EF4C2804F19AA700CA25C5 /* AudioCodecComponentGlue.c */; };
 		F5BDAC990A20A00000FF4884 /* ACShepA52Codec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6535B19006694BFC00059066 /* ACShepA52Codec.cpp */; };
-		F5BDAC9A0A20A00000FF4884 /* ACShepA52Codec.exp in Sources */ = {isa = PBXBuildFile; fileRef = 6535B19106694BFC00059066 /* ACShepA52Codec.exp */; };
 		F5BDAC9C0A20A00000FF4884 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 658FF1ED06694F4F003F9757 /* CAStreamBasicDescription.cpp */; };
 		F5BDAC9D0A20A00000FF4884 /* GetCodecBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A9B063104D728440070DEF0 /* GetCodecBundle.cpp */; };
 		F5BDAC9F0A20A00000FF4884 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A548EC0287A16D01000102 /* CoreServices.framework */; };
@@ -349,7 +348,6 @@
 				F5BDAC970A20A00000FF4884 /* ACCodec.cpp in Sources */,
 				F5BDAC980A20A00000FF4884 /* AudioCodecComponentGlue.c in Sources */,
 				F5BDAC990A20A00000FF4884 /* ACShepA52Codec.cpp in Sources */,
-				F5BDAC9A0A20A00000FF4884 /* ACShepA52Codec.exp in Sources */,
 				F5BDAC9C0A20A00000FF4884 /* CAStreamBasicDescription.cpp in Sources */,
 				F5BDAC9D0A20A00000FF4884 /* GetCodecBundle.cpp in Sources */,
 				F5BDACDB0A20A03200FF4884 /* bit_allocate.c in Sources */,
