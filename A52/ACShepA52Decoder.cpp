@@ -799,15 +799,18 @@ void ACShepA52Decoder::AppendInputData(const void* inInputData,
 
 				offset++;
 				if(offset + 7 > ioInputDataByteSize)
-					CODEC_THROW(kAudioCodecNotEnoughBufferSpaceError);
+					break;
 				bytes_to_read = a52_syncinfo(static_cast<const uint8_t*>(inInputData) + offset, &packetFlags, &packetSampleRate, &packetBitrate);
 			}
+			if(bytes_to_read == 0)
+				//Broke out of previous loop
+				break;
 
 			if(bytes_to_read + offset > ioInputDataByteSize)
 				break;
-			bytes_can_copy = GetInputBufferByteSize();
+			bytes_can_copy = GetInputBufferByteSize() - GetUsedInputBufferByteSize();
 			if(bytes_to_read > bytes_can_copy)
-				CODEC_THROW(kAudioCodecNotEnoughBufferSpaceError);
+				break;
 			
 			ACSimpleCodec::AppendInputBuffer(inInputData, offset, bytes_to_read);
 			// fprintf(stderr, "ACShepA52Codec::AppendInputData: Copied in %ld:%ld new bytes\n", bytes_to_read, offset);
