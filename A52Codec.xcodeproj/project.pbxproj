@@ -9,6 +9,30 @@
 /* Begin PBXBuildFile section */
 		F508127A0A21251C0092BF70 /* ACSimpleCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F51A93080287A1A201000102 /* ACSimpleCodec.cpp */; };
 		F508127C0A21251F0092BF70 /* ACSimpleCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93090287A1A201000102 /* ACSimpleCodec.h */; };
+		F5525DD30A3BF78A00F36B86 /* a52.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACBC0A20A03200FF4884 /* a52.h */; };
+		F5525DD40A3BF78A00F36B86 /* attributes.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACBD0A20A03200FF4884 /* attributes.h */; };
+		F5525DD50A3BF78A00F36B86 /* audio_out.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACBE0A20A03200FF4884 /* audio_out.h */; };
+		F5525DD60A3BF78A00F36B86 /* mm_accel.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACC20A20A03200FF4884 /* mm_accel.h */; };
+		F5525DD70A3BF78A00F36B86 /* tendra.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACC40A20A03200FF4884 /* tendra.h */; };
+		F5525DD80A3BF78A00F36B86 /* a52_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACC60A20A03200FF4884 /* a52_internal.h */; };
+		F5525DD90A3BF78A00F36B86 /* bitstream.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACC90A20A03200FF4884 /* bitstream.h */; };
+		F5525DDA0A3BF78A00F36B86 /* tables.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACD00A20A03200FF4884 /* tables.h */; };
+		F5525DE40A3BF78A00F36B86 /* bit_allocate.c in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACC70A20A03200FF4884 /* bit_allocate.c */; };
+		F5525DE50A3BF78A00F36B86 /* bitstream.c in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACC80A20A03200FF4884 /* bitstream.c */; };
+		F5525DE60A3BF78A00F36B86 /* downmix.c in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACCB0A20A03200FF4884 /* downmix.c */; };
+		F5525DE70A3BF78A00F36B86 /* imdct.c in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACCC0A20A03200FF4884 /* imdct.c */; };
+		F5525DE80A3BF78A00F36B86 /* parse.c in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACCF0A20A03200FF4884 /* parse.c */; };
+		F5525DEC0A3BF78A00F36B86 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A548EC0287A16D01000102 /* CoreServices.framework */; };
+		F5525DED0A3BF78A00F36B86 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07DBCC4D04F56F9100CA25C5 /* Carbon.framework */; };
+		F5525DEE0A3BF78A00F36B86 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0724C23C05B4963A00AC8248 /* AudioUnit.framework */; };
+		F5525DEF0A3BF78A00F36B86 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65CB364E066A1FA900A75A43 /* CoreAudio.framework */; };
+		F5525E040A3BF7D700F36B86 /* AC3MovieImport.c in Sources */ = {isa = PBXBuildFile; fileRef = F5525DFE0A3BF7D700F36B86 /* AC3MovieImport.c */; };
+		F5525E050A3BF7D700F36B86 /* AC3MovieImport.r in Rez */ = {isa = PBXBuildFile; fileRef = F5525DFF0A3BF7D700F36B86 /* AC3MovieImport.r */; };
+		F5525E060A3BF7D700F36B86 /* AC3MovieImport_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = F5525E000A3BF7D700F36B86 /* AC3MovieImport_Prefix.pch */; };
+		F5525E070A3BF7D700F36B86 /* AC3MovieImportDispatch.h in Headers */ = {isa = PBXBuildFile; fileRef = F5525E010A3BF7D700F36B86 /* AC3MovieImportDispatch.h */; };
+		F5525E080A3BF7D700F36B86 /* debug.h in Headers */ = {isa = PBXBuildFile; fileRef = F5525E020A3BF7D700F36B86 /* debug.h */; };
+		F5525E090A3BF7D700F36B86 /* versions.h in Headers */ = {isa = PBXBuildFile; fileRef = F5525E030A3BF7D700F36B86 /* versions.h */; };
+		F5536FB20A3BF8E800969CA8 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5536FB10A3BF8E800969CA8 /* QuickTime.framework */; };
 		F5BDAC870A20A00000FF4884 /* ACBaseCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93010287A1A201000102 /* ACBaseCodec.h */; };
 		F5BDAC880A20A00000FF4884 /* ACCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93030287A1A201000102 /* ACCodec.h */; };
 		F5BDAC8F0A20A00000FF4884 /* ACShepA52Codec.h in Headers */ = {isa = PBXBuildFile; fileRef = 6535B19206694BFC00059066 /* ACShepA52Codec.h */; };
@@ -78,6 +102,15 @@
 		F51A93070287A1A201000102 /* ACConditionalMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACConditionalMacros.h; sourceTree = "<group>"; };
 		F51A93080287A1A201000102 /* ACSimpleCodec.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ACSimpleCodec.cpp; sourceTree = "<group>"; };
 		F51A93090287A1A201000102 /* ACSimpleCodec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACSimpleCodec.h; sourceTree = "<group>"; };
+		F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AC3MovieImport.component; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5525DFE0A3BF7D700F36B86 /* AC3MovieImport.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = AC3MovieImport.c; sourceTree = "<group>"; };
+		F5525DFF0A3BF7D700F36B86 /* AC3MovieImport.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = AC3MovieImport.r; sourceTree = "<group>"; };
+		F5525E000A3BF7D700F36B86 /* AC3MovieImport_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AC3MovieImport_Prefix.pch; sourceTree = "<group>"; };
+		F5525E010A3BF7D700F36B86 /* AC3MovieImportDispatch.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AC3MovieImportDispatch.h; sourceTree = "<group>"; };
+		F5525E020A3BF7D700F36B86 /* debug.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
+		F5525E030A3BF7D700F36B86 /* versions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = versions.h; sourceTree = "<group>"; };
+		F5536FA50A3BF89E00969CA8 /* AC3MovieImport.exp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.exports; path = AC3MovieImport.exp; sourceTree = "<group>"; };
+		F5536FB10A3BF8E800969CA8 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		F5A548EC0287A16D01000102 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		F5BDACAC0A20A00000FF4884 /* Info-A52Codec__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Info-A52Codec__Upgraded_.plist"; sourceTree = "<group>"; };
 		F5BDACAD0A20A00000FF4884 /* A52Codec.component */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = A52Codec.component; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +131,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F5525DEB0A3BF78A00F36B86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5525DEC0A3BF78A00F36B86 /* CoreServices.framework in Frameworks */,
+				F5525DED0A3BF78A00F36B86 /* Carbon.framework in Frameworks */,
+				F5525DEE0A3BF78A00F36B86 /* AudioUnit.framework in Frameworks */,
+				F5525DEF0A3BF78A00F36B86 /* CoreAudio.framework in Frameworks */,
+				F5536FB20A3BF8E800969CA8 /* QuickTime.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5BDAC9E0A20A00000FF4884 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -172,6 +217,20 @@
 			path = ACPublic;
 			sourceTree = "<group>";
 		};
+		F5525DFD0A3BF7D700F36B86 /* AC3MovieImport */ = {
+			isa = PBXGroup;
+			children = (
+				F5536FA50A3BF89E00969CA8 /* AC3MovieImport.exp */,
+				F5525DFE0A3BF7D700F36B86 /* AC3MovieImport.c */,
+				F5525DFF0A3BF7D700F36B86 /* AC3MovieImport.r */,
+				F5525E000A3BF7D700F36B86 /* AC3MovieImport_Prefix.pch */,
+				F5525E010A3BF7D700F36B86 /* AC3MovieImportDispatch.h */,
+				F5525E020A3BF7D700F36B86 /* debug.h */,
+				F5525E030A3BF7D700F36B86 /* versions.h */,
+			);
+			path = AC3MovieImport;
+			sourceTree = "<group>";
+		};
 		F5A548DA02879EB701000102 = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				F5BDACAD0A20A00000FF4884 /* A52Codec.component */,
+				F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -198,6 +258,7 @@
 				658FF1C406694E5E003F9757 /* PublicUtility */,
 				F51A92FF0287A1A201000102 /* ACPublic */,
 				F5BDACB70A20A01C00FF4884 /* liba52 */,
+				F5525DFD0A3BF7D700F36B86 /* AC3MovieImport */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -205,6 +266,7 @@
 		F5A548EB0287A13A01000102 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F5536FB10A3BF8E800969CA8 /* QuickTime.framework */,
 				65CB364E066A1FA900A75A43 /* CoreAudio.framework */,
 				0724C23C05B4963A00AC8248 /* AudioUnit.framework */,
 				F5A548EC0287A16D01000102 /* CoreServices.framework */,
@@ -254,6 +316,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		F5525DCB0A3BF78A00F36B86 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5525DD30A3BF78A00F36B86 /* a52.h in Headers */,
+				F5525DD40A3BF78A00F36B86 /* attributes.h in Headers */,
+				F5525DD50A3BF78A00F36B86 /* audio_out.h in Headers */,
+				F5525DD60A3BF78A00F36B86 /* mm_accel.h in Headers */,
+				F5525DD70A3BF78A00F36B86 /* tendra.h in Headers */,
+				F5525DD80A3BF78A00F36B86 /* a52_internal.h in Headers */,
+				F5525DD90A3BF78A00F36B86 /* bitstream.h in Headers */,
+				F5525DDA0A3BF78A00F36B86 /* tables.h in Headers */,
+				F5525E060A3BF7D700F36B86 /* AC3MovieImport_Prefix.pch in Headers */,
+				F5525E070A3BF7D700F36B86 /* AC3MovieImportDispatch.h in Headers */,
+				F5525E080A3BF7D700F36B86 /* debug.h in Headers */,
+				F5525E090A3BF7D700F36B86 /* versions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5BDAC860A20A00000FF4884 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -280,6 +361,26 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5525DF20A3BF78A00F36B86 /* Build configuration list for PBXNativeTarget "AC3MovieImport" */;
+			buildPhases = (
+				F5525DCB0A3BF78A00F36B86 /* Headers */,
+				F5525DDC0A3BF78A00F36B86 /* Resources */,
+				F5525DDD0A3BF78A00F36B86 /* Sources */,
+				F5525DEB0A3BF78A00F36B86 /* Frameworks */,
+				F5525DF00A3BF78A00F36B86 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AC3MovieImport;
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = AudioCodecSDK;
+			productReference = F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */;
+			productType = "com.apple.product-type.bundle";
+		};
 		F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5BDACA70A20A00000FF4884 /* Build configuration list for PBXNativeTarget "A52Codec (Upgraded)" */;
@@ -312,11 +413,19 @@
 			projectDirPath = "";
 			targets = (
 				F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */,
+				F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F5525DDC0A3BF78A00F36B86 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5BDAC940A20A00000FF4884 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -327,6 +436,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXRezBuildPhase section */
+		F5525DF00A3BF78A00F36B86 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5525E050A3BF7D700F36B86 /* AC3MovieImport.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5BDACA40A20A00000FF4884 /* Rez */ = {
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
@@ -338,6 +455,19 @@
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F5525DDD0A3BF78A00F36B86 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5525DE40A3BF78A00F36B86 /* bit_allocate.c in Sources */,
+				F5525DE50A3BF78A00F36B86 /* bitstream.c in Sources */,
+				F5525DE60A3BF78A00F36B86 /* downmix.c in Sources */,
+				F5525DE70A3BF78A00F36B86 /* imdct.c in Sources */,
+				F5525DE80A3BF78A00F36B86 /* parse.c in Sources */,
+				F5525E040A3BF7D700F36B86 /* AC3MovieImport.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5BDAC950A20A00000FF4884 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -361,6 +491,129 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		F5525DF30A3BF78A00F36B86 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				EXPORTED_SYMBOLS_FILE = AC3MovieImport/AC3MovieImport.exp;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_CARBON=1";
+				HEADER_SEARCH_PATHS = (
+					liba52/include,
+					.,
+					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
+				);
+				INFOPLIST_FILE = "/Users/gbooker/projects/a52codec/Info-AC3MovieImport.plist";
+				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
+				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
+				PRODUCT_NAME = AC3MovieImport;
+				PROFILING_CODE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = component;
+			};
+			name = Release;
+		};
+		F5525DF40A3BF78A00F36B86 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				EXPORTED_SYMBOLS_FILE = AC3MovieImport/AC3MovieImport.exp;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TARGET_CARBON=1",
+					"CoreAudio_Debug=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					liba52/include,
+					.,
+					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
+				);
+				INFOPLIST_FILE = "/Users/gbooker/projects/a52codec/Info-AC3MovieImport.plist";
+				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
+				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
+				PRODUCT_NAME = AC3MovieImport;
+				PROFILING_CODE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = component;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		F5525DF50A3BF78A00F36B86 /* Development-Unoptimized */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				EXPORTED_SYMBOLS_FILE = AC3MovieImport/AC3MovieImport.exp;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TARGET_CARBON=1",
+					"CoreAudio_Debug=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					liba52/include,
+					.,
+					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
+				);
+				INFOPLIST_FILE = "/Users/gbooker/projects/a52codec/Info-AC3MovieImport.plist";
+				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
+				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
+				PRODUCT_NAME = AC3MovieImport;
+				PROFILING_CODE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = component;
+			};
+			name = "Development-Unoptimized";
+		};
+		F5525DF60A3BF78A00F36B86 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXPORTED_SYMBOLS_FILE = AC3MovieImport/AC3MovieImport.exp;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
+				);
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_CARBON=1";
+				HEADER_SEARCH_PATHS = (
+					liba52/include,
+					.,
+					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
+				);
+				INFOPLIST_FILE = "/Users/gbooker/projects/a52codec/Info-AC3MovieImport.plist";
+				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
+				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
+				PRODUCT_NAME = AC3MovieImport;
+				PROFILING_CODE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = component;
+			};
+			name = Default;
+		};
 		F5BDACA80A20A00000FF4884 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -515,6 +768,17 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F5525DF20A3BF78A00F36B86 /* Build configuration list for PBXNativeTarget "AC3MovieImport" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5525DF30A3BF78A00F36B86 /* Release */,
+				F5525DF40A3BF78A00F36B86 /* Development */,
+				F5525DF50A3BF78A00F36B86 /* Development-Unoptimized */,
+				F5525DF60A3BF78A00F36B86 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
 		F5BDACA70A20A00000FF4884 /* Build configuration list for PBXNativeTarget "A52Codec (Upgraded)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
