@@ -57,7 +57,7 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	kFloatPCMOutFormatFlag = kLinearPCMFormatFlagIsFloat		 | kLinearPCMFormatFlagIsPacked;
 #endif
 	
-	for (int channels = 2; channels <= 6; channels++) {
+	for (int channels = 1; channels <= 6; channels++) {
 		//	This decoder only takes an A/52 or AC-3 stream as it's input
 		CAStreamBasicDescription theInputFormat1(48000, kAudioFormatAC3, 0, 256*6, 0, channels, 0, 0);
 		AddInputFormat(theInputFormat1);
@@ -427,6 +427,11 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 		// Now ready to do a bit of processing...
 		
 		switch(mOutputFormat.mChannelsPerFrame) {
+			case 1:
+				// Just mono
+				a52_flags = A52_MONO | A52_ADJUST_LEVEL;
+				break;
+				
 			case 2:
 				// All we really need is stereophonic, baby 
 				a52_flags = A52_DOLBY | A52_ADJUST_LEVEL;			
@@ -820,12 +825,13 @@ void ACShepA52Decoder::AppendInputData(const void* inInputData,
 		}
 		ioInputDataByteSize = offset;
 		ioNumberPackets = packet;
-    } else {
+	}
+	if( ioInputDataByteSize == 0) {
         CODEC_THROW(kAudioCodecNotEnoughBufferSpaceError);
     }
 	//fprintf(stderr, "ACShepA52Codec::AppendInputData: Copying in %ld:%ld new bytes\n", ioNumberPackets, ioInputDataByteSize);
 	
-	if (firstInput) {
+	if (firstInput && ioInputDataByteSize != 0) {
 		DetermineStreamParameters();
 	}
 	
