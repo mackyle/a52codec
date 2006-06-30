@@ -6,6 +6,21 @@
 	objectVersion = 42;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		F5DA8EE20A54C702004A41D0 /* Build All */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = F5DA8EEB0A54C713004A41D0 /* Build configuration list for PBXAggregateTarget "Build All" */;
+			buildPhases = (
+			);
+			dependencies = (
+				F5DA8EE40A54C708004A41D0 /* PBXTargetDependency */,
+				F5DA8EE60A54C708004A41D0 /* PBXTargetDependency */,
+			);
+			name = "Build All";
+			productName = "Build Both";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		F508127A0A21251C0092BF70 /* ACSimpleCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F51A93080287A1A201000102 /* ACSimpleCodec.cpp */; };
 		F508127C0A21251F0092BF70 /* ACSimpleCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93090287A1A201000102 /* ACSimpleCodec.h */; };
@@ -66,6 +81,23 @@
 		F5BDACE40A20A03200FF4884 /* tables.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACD00A20A03200FF4884 /* tables.h */; };
 		F5BDACFB0A20A11D00FF4884 /* ACShepA52Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACFA0A20A11D00FF4884 /* ACShepA52Decoder.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F5DA8EE30A54C708004A41D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5A548DE02879EB701000102 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */;
+			remoteInfo = "A52Codec (Upgraded)";
+		};
+		F5DA8EE50A54C708004A41D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5A548DE02879EB701000102 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */;
+			remoteInfo = AC3MovieImport;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0724C23C05B4963A00AC8248 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
@@ -412,6 +444,7 @@
 			productRefGroup = F5A548E802879F3901000102 /* Products */;
 			projectDirPath = "";
 			targets = (
+				F5DA8EE20A54C702004A41D0 /* Build All */,
 				F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */,
 				F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */,
 			);
@@ -489,6 +522,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F5DA8EE40A54C708004A41D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */;
+			targetProxy = F5DA8EE30A54C708004A41D0 /* PBXContainerItemProxy */;
+		};
+		F5DA8EE60A54C708004A41D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */;
+			targetProxy = F5DA8EE50A54C708004A41D0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		F5525DF30A3BF78A00F36B86 /* Release */ = {
@@ -765,6 +811,42 @@
 			};
 			name = Default;
 		};
+		F5DA8EEC0A54C713004A41D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = "Build Both";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		F5DA8EED0A54C713004A41D0 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Build Both";
+			};
+			name = Development;
+		};
+		F5DA8EEE0A54C713004A41D0 /* Development-Unoptimized */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Build Both";
+			};
+			name = "Development-Unoptimized";
+		};
+		F5DA8EEF0A54C713004A41D0 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Build Both";
+			};
+			name = Default;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -797,6 +879,17 @@
 				F5BDACB10A20A00100FF4884 /* Development */,
 				F5BDACB20A20A00100FF4884 /* Development-Unoptimized */,
 				F5BDACB30A20A00100FF4884 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		F5DA8EEB0A54C713004A41D0 /* Build configuration list for PBXAggregateTarget "Build All" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5DA8EEC0A54C713004A41D0 /* Release */,
+				F5DA8EED0A54C713004A41D0 /* Development */,
+				F5DA8EEE0A54C713004A41D0 /* Development-Unoptimized */,
+				F5DA8EEF0A54C713004A41D0 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
