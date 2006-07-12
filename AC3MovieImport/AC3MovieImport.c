@@ -41,7 +41,7 @@
  *
  */
 
-#include <Quicktime/Quicktime.h>
+#include <QuickTime/QuickTime.h>
 #include <AudioToolbox/AudioToolbox.h>
 #include "versions.h"
 #include "debug.h"
