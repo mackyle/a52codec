@@ -87,14 +87,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = F5A548DE02879EB701000102 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */;
+			remoteGlobalIDString = F5BDAC850A20A00000FF4884;
 			remoteInfo = "A52Codec (Upgraded)";
 		};
 		F5DA8EE50A54C708004A41D0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5A548DE02879EB701000102 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */;
+			remoteGlobalIDString = F5525DCA0A3BF78A00F36B86;
 			remoteInfo = AC3MovieImport;
 		};
 /* End PBXContainerItemProxy section */
@@ -558,7 +558,7 @@
 					.,
 					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
 				);
-				INFOPLIST_FILE = "/Users/gbooker/projects/a52codec/Info-AC3MovieImport.plist";
+				INFOPLIST_FILE = "Info-AC3MovieImport.plist";
 				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
 				PRODUCT_NAME = AC3MovieImport;
@@ -591,7 +591,7 @@
 					.,
 					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
 				);
-				INFOPLIST_FILE = "/Users/gbooker/projects/a52codec/Info-AC3MovieImport.plist";
+				INFOPLIST_FILE = "Info-AC3MovieImport.plist";
 				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
 				PRODUCT_NAME = AC3MovieImport;
@@ -623,7 +623,7 @@
 					.,
 					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
 				);
-				INFOPLIST_FILE = "/Users/gbooker/projects/a52codec/Info-AC3MovieImport.plist";
+				INFOPLIST_FILE = "Info-AC3MovieImport.plist";
 				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
 				PRODUCT_NAME = AC3MovieImport;
@@ -649,7 +649,7 @@
 					.,
 					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
 				);
-				INFOPLIST_FILE = "/Users/gbooker/projects/a52codec/Info-AC3MovieImport.plist";
+				INFOPLIST_FILE = "Info-AC3MovieImport.plist";
 				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
 				PRODUCT_NAME = AC3MovieImport;
