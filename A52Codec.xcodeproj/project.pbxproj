@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		F583B2030A759C09005F8A5A /* Debug */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = F583B20E0A759C31005F8A5A /* Build configuration list for PBXAggregateTarget "Debug" */;
+			buildPhases = (
+				F583B2020A759C09005F8A5A /* CopyFiles */,
+				F583B20A0A759C25005F8A5A /* CopyFiles */,
+			);
+			dependencies = (
+				F583B2050A759C0F005F8A5A /* PBXTargetDependency */,
+			);
+			name = Debug;
+			productName = Debug;
+		};
 		F5DA8EE20A54C702004A41D0 /* Build All */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = F5DA8EEB0A54C713004A41D0 /* Build configuration list for PBXAggregateTarget "Build All" */;
@@ -48,6 +61,8 @@
 		F5525E080A3BF7D700F36B86 /* debug.h in Headers */ = {isa = PBXBuildFile; fileRef = F5525E020A3BF7D700F36B86 /* debug.h */; };
 		F5525E090A3BF7D700F36B86 /* versions.h in Headers */ = {isa = PBXBuildFile; fileRef = F5525E030A3BF7D700F36B86 /* versions.h */; };
 		F5536FB20A3BF8E800969CA8 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5536FB10A3BF8E800969CA8 /* QuickTime.framework */; };
+		F583B2070A759C1D005F8A5A /* AC3MovieImport.component in CopyFiles */ = {isa = PBXBuildFile; fileRef = F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */; };
+		F583B2150A759C4C005F8A5A /* A52Codec.component in CopyFiles */ = {isa = PBXBuildFile; fileRef = F5BDACAD0A20A00000FF4884 /* A52Codec.component */; };
 		F5BDAC870A20A00000FF4884 /* ACBaseCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93010287A1A201000102 /* ACBaseCodec.h */; };
 		F5BDAC880A20A00000FF4884 /* ACCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93030287A1A201000102 /* ACCodec.h */; };
 		F5BDAC8F0A20A00000FF4884 /* ACShepA52Codec.h in Headers */ = {isa = PBXBuildFile; fileRef = 6535B19206694BFC00059066 /* ACShepA52Codec.h */; };
@@ -83,6 +98,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F583B2040A759C0F005F8A5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5A548DE02879EB701000102 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5DA8EE20A54C702004A41D0 /* Build All */;
+			remoteInfo = "Build All";
+		};
 		F5DA8EE30A54C708004A41D0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5A548DE02879EB701000102 /* Project object */;
@@ -98,6 +120,29 @@
 			remoteInfo = AC3MovieImport;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F583B2020A759C09005F8A5A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(HOME)/Library/QuickTime";
+			dstSubfolderSpec = 0;
+			files = (
+				F583B2070A759C1D005F8A5A /* AC3MovieImport.component in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F583B20A0A759C25005F8A5A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(HOME)/Library/Audio/Plug-Ins/Components/";
+			dstSubfolderSpec = 0;
+			files = (
+				F583B2150A759C4C005F8A5A /* A52Codec.component in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0724C23C05B4963A00AC8248 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
@@ -447,6 +492,7 @@
 				F5DA8EE20A54C702004A41D0 /* Build All */,
 				F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */,
 				F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */,
+				F583B2030A759C09005F8A5A /* Debug */,
 			);
 		};
 /* End PBXProject section */
@@ -524,6 +570,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F583B2050A759C0F005F8A5A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5DA8EE20A54C702004A41D0 /* Build All */;
+			targetProxy = F583B2040A759C0F005F8A5A /* PBXContainerItemProxy */;
+		};
 		F5DA8EE40A54C708004A41D0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */;
@@ -657,6 +708,42 @@
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = component;
+			};
+			name = Default;
+		};
+		F583B20F0A759C31005F8A5A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = Debug;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		F583B2100A759C31005F8A5A /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Debug;
+			};
+			name = Development;
+		};
+		F583B2110A759C31005F8A5A /* Development-Unoptimized */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = Debug;
+			};
+			name = "Development-Unoptimized";
+		};
+		F583B2120A759C31005F8A5A /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = Debug;
 			};
 			name = Default;
 		};
@@ -857,6 +944,17 @@
 				F5525DF40A3BF78A00F36B86 /* Development */,
 				F5525DF50A3BF78A00F36B86 /* Development-Unoptimized */,
 				F5525DF60A3BF78A00F36B86 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		F583B20E0A759C31005F8A5A /* Build configuration list for PBXAggregateTarget "Debug" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F583B20F0A759C31005F8A5A /* Release */,
+				F583B2100A759C31005F8A5A /* Development */,
+				F583B2110A759C31005F8A5A /* Development-Unoptimized */,
+				F583B2120A759C31005F8A5A /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
