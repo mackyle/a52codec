@@ -61,7 +61,7 @@ private:
 	UInt32	Process16BitSignedInts(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags);
 	UInt32	Process32BitSignedInts(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags);
 	UInt32	ProcessFloats(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags);
-	
+	UInt32  AppendPacket(const void* inInputData, UInt32 inInputDataSize, UInt32 bufferStartOffset, UInt32 offset, UInt32& packetSize);		
 	
 	a52_state_t *decoder_state;
 	
@@ -72,6 +72,11 @@ private:
 	UInt32  total_bytes;
 	
 	bool firstInput;
+	
+	//For badly packetized data
+	UInt32	remainingBytesFromLastFrame;
+	Byte	beginningOfIncompleteHeader[6];
+	UInt32	beginningOfIncompleteHeaderSize;
 };
 
 #endif

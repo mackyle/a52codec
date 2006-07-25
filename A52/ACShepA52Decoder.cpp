@@ -83,6 +83,9 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	decoder_state = NULL;
 	firstInput = true;
 	
+	remainingBytesFromLastFrame = 0;
+	beginningOfIncompleteHeaderSize = 0;	
+	
 	//fprintf(stderr, "ACShepA52Decoder::Constructor: Number of input formats supported: %lu\n", GetNumberSupportedInputFormats());
 	//fprintf(stderr, "ACShepA52Decoder::Constructor: Number of output formats supported: %lu\n", GetNumberSupportedOutputFormats());
 }
@@ -133,6 +136,7 @@ void ACShepA52Decoder::Reset() {
 	decoder_state = a52_init(0);
 	
 	firstInput = true;
+	remainingBytesFromLastFrame = beginningOfIncompleteHeaderSize = 0;
 	
 	//	let our base class clean up it's internal state
 	ACShepA52Codec::Reset();
@@ -758,6 +762,42 @@ UInt32 ACShepA52Decoder::SyncA52Stream(UInt32 &bytes_to_read,
 	return kAudioCodecProduceOutputPacketSuccess;
 }
 
+UInt32 ACShepA52Decoder::AppendPacket(const void* inInputData,
+									  UInt32 inInputDataSize,
+									  UInt32 bufferStartOffset,
+									  UInt32 offset,
+									  UInt32& packetSize)
+{
+	UInt32 bytes_to_read = 0;
+	packetSize = 0;
+	offset --;
+	while(bytes_to_read == 0)
+	{
+		int packetFlags;
+		int packetSampleRate;
+		int packetBitrate;
+		
+		offset++;
+		if(offset + 7 > inInputDataSize)
+			break;
+		bytes_to_read = a52_syncinfo(static_cast<const uint8_t*>(inInputData) + bufferStartOffset + offset, &packetFlags, &packetSampleRate, &packetBitrate);
+	}
+	if(bytes_to_read == 0)
+		//Broke out of previous loop
+		return offset;
+	
+	packetSize = bytes_to_read;
+	if(bytes_to_read + offset > inInputDataSize)
+		return offset;
+	UInt32 bytes_can_copy = GetInputBufferByteSize() - GetUsedInputBufferByteSize();
+	if(bytes_to_read > bytes_can_copy)
+		return offset;
+	
+	ACSimpleCodec::AppendInputBuffer(inInputData, bufferStartOffset + offset, bytes_to_read);
+	// fprintf(stderr, "ACShepA52Codec::AppendInputData: Copied in %ld:%ld new bytes\n", bytes_to_read, offset);
+	
+	return offset+bytes_to_read;
+}
 
 void ACShepA52Decoder::AppendInputData(const void* inInputData,
 									   UInt32& ioInputDataByteSize,
@@ -785,7 +825,74 @@ void ACShepA52Decoder::AppendInputData(const void* inInputData,
 			if(packetSize > totalSize - GetUsedInputBufferByteSize())
 				break;
 
-			ACSimpleCodec::AppendInputBuffer(inInputData, inPacketDescription[packets].mStartOffset, packetSize);
+			//Last frame was incommplete, complete it first.
+			if(beginningOfIncompleteHeaderSize != 0)
+			{
+				if(packetSize + beginningOfIncompleteHeaderSize > 7)
+				{
+					//lets complete the header and party
+					for(UInt32 i=0; i<beginningOfIncompleteHeaderSize; i++)
+					{
+						Byte newHeader[7];
+						memcpy(newHeader, beginningOfIncompleteHeader + i, beginningOfIncompleteHeaderSize-i);
+						memcpy(newHeader+beginningOfIncompleteHeaderSize-i, inInputData, 7-beginningOfIncompleteHeaderSize+i);
+						
+						int packetFlags;
+						int packetSampleRate;
+						int packetBitrate;
+						
+						int bytes_to_read = a52_syncinfo(newHeader, &packetFlags, &packetSampleRate, &packetBitrate);
+						if(bytes_to_read != 0)
+						{
+							//First add the stuff stuck in the buffer
+							beginningOfIncompleteHeaderSize -= i;
+							ACSimpleCodec::AppendInputBuffer(static_cast<const void *>(beginningOfIncompleteHeader), (UInt32)i, beginningOfIncompleteHeaderSize);
+							//Now, let the below handle the rest
+							remainingBytesFromLastFrame = bytes_to_read - beginningOfIncompleteHeaderSize;
+						}
+					}
+				}
+				beginningOfIncompleteHeaderSize = 0;
+			}
+			
+			UInt32 bytes_to_read = remainingBytesFromLastFrame;
+			if(bytes_to_read > packetSize)
+			{
+				bytes_to_read = packetSize;
+				remainingBytesFromLastFrame -= packetSize;
+			}
+			else
+				remainingBytesFromLastFrame = 0;
+			if(bytes_to_read != 0)
+			{
+				ACSimpleCodec::AppendInputBuffer(inInputData,inPacketDescription[packets].mStartOffset, bytes_to_read);
+			}
+			
+			UInt32 offset = bytes_to_read;
+			
+			UInt32 frameSize = 0;
+			while(offset < packetSize)
+			{
+				UInt32 offsetIn = offset;
+				offset = AppendPacket(inInputData, packetSize, inPacketDescription[packets].mStartOffset, offset, frameSize);
+				if(offsetIn == offset)
+					break;
+			}
+			if(offset != packetSize)
+			{
+				if(packetSize - offset < 7)
+				{
+					//Incomplete header
+					beginningOfIncompleteHeaderSize = packetSize - offset;
+					memcpy(beginningOfIncompleteHeader, static_cast<const uint8_t*>(inInputData) + offset + inPacketDescription[packets].mStartOffset, beginningOfIncompleteHeaderSize);
+				}
+				else if(frameSize != 0)
+				{
+					UInt32 availableInFrame = packetSize - offset;
+					ACSimpleCodec::AppendInputBuffer(inInputData, offset, availableInFrame);
+					remainingBytesFromLastFrame = frameSize - availableInFrame;
+				}
+			}
 			packets++;
 		}
 		ioNumberPackets = packets;
@@ -794,34 +901,12 @@ void ACShepA52Decoder::AppendInputData(const void* inInputData,
         UInt32 packet = 0;
 		UInt32 offset = 0;
         while (packet < ioNumberPackets) {
-			UInt32 bytes_to_read = 0;
-			offset --;
-			while(bytes_to_read == 0)
-			{
-				int packetFlags;
-				int packetSampleRate;
-				int packetBitrate;
-
-				offset++;
-				if(offset + 7 > ioInputDataByteSize)
-					break;
-				bytes_to_read = a52_syncinfo(static_cast<const uint8_t*>(inInputData) + offset, &packetFlags, &packetSampleRate, &packetBitrate);
-			}
-			if(bytes_to_read == 0)
-				//Broke out of previous loop
+			UInt32 packetSize = 0;
+			offset = AppendPacket(inInputData, ioInputDataByteSize, 0, offset, packetSize);
+			if(packetSize != 0)
+				packet++;
+			else
 				break;
-
-			if(bytes_to_read + offset > ioInputDataByteSize)
-				break;
-			bytes_can_copy = GetInputBufferByteSize() - GetUsedInputBufferByteSize();
-			if(bytes_to_read > bytes_can_copy)
-				break;
-			
-			ACSimpleCodec::AppendInputBuffer(inInputData, offset, bytes_to_read);
-			// fprintf(stderr, "ACShepA52Codec::AppendInputData: Copied in %ld:%ld new bytes\n", bytes_to_read, offset);
-
-			offset += bytes_to_read;
-			packet++;
 		}
 		ioInputDataByteSize = offset;
 		ioNumberPackets = packet;
