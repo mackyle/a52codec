@@ -136,7 +136,7 @@ COMPONENTFUNC AC3MovieImportOpen(AC3MovieImportGlobals globals, ComponentInstanc
 {
 	OSErr err;
 	
-	printf("allocing\n");
+//	printf("allocing\n");
 // Allocate memory for our globals, and inform the component manager that we've done so
 	globals = (AC3MovieImportGlobals)NewPtrClear(sizeof(AC3MovieImportGlobalsRecord));
 	if ((err = MemError())) goto bail;
@@ -154,7 +154,7 @@ COMPONENTFUNC AC3MovieImportClose(AC3MovieImportGlobals globals, ComponentInstan
 {
 #pragma unused(self)
 	
-	printf("closing\n");
+//	printf("closing\n");
 // Make sure to dealocate our storage
 	if (globals)
 		DisposePtr((Ptr)globals);
@@ -253,7 +253,7 @@ COMPONENTFUNC AC3MovieImportValidateDataRef(AC3MovieImportGlobals    globals,
 	
 	OSErr err = noErr;
 	DataHandler dataHandler = 0;
-	unsigned char header[7];
+	unsigned char header[107];
 	
 	*valid = 0;
 	
@@ -274,10 +274,15 @@ COMPONENTFUNC AC3MovieImportValidateDataRef(AC3MovieImportGlobals    globals,
 	int flags;
 	int sample_rate;
 	int bit_rate;
-	int frame_size = a52_syncinfo(header, &flags, &sample_rate, &bit_rate);
-	if (frame_size > 0) {
-		*valid = 128;
-	} 	
+	int i;
+	for(i=0;i<100;i++)
+	{
+		int frame_size = a52_syncinfo(header+i, &flags, &sample_rate, &bit_rate);
+		if (frame_size > 0) {
+			*valid = 128;
+			break;
+		}		
+	}
 	
 bail:
 		if (dataHandler)
@@ -337,7 +342,7 @@ COMPONENTFUNC AC3MovieImportDataRef(AC3MovieImportGlobals globals, Handle dataRe
 	
 	OSErr err = noErr;
 	Track audioTrack = NULL;
-	Media audioMedia;
+	Media audioMedia = NULL;
 	ComponentInstance dataHandler = 0;
 	unsigned char header[7];
 	long fileOffset = 0, fileSize;
