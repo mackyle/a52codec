@@ -71,12 +71,16 @@ private:
 	UInt32  total_frames;
 	UInt32  total_bytes;
 	
-	bool firstInput;
+	bool	firstInput;
 	
 	//For badly packetized data
 	UInt32	remainingBytesFromLastFrame;
 	Byte	beginningOfIncompleteHeader[6];
 	UInt32	beginningOfIncompleteHeaderSize;
+	
+	//Prefs
+	bool	useStereoOverDolby;
+	double	dynamicRangeCompression;
 };
 
 #endif

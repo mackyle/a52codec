@@ -802,7 +802,10 @@
 					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
 				);
 				INFOPLIST_FILE = "Info-A52Codec__Upgraded_.plist";
-				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
+				OTHER_CFLAGS = (
+					"-DIS_COMPILER_WORKING=0",
+					"-DDEBUG",
+				);
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
 				PRODUCT_NAME = A52Codec;
 				PROFILING_CODE = NO;

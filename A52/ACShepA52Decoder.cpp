@@ -19,7 +19,6 @@
 //	ACShepA52Decoder
 //=============================================================================
 
-#define DEBUG
 #define kAudioFormatAVIAC3	0x6D732000
 
 
@@ -84,7 +83,36 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	firstInput = true;
 	
 	remainingBytesFromLastFrame = 0;
-	beginningOfIncompleteHeaderSize = 0;	
+	beginningOfIncompleteHeaderSize = 0;
+	
+	CFPreferencesAppSynchronize(CFSTR("com.cod3r.a52codec"));
+	CFTypeRef dynRange = CFPreferencesCopyAppValue(CFSTR("dynamicRange"), CFSTR("com.cod3r.a52codec"));
+	if(dynRange != NULL)
+	{
+		CFTypeID type = CFGetTypeID(dynRange);
+		if(type == CFStringGetTypeID())
+			dynamicRangeCompression = CFStringGetDoubleValue((CFStringRef)dynRange);
+		else if(type == CFNumberGetTypeID())
+			CFNumberGetValue((CFNumberRef)dynRange, kCFNumberDoubleType, &dynamicRangeCompression);
+		else
+			dynamicRangeCompression = 1;
+	}
+	else
+		dynamicRangeCompression = 1;  //no compression
+	
+	CFTypeRef stereo = CFPreferencesCopyAppValue(CFSTR("useStereoOverDolby"), CFSTR("com.cod3r.a52codec"));
+	if(stereo != NULL)
+	{
+		CFTypeID type = CFGetTypeID(dynRange);
+		if(type == CFStringGetTypeID())
+			dynamicRangeCompression = CFStringGetIntValue((CFStringRef)dynRange);
+		else if(type == CFNumberGetTypeID())
+			CFNumberGetValue((CFNumberRef)dynRange, kCFNumberIntType, &dynamicRangeCompression);
+		else
+			useStereoOverDolby = 0;		
+	}
+	else
+		useStereoOverDolby = 0;
 	
 	//fprintf(stderr, "ACShepA52Decoder::Constructor: Number of input formats supported: %lu\n", GetNumberSupportedInputFormats());
 	//fprintf(stderr, "ACShepA52Decoder::Constructor: Number of output formats supported: %lu\n", GetNumberSupportedOutputFormats());
@@ -266,6 +294,12 @@ void ACShepA52Decoder::SetCurrentOutputFormat(const AudioStreamBasicDescription&
 	//fprintf(stderr, "ACShepA52Decoder::SetCurrentOutputFormat: Exiting function\n");
 }
 
+static sample_t dynrng_call (sample_t c, void *data)
+{
+	double *level = (double *)data;
+	return pow((double)c, *level);
+}
+
 UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 											   UInt32& ioOutputDataByteSize,
 											   UInt32& ioNumberPackets, 
@@ -396,8 +430,7 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 		level = 1;
 		bias = 0;
 	}
-	
-	
+		
 	while(processed_frames < frames_to_process) {
 		// Redo the entry, for each loop
 		
@@ -437,8 +470,11 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 				break;
 				
 			case 2:
-				// All we really need is stereophonic, baby 
-				a52_flags = A52_DOLBY | A52_ADJUST_LEVEL;			
+				// All we really need is stereophonic, baby
+				if(useStereoOverDolby)
+					a52_flags = A52_STEREO | A52_ADJUST_LEVEL;
+				else
+					a52_flags = A52_DOLBY | A52_ADJUST_LEVEL;
 				break;
 				
 			case 5:
@@ -458,8 +494,8 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 
 		readLength = bytes_to_read;
 		input_data = GetBytes(readLength);
-		// TODO: Try to test for stereo return and shift to Dolby?
 		a52_frame(decoder_state, input_data, &a52_flags, &level, bias);
+		a52_dynrng(decoder_state, dynrng_call, &dynamicRangeCompression);
 		
 		// Cycle through the blocks, and actually do stuff 
 		for (int j = 0; j < 6; j++) {
