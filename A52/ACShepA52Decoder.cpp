@@ -607,7 +607,19 @@ UInt32 ACShepA52Decoder::Process16BitSignedInts(void *output_data_untyped, UInt3
 				output_data[2*k + output_data_offset + 1] =  cast_samples[k + 256]; // right chan 
 			}
 				
-				return 2 * 256; // Number of 'UInt16' we processed
+			return 2 * 256; // Number of 'UInt16' we processed
+			
+			break;
+			
+		// Mono
+		case A52_MONO:
+			//fprintf(stderr, "ACShepA52Decoder::Process16BitSignedInts: Running mono\n");
+			
+			for (int k = 0; k < 256; k++) {
+				output_data[k + output_data_offset]     =  cast_samples[k];       // mono chan 
+			}
+			
+			return 256; // Number of 'UInt16' we processed
 			
 			break;
 			
@@ -675,6 +687,17 @@ UInt32 ACShepA52Decoder::Process32BitSignedInts(void *output_data_untyped, UInt3
 			return 2 * 256; // Number of 'UInt32' we processed
 			break;
 			
+		// Mono
+		case A52_MONO:
+			//fprintf(stderr, "ACShepA52Decoder::Process32BitSignedInts: Running mono\n");
+			
+			for (int k = 0; k < 256; k++) {
+				output_data[k + output_data_offset]     =  (SInt32)output_samples[k];       // moon chan 
+			}
+			
+			return 256; // Number of 'UInt32' we processed
+			break;
+
 		default:
 			
 			fprintf(stderr, "ACShepA52Decoder::Process32BitSignedInts: Failed to match output channels\n");
@@ -695,7 +718,7 @@ UInt32 ACShepA52Decoder::ProcessFloats(void *output_data_untyped, UInt32 output_
 			
 			// With LFE
 			if (a52_flags & A52_LFE) {
-				fprintf(stderr, "ACShepA52Decoder::ProcessFloats: Running 5.1\n");
+				//fprintf(stderr, "ACShepA52Decoder::ProcessFloats: Running 5.1\n");
 				
 				for (int k = 0; k < 256; k++) {
 					output_data[6*k + output_data_offset + 3] = output_samples[k + 256*0]; // LFE chan 
@@ -708,7 +731,7 @@ UInt32 ACShepA52Decoder::ProcessFloats(void *output_data_untyped, UInt32 output_
 				
 				return 6 * 256; // Number of 'float' we processed
 			} else {
-				fprintf(stderr, "ACShepA52Decoder::ProcessFloats: Running 5.0\n");
+				//fprintf(stderr, "ACShepA52Decoder::ProcessFloats: Running 5.0\n");
 				for (int k = 0; k < 256; k++) {
 					output_data[5*k + output_data_offset + 0] = output_samples[k + 256*0]; // left chan 
 					output_data[5*k + output_data_offset + 2] = output_samples[k + 256*1]; // center chan 
@@ -735,6 +758,16 @@ UInt32 ACShepA52Decoder::ProcessFloats(void *output_data_untyped, UInt32 output_
 			return 2 * 256; // Number of 'float' we processed
 			break;
 			
+		// Mono
+		case A52_MONO:
+			//fprintf(stderr, "ACShepA52Decoder::ProcessFloats: Running mono\n");
+			
+			for (int k = 0; k < 256; k++) {
+				output_data[k + output_data_offset]     =  output_samples[k];       // mono chan 
+			}
+			
+			return 256; // Number of 'float' we processed
+			break;
 			
 		default:
 			fprintf(stderr, "ACShepA52Decoder::ProcessFloats: Failed to match output channels\n");

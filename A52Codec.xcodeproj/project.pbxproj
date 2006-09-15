@@ -28,6 +28,7 @@
 			dependencies = (
 				F5DA8EE40A54C708004A41D0 /* PBXTargetDependency */,
 				F5DA8EE60A54C708004A41D0 /* PBXTargetDependency */,
+				F50B7AC00AAB69DB00065C78 /* PBXTargetDependency */,
 			);
 			name = "Build All";
 			productName = "Build Both";
@@ -37,6 +38,11 @@
 /* Begin PBXBuildFile section */
 		F508127A0A21251C0092BF70 /* ACSimpleCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F51A93080287A1A201000102 /* ACSimpleCodec.cpp */; };
 		F508127C0A21251F0092BF70 /* ACSimpleCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93090287A1A201000102 /* ACSimpleCodec.h */; };
+		F50B7AC80AAB6E6000065C78 /* A52Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7AC70AAB6E6000065C78 /* A52Preferences.m */; };
+		F50B7AD50AAB6E9500065C78 /* A52CodecPreferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = F50B7AD40AAB6E9500065C78 /* A52CodecPreferences.nib */; };
+		F50B7AD70AAB6EBA00065C78 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7AD60AAB6EBA00065C78 /* main.m */; };
+		F50B7B460AAB751E00065C78 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F50B7B450AAB751E00065C78 /* Foundation.framework */; };
+		F50B7BC60AAB753500065C78 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F50B7BC50AAB753500065C78 /* AppKit.framework */; };
 		F5525DD30A3BF78A00F36B86 /* a52.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACBC0A20A03200FF4884 /* a52.h */; };
 		F5525DD40A3BF78A00F36B86 /* attributes.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACBD0A20A03200FF4884 /* attributes.h */; };
 		F5525DD50A3BF78A00F36B86 /* audio_out.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACBE0A20A03200FF4884 /* audio_out.h */; };
@@ -98,6 +104,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F50B7ABF0AAB69DB00065C78 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5A548DE02879EB701000102 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F50B7AB40AAB69C600065C78 /* Preferences */;
+			remoteInfo = Preferences;
+		};
 		F583B2040A759C0F005F8A5A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5A548DE02879EB701000102 /* Project object */;
@@ -169,6 +182,14 @@
 		658FF1F206694F67003F9757 /* CALogMacros.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CALogMacros.h; sourceTree = "<group>"; };
 		65CB364E066A1FA900A75A43 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		F50815870A2161180092BF70 /* XCAResources.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = XCAResources.r; sourceTree = "<group>"; };
+		F50B7AB50AAB69C600065C78 /* Preferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Preferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F50B7AB70AAB69C700065C78 /* Preferences-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Preferences-Info.plist"; sourceTree = "<group>"; };
+		F50B7AC40AAB6E3F00065C78 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/A52CodecPreferences.nib; sourceTree = "<group>"; };
+		F50B7AC60AAB6E6000065C78 /* A52Preferences.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = A52Preferences.h; sourceTree = "<group>"; };
+		F50B7AC70AAB6E6000065C78 /* A52Preferences.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = A52Preferences.m; sourceTree = "<group>"; };
+		F50B7AD60AAB6EBA00065C78 /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F50B7B450AAB751E00065C78 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		F50B7BC50AAB753500065C78 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		F51A93000287A1A201000102 /* ACBaseCodec.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ACBaseCodec.cpp; sourceTree = "<group>"; };
 		F51A93010287A1A201000102 /* ACBaseCodec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACBaseCodec.h; sourceTree = "<group>"; };
 		F51A93020287A1A201000102 /* ACCodec.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ACCodec.cpp; sourceTree = "<group>"; };
@@ -208,6 +229,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F50B7AB30AAB69C600065C78 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F50B7B460AAB751E00065C78 /* Foundation.framework in Frameworks */,
+				F50B7BC60AAB753500065C78 /* AppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5525DEB0A3BF78A00F36B86 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -280,6 +310,18 @@
 			path = PublicUtility;
 			sourceTree = "<group>";
 		};
+		F50B7AC20AAB69F000065C78 /* A52Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				F50B7AD60AAB6EBA00065C78 /* main.m */,
+				F50B7AC60AAB6E6000065C78 /* A52Preferences.h */,
+				F50B7AC70AAB6E6000065C78 /* A52Preferences.m */,
+				F50B7AD40AAB6E9500065C78 /* A52CodecPreferences.nib */,
+				F50B7AB70AAB69C700065C78 /* Preferences-Info.plist */,
+			);
+			path = A52Preferences;
+			sourceTree = "<group>";
+		};
 		F51A92FF0287A1A201000102 /* ACPublic */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +365,7 @@
 			children = (
 				F5BDACAD0A20A00000FF4884 /* A52Codec.component */,
 				F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */,
+				F50B7AB50AAB69C600065C78 /* Preferences.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -336,6 +379,7 @@
 				F51A92FF0287A1A201000102 /* ACPublic */,
 				F5BDACB70A20A01C00FF4884 /* liba52 */,
 				F5525DFD0A3BF7D700F36B86 /* AC3MovieImport */,
+				F50B7AC20AAB69F000065C78 /* A52Preferences */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -343,6 +387,8 @@
 		F5A548EB0287A13A01000102 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F50B7BC50AAB753500065C78 /* AppKit.framework */,
+				F50B7B450AAB751E00065C78 /* Foundation.framework */,
 				F5536FB10A3BF8E800969CA8 /* QuickTime.framework */,
 				65CB364E066A1FA900A75A43 /* CoreAudio.framework */,
 				0724C23C05B4963A00AC8248 /* AudioUnit.framework */,
@@ -438,6 +484,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F50B7AB40AAB69C600065C78 /* Preferences */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F50B7AB80AAB69C800065C78 /* Build configuration list for PBXNativeTarget "Preferences" */;
+			buildPhases = (
+				F50B7AB10AAB69C600065C78 /* Resources */,
+				F50B7AB20AAB69C600065C78 /* Sources */,
+				F50B7AB30AAB69C600065C78 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Preferences;
+			productName = Preferences;
+			productReference = F50B7AB50AAB69C600065C78 /* Preferences.app */;
+			productType = "com.apple.product-type.application";
+		};
 		F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5525DF20A3BF78A00F36B86 /* Build configuration list for PBXNativeTarget "AC3MovieImport" */;
@@ -492,12 +555,21 @@
 				F5DA8EE20A54C702004A41D0 /* Build All */,
 				F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */,
 				F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */,
+				F50B7AB40AAB69C600065C78 /* Preferences */,
 				F583B2030A759C09005F8A5A /* Debug */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F50B7AB10AAB69C600065C78 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F50B7AD50AAB6E9500065C78 /* A52CodecPreferences.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5525DDC0A3BF78A00F36B86 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -534,6 +606,15 @@
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F50B7AB20AAB69C600065C78 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F50B7AC80AAB6E6000065C78 /* A52Preferences.m in Sources */,
+				F50B7AD70AAB6EBA00065C78 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5525DDD0A3BF78A00F36B86 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -570,6 +651,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F50B7AC00AAB69DB00065C78 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F50B7AB40AAB69C600065C78 /* Preferences */;
+			targetProxy = F50B7ABF0AAB69DB00065C78 /* PBXContainerItemProxy */;
+		};
 		F583B2050A759C0F005F8A5A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F5DA8EE20A54C702004A41D0 /* Build All */;
@@ -587,7 +673,116 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		F50B7AD40AAB6E9500065C78 /* A52CodecPreferences.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F50B7AC40AAB6E3F00065C78 /* English */,
+			);
+			name = A52CodecPreferences.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		F50B7AB90AAB69C800065C78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "A52Preferences/Preferences-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Preferences;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		F50B7ABA0AAB69C800065C78 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "A52Preferences/Preferences-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Preferences;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		F50B7ABB0AAB69C800065C78 /* Development-Unoptimized */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "A52Preferences/Preferences-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Preferences;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = "Development-Unoptimized";
+		};
+		F50B7ABC0AAB69C800065C78 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "A52Preferences/Preferences-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Preferences;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Default;
+		};
 		F5525DF30A3BF78A00F36B86 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -940,6 +1135,17 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F50B7AB80AAB69C800065C78 /* Build configuration list for PBXNativeTarget "Preferences" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F50B7AB90AAB69C800065C78 /* Release */,
+				F50B7ABA0AAB69C800065C78 /* Development */,
+				F50B7ABB0AAB69C800065C78 /* Development-Unoptimized */,
+				F50B7ABC0AAB69C800065C78 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
 		F5525DF20A3BF78A00F36B86 /* Build configuration list for PBXNativeTarget "AC3MovieImport" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {cancel = id; save = id; }; 
+            CLASS = A52Preferences; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {"NSButton_dynamicRange" = NSButton; "NSButton_stereo" = NSButton; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
