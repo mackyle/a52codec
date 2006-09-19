@@ -13,6 +13,17 @@ Based on A52Codec 1.5\
 by Shepmaster <shepmaster@applesolutions.com>\
 \
 This is an A/52 / AC-3 AudioCodec for the CoreAudio framework in Mac OS X. \
+
+\f1\b\fs28 \
+Major Features
+\f0\b0 :
+\fs24 \
+Multi-channel decoding of AC3 audio (can do full 5.1 decoding).\
+Implemented as a core-audio component so it is available to both Quicktime and Core Audio components.\
+Includes an AC3 importer so QuickTime can read .ac3 files directly.\
+Includes a preferences file to enable or disable dobly surround encoding as well as dynamic range compression.\
+\
+Does not include AC3 passthrough.  That is up to Apple to fix.  Bug them about it!\
 \
 
 \f1\b\fs28 Install
