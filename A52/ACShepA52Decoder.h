@@ -29,7 +29,7 @@ class ACShepA52Decoder
 
 //	Construction/Destruction
 public:
-					ACShepA52Decoder(UInt32 inInputBufferByteSize = 19200);
+					ACShepA52Decoder(UInt32 inInputBufferByteSize = 76800);
 	virtual			~ACShepA52Decoder();
 
 	virtual void	Initialize(const AudioStreamBasicDescription* inInputFormat, const AudioStreamBasicDescription* inOutputFormat, const void* inMagicCookie, UInt32 inMagicCookieByteSize);
