@@ -182,7 +182,7 @@
 		658FF1F206694F67003F9757 /* CALogMacros.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CALogMacros.h; sourceTree = "<group>"; };
 		65CB364E066A1FA900A75A43 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		F50815870A2161180092BF70 /* XCAResources.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = XCAResources.r; sourceTree = "<group>"; };
-		F50B7AB50AAB69C600065C78 /* Preferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Preferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F50B7AB50AAB69C600065C78 /* A52Preferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A52Preferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F50B7AB70AAB69C700065C78 /* Preferences-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Preferences-Info.plist"; sourceTree = "<group>"; };
 		F50B7AC40AAB6E3F00065C78 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/A52CodecPreferences.nib; sourceTree = "<group>"; };
 		F50B7AC60AAB6E6000065C78 /* A52Preferences.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = A52Preferences.h; sourceTree = "<group>"; };
@@ -365,7 +365,7 @@
 			children = (
 				F5BDACAD0A20A00000FF4884 /* A52Codec.component */,
 				F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */,
-				F50B7AB50AAB69C600065C78 /* Preferences.app */,
+				F50B7AB50AAB69C600065C78 /* A52Preferences.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -484,9 +484,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		F50B7AB40AAB69C600065C78 /* Preferences */ = {
+		F50B7AB40AAB69C600065C78 /* A52Preferences */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F50B7AB80AAB69C800065C78 /* Build configuration list for PBXNativeTarget "Preferences" */;
+			buildConfigurationList = F50B7AB80AAB69C800065C78 /* Build configuration list for PBXNativeTarget "A52Preferences" */;
 			buildPhases = (
 				F50B7AB10AAB69C600065C78 /* Resources */,
 				F50B7AB20AAB69C600065C78 /* Sources */,
@@ -496,9 +496,9 @@
 			);
 			dependencies = (
 			);
-			name = Preferences;
+			name = A52Preferences;
 			productName = Preferences;
-			productReference = F50B7AB50AAB69C600065C78 /* Preferences.app */;
+			productReference = F50B7AB50AAB69C600065C78 /* A52Preferences.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */ = {
@@ -555,7 +555,7 @@
 				F5DA8EE20A54C702004A41D0 /* Build All */,
 				F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */,
 				F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */,
-				F50B7AB40AAB69C600065C78 /* Preferences */,
+				F50B7AB40AAB69C600065C78 /* A52Preferences */,
 				F583B2030A759C09005F8A5A /* Debug */,
 			);
 		};
@@ -653,7 +653,7 @@
 /* Begin PBXTargetDependency section */
 		F50B7AC00AAB69DB00065C78 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F50B7AB40AAB69C600065C78 /* Preferences */;
+			target = F50B7AB40AAB69C600065C78 /* A52Preferences */;
 			targetProxy = F50B7ABF0AAB69DB00065C78 /* PBXContainerItemProxy */;
 		};
 		F583B2050A759C0F005F8A5A /* PBXTargetDependency */ = {
@@ -707,7 +707,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Preferences;
+				PRODUCT_NAME = A52Preferences;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -1135,7 +1135,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F50B7AB80AAB69C800065C78 /* Build configuration list for PBXNativeTarget "Preferences" */ = {
+		F50B7AB80AAB69C800065C78 /* Build configuration list for PBXNativeTarget "A52Preferences" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F50B7AB90AAB69C800065C78 /* Release */,
