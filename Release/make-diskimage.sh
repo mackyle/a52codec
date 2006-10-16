@@ -53,7 +53,7 @@ hdiutil detach "${DEV_NAME}"
 
 # compress image
 echo "Compressing disk image..."
-hdiutil convert "${DMG_TEMP_NAME}" -format UDBZ -o "${DMG_DIR}/${DMG_NAME}"
+hdiutil convert "${DMG_TEMP_NAME}" -format UDZO -o "${DMG_DIR}/${DMG_NAME}"
 rm -f "${DMG_TEMP_NAME}"
 
 # adding EULA resources
