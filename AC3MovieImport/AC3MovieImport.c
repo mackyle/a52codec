@@ -250,10 +250,10 @@ COMPONENTFUNC AC3MovieImportValidateDataRef(AC3MovieImportGlobals    globals,
 											UInt8 *                     valid)
 {
 #pragma unused(globals)
-	
+#define SEARCH_SIZE 2048	
 	OSErr err = noErr;
 	DataHandler dataHandler = 0;
-	unsigned char header[107];
+	unsigned char header[SEARCH_SIZE+7];
 	
 	*valid = 0;
 	
@@ -275,7 +275,7 @@ COMPONENTFUNC AC3MovieImportValidateDataRef(AC3MovieImportGlobals    globals,
 	int sample_rate;
 	int bit_rate;
 	int i;
-	for(i=0;i<100;i++)
+	for(i=0;i<SEARCH_SIZE;i++)
 	{
 		int frame_size = a52_syncinfo(header+i, &flags, &sample_rate, &bit_rate);
 		if (frame_size > 0) {
@@ -345,7 +345,7 @@ COMPONENTFUNC AC3MovieImportDataRef(AC3MovieImportGlobals globals, Handle dataRe
 	Media audioMedia = NULL;
 	ComponentInstance dataHandler = 0;
 	unsigned char header[7];
-	long fileOffset = 0, fileSize;
+	UInt64 fileOffset = 0, fileSize;
 	
 	*outFlags = 0;
 	
@@ -373,7 +373,9 @@ COMPONENTFUNC AC3MovieImportDataRef(AC3MovieImportGlobals globals, Handle dataRe
 	
 // Get the size, in bytes, of the current data reference, this is
 // functionally equivalent to the File Manager's GetEOF function.
-	err = DataHGetFileSize(dataHandler, &fileSize);
+	wide fileSizeInWide;
+	err = DataHGetFileSize64(dataHandler, &fileSizeInWide);
+	fileSize = WideToSInt64(fileSizeInWide);
 	if (err) goto bail;
 	
 	while (fileOffset < fileSize) {
@@ -484,18 +486,24 @@ COMPONENTFUNC AC3MovieImportDataRef(AC3MovieImportGlobals globals, Handle dataRe
 	// Rather, it defines references to sample data contained elswhere. Note that one reference may refer to more
 	// than one sample--all the samples described by a reference must be the same size. This function does not update the movie data
 	// as part of the add operation therefore you do not have to call BeginMediaEdits before calling AddMediaSampleReference.
-		err = AddMediaSampleReference(audioMedia,		// Specifies the media for this operation
-									  fileOffset,		// Specifies the offset into the data file
-									  frame_size,		// Specifies the number of bytes of sample data to be identified by the reference
-									  6 * 256,	// Specifies the duration of each sample in the reference
-									  (SampleDescriptionHandle)globals->audioDesc,	 // Handle to a sample description
-									  1,				// Specifies the number of samples contained in the reference
-									  0,				// Contains flags that control the operation	
-									  NULL);			// Returns the time where the reference was inserted, NULL to ignore
+		SampleReference64Record sampleRec;
+		sampleRec.dataOffset = SInt64ToWide(fileOffset);
+		sampleRec.dataSize = frame_size;
+		sampleRec.durationPerSample = 6 * 256;
+		sampleRec.numberOfSamples = 1;
+		TimeValue mediaTime;
+
+		// Increment to the next frame
+		fileOffset += frame_size;
+		if(fileOffset > fileSize)
+			break;  //frame is incomplete, drop it.
+		err = AddMediaSampleReferences64(audioMedia,										// Specifies the media for this operation
+										 (SampleDescriptionHandle)globals->audioDesc,		// The sampleRecord to add
+										 1,													// 1 sample to add
+										 &sampleRec,										// the sample to add
+										 &mediaTime);										// The time of the sample
 		if (err) goto bail;
 		
-	// Increment to the next frame
-		fileOffset += frame_size;
 	}
 	
 // Insert the added media into the track
