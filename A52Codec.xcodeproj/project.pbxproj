@@ -182,7 +182,7 @@
 		658FF1F206694F67003F9757 /* CALogMacros.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CALogMacros.h; sourceTree = "<group>"; };
 		65CB364E066A1FA900A75A43 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		F50815870A2161180092BF70 /* XCAResources.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = XCAResources.r; sourceTree = "<group>"; };
-		F50B7AB50AAB69C600065C78 /* A52Preferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A52Preferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F50B7AB50AAB69C600065C78 /* Preferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Preferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F50B7AB70AAB69C700065C78 /* Preferences-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Preferences-Info.plist"; sourceTree = "<group>"; };
 		F50B7AC40AAB6E3F00065C78 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/A52CodecPreferences.nib; sourceTree = "<group>"; };
 		F50B7AC60AAB6E6000065C78 /* A52Preferences.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = A52Preferences.h; sourceTree = "<group>"; };
@@ -365,7 +365,7 @@
 			children = (
 				F5BDACAD0A20A00000FF4884 /* A52Codec.component */,
 				F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */,
-				F50B7AB50AAB69C600065C78 /* A52Preferences.app */,
+				F50B7AB50AAB69C600065C78 /* Preferences.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -498,7 +498,7 @@
 			);
 			name = A52Preferences;
 			productName = Preferences;
-			productReference = F50B7AB50AAB69C600065C78 /* A52Preferences.app */;
+			productReference = F50B7AB50AAB69C600065C78 /* Preferences.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */ = {
@@ -685,7 +685,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		F50B7AB90AAB69C800065C78 /* Release */ = {
+		F50B7AB90AAB69C800065C78 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
@@ -711,7 +711,7 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
-			name = Release;
+			name = Deployment;
 		};
 		F50B7ABA0AAB69C800065C78 /* Development */ = {
 			isa = XCBuildConfiguration;
@@ -783,7 +783,7 @@
 			};
 			name = Default;
 		};
-		F5525DF30A3BF78A00F36B86 /* Release */ = {
+		F5525DF30A3BF78A00F36B86 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
@@ -813,7 +813,7 @@
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = component;
 			};
-			name = Release;
+			name = Deployment;
 		};
 		F5525DF40A3BF78A00F36B86 /* Development */ = {
 			isa = XCBuildConfiguration;
@@ -906,7 +906,7 @@
 			};
 			name = Default;
 		};
-		F583B20F0A759C31005F8A5A /* Release */ = {
+		F583B20F0A759C31005F8A5A /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -915,7 +915,7 @@
 				PRODUCT_NAME = Debug;
 				ZERO_LINK = NO;
 			};
-			name = Release;
+			name = Deployment;
 		};
 		F583B2100A759C31005F8A5A /* Development */ = {
 			isa = XCBuildConfiguration;
@@ -942,7 +942,7 @@
 			};
 			name = Default;
 		};
-		F5BDACA80A20A00000FF4884 /* Release */ = {
+		F5BDACA80A20A00000FF4884 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
@@ -972,7 +972,7 @@
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = component;
 			};
-			name = Release;
+			name = Deployment;
 		};
 		F5BDACA90A20A00000FF4884 /* Development */ = {
 			isa = XCBuildConfiguration;
@@ -1068,12 +1068,12 @@
 			};
 			name = Default;
 		};
-		F5BDACB00A20A00100FF4884 /* Release */ = {
+		F5BDACB00A20A00100FF4884 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
-			name = Release;
+			name = Deployment;
 		};
 		F5BDACB10A20A00100FF4884 /* Development */ = {
 			isa = XCBuildConfiguration;
@@ -1096,7 +1096,7 @@
 			};
 			name = Default;
 		};
-		F5DA8EEC0A54C713004A41D0 /* Release */ = {
+		F5DA8EEC0A54C713004A41D0 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -1105,7 +1105,7 @@
 				PRODUCT_NAME = "Build Both";
 				ZERO_LINK = NO;
 			};
-			name = Release;
+			name = Deployment;
 		};
 		F5DA8EED0A54C713004A41D0 /* Development */ = {
 			isa = XCBuildConfiguration;
@@ -1138,7 +1138,7 @@
 		F50B7AB80AAB69C800065C78 /* Build configuration list for PBXNativeTarget "A52Preferences" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F50B7AB90AAB69C800065C78 /* Release */,
+				F50B7AB90AAB69C800065C78 /* Deployment */,
 				F50B7ABA0AAB69C800065C78 /* Development */,
 				F50B7ABB0AAB69C800065C78 /* Development-Unoptimized */,
 				F50B7ABC0AAB69C800065C78 /* Default */,
@@ -1149,7 +1149,7 @@
 		F5525DF20A3BF78A00F36B86 /* Build configuration list for PBXNativeTarget "AC3MovieImport" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F5525DF30A3BF78A00F36B86 /* Release */,
+				F5525DF30A3BF78A00F36B86 /* Deployment */,
 				F5525DF40A3BF78A00F36B86 /* Development */,
 				F5525DF50A3BF78A00F36B86 /* Development-Unoptimized */,
 				F5525DF60A3BF78A00F36B86 /* Default */,
@@ -1160,7 +1160,7 @@
 		F583B20E0A759C31005F8A5A /* Build configuration list for PBXAggregateTarget "Debug" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F583B20F0A759C31005F8A5A /* Release */,
+				F583B20F0A759C31005F8A5A /* Deployment */,
 				F583B2100A759C31005F8A5A /* Development */,
 				F583B2110A759C31005F8A5A /* Development-Unoptimized */,
 				F583B2120A759C31005F8A5A /* Default */,
@@ -1171,7 +1171,7 @@
 		F5BDACA70A20A00000FF4884 /* Build configuration list for PBXNativeTarget "A52Codec (Upgraded)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F5BDACA80A20A00000FF4884 /* Release */,
+				F5BDACA80A20A00000FF4884 /* Deployment */,
 				F5BDACA90A20A00000FF4884 /* Development */,
 				F5BDACAA0A20A00000FF4884 /* Development-Unoptimized */,
 				F5BDACAB0A20A00000FF4884 /* Default */,
@@ -1182,7 +1182,7 @@
 		F5BDACAF0A20A00100FF4884 /* Build configuration list for PBXProject "A52Codec" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F5BDACB00A20A00100FF4884 /* Release */,
+				F5BDACB00A20A00100FF4884 /* Deployment */,
 				F5BDACB10A20A00100FF4884 /* Development */,
 				F5BDACB20A20A00100FF4884 /* Development-Unoptimized */,
 				F5BDACB30A20A00100FF4884 /* Default */,
@@ -1193,7 +1193,7 @@
 		F5DA8EEB0A54C713004A41D0 /* Build configuration list for PBXAggregateTarget "Build All" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F5DA8EEC0A54C713004A41D0 /* Release */,
+				F5DA8EEC0A54C713004A41D0 /* Deployment */,
 				F5DA8EED0A54C713004A41D0 /* Development */,
 				F5DA8EEE0A54C713004A41D0 /* Development-Unoptimized */,
 				F5DA8EEF0A54C713004A41D0 /* Default */,
