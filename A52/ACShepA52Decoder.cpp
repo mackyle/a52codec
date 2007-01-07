@@ -56,26 +56,29 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	kFloatPCMOutFormatFlag = kLinearPCMFormatFlagIsFloat		 | kLinearPCMFormatFlagIsPacked;
 #endif
 	
-	for (int channels = 1; channels <= 6; channels++) {
-		//	This decoder only takes an A/52 or AC-3 stream as it's input
-		CAStreamBasicDescription theInputFormat1(48000, kAudioFormatAC3, 0, 256*6, 0, channels, 0, 0);
-		AddInputFormat(theInputFormat1);
-		CAStreamBasicDescription theInputFormat2(48000, kAudioFormatAVIAC3, 0, 256*6, 0, channels, 0, 0);
-		AddInputFormat(theInputFormat2);
-		
-		// Output 16-Bit Ints
-		CAStreamBasicDescription theOutputFormat1(48000, kAudioFormatLinearPCM, 0, 1, 0, channels, 16, kIntPCMOutFormatFlag);
-		AddOutputFormat(theOutputFormat1);
-		
-		// And 32-Bit
-		CAStreamBasicDescription theOutputFormat2(48000, kAudioFormatLinearPCM, 0, 1, 0, channels, 32, kIntPCMOutFormatFlag);
-		AddOutputFormat(theOutputFormat2);
-		
-		// And floats
-		CAStreamBasicDescription theOutputFormat3(48000, kAudioFormatLinearPCM, 0, 1, 0, channels, 32, kFloatPCMOutFormatFlag);
-		AddOutputFormat(theOutputFormat3);
+	static int sample_rates[] = {48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 6000, 5512, 4000};
+	for (int sample_index = 0; sample_index < 12; sample_index ++)
+	{
+		for (int channels = 1; channels <= 6; channels++) {
+			//	This decoder only takes an A/52 or AC-3 stream as it's input
+			CAStreamBasicDescription theInputFormat1(sample_rates[sample_index], kAudioFormatAC3, 0, 256*6, 0, channels, 0, 0);
+			AddInputFormat(theInputFormat1);
+			CAStreamBasicDescription theInputFormat2(sample_rates[sample_index], kAudioFormatAVIAC3, 0, 256*6, 0, channels, 0, 0);
+			AddInputFormat(theInputFormat2);
+			
+			// Output 16-Bit Ints
+			CAStreamBasicDescription theOutputFormat1(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 16, kIntPCMOutFormatFlag);
+			AddOutputFormat(theOutputFormat1);
+			
+			// And 32-Bit
+			CAStreamBasicDescription theOutputFormat2(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 32, kIntPCMOutFormatFlag);
+			AddOutputFormat(theOutputFormat2);
+			
+			// And floats
+			CAStreamBasicDescription theOutputFormat3(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 32, kFloatPCMOutFormatFlag);
+			AddOutputFormat(theOutputFormat3);
+		}
 	}
-	
 	
 	total_bytes = 0;
 	total_frames = 0;
