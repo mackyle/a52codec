@@ -99,6 +99,7 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 			CFNumberGetValue((CFNumberRef)dynRange, kCFNumberDoubleType, &dynamicRangeCompression);
 		else
 			dynamicRangeCompression = 1;
+		CFRelease(dynRange);
 	}
 	else
 		dynamicRangeCompression = 1;  //no compression
@@ -112,7 +113,8 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 		else if(type == CFNumberGetTypeID())
 			CFNumberGetValue((CFNumberRef)dynRange, kCFNumberIntType, &dynamicRangeCompression);
 		else
-			useStereoOverDolby = 0;		
+			useStereoOverDolby = 0;
+		CFRelease(stereo);
 	}
 	else
 		useStereoOverDolby = 0;
