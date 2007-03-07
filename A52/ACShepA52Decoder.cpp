@@ -97,7 +97,14 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 			dynamicRangeCompression = CFStringGetDoubleValue((CFStringRef)dynRange);
 		else if(type == CFNumberGetTypeID())
 			CFNumberGetValue((CFNumberRef)dynRange, kCFNumberDoubleType, &dynamicRangeCompression);
-		else
+		else if(type == CFBooleanGetTypeID())
+        {
+            if(CFBooleanGetValue((CFBooleanRef)dynRange))
+                dynamicRangeCompression = 0.2;
+            else
+                dynamicRangeCompression = 1;            
+        }
+        else
 			dynamicRangeCompression = 1;
 		CFRelease(dynRange);
 	}
@@ -109,9 +116,9 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	{
 		CFTypeID type = CFGetTypeID(dynRange);
 		if(type == CFStringGetTypeID())
-			dynamicRangeCompression = CFStringGetIntValue((CFStringRef)dynRange);
+			useStereoOverDolby = CFStringGetIntValue((CFStringRef)dynRange);
 		else if(type == CFNumberGetTypeID())
-			CFNumberGetValue((CFNumberRef)dynRange, kCFNumberIntType, &dynamicRangeCompression);
+			CFNumberGetValue((CFNumberRef)dynRange, kCFNumberIntType, &useStereoOverDolby);
 		else
 			useStereoOverDolby = 0;
 		CFRelease(stereo);
@@ -428,7 +435,7 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 			level = 1;
 			bias = 384;
 		} else {
-			level = 2 << 30;
+			level = 1 << 30;
 			bias = 0;
 		}
 	} else {
