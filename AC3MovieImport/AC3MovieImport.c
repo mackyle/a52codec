@@ -48,8 +48,6 @@
 
 #include "a52.h"
 
-#define kTimeScale (48000)
-
 // Component globals
 typedef struct {
 	ComponentInstance		self;
@@ -401,7 +399,7 @@ COMPONENTFUNC AC3MovieImportDataRef(AC3MovieImportGlobals globals, Handle dataRe
 		// Create a media for the track. The media refers to the actual data samples used by the track. 
 			audioMedia = NewTrackMedia(audioTrack,		// Specifies the track for this operation
 									   SoundMediaType,	// Type of media to create
-									   kTimeScale,		// Set the time scale, this defines the media's time coordinate system
+									   sample_rate,		// Set the time scale, this defines the media's time coordinate system
 									   dataRef,			// Specifies the data reference
 									   dataRefType);	// Specifies the type of data reference
 			if ((err = GetMoviesError())) goto bail;
@@ -465,7 +463,7 @@ COMPONENTFUNC AC3MovieImportDataRef(AC3MovieImportGlobals globals, Handle dataRe
 			AudioStreamBasicDescription absd;
 			memset(&absd, 0, sizeof(absd));
 			absd.mFormatID = kAudioFormatAC3;
-			absd.mSampleRate = 48000;
+			absd.mSampleRate = sample_rate;
 			if(flags & A52_LFE)
 				channels++;
 			absd.mChannelsPerFrame = channels;
