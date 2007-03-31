@@ -970,7 +970,7 @@ void ACShepA52Decoder::AppendInputData(const void* inInputData,
 				else if(frameSize != 0)
 				{
 					UInt32 availableInFrame = packetSize - offset;
-					ACSimpleCodec::AppendInputBuffer(inInputData, offset, availableInFrame);
+					ACSimpleCodec::AppendInputBuffer(inInputData, inPacketDescription[packets].mStartOffset + offset, availableInFrame);
 					remainingBytesFromLastFrame = frameSize - availableInFrame;
 				}
 			}
