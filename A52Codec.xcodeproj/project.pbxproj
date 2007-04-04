@@ -182,7 +182,7 @@
 		658FF1F206694F67003F9757 /* CALogMacros.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CALogMacros.h; sourceTree = "<group>"; };
 		65CB364E066A1FA900A75A43 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		F50815870A2161180092BF70 /* XCAResources.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = XCAResources.r; sourceTree = "<group>"; };
-		F50B7AB50AAB69C600065C78 /* Preferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Preferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F50B7AB50AAB69C600065C78 /* A52Preferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A52Preferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F50B7AB70AAB69C700065C78 /* Preferences-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Preferences-Info.plist"; sourceTree = "<group>"; };
 		F50B7AC40AAB6E3F00065C78 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/A52CodecPreferences.nib; sourceTree = "<group>"; };
 		F50B7AC60AAB6E6000065C78 /* A52Preferences.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = A52Preferences.h; sourceTree = "<group>"; };
@@ -365,7 +365,7 @@
 			children = (
 				F5BDACAD0A20A00000FF4884 /* A52Codec.component */,
 				F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */,
-				F50B7AB50AAB69C600065C78 /* Preferences.app */,
+				F50B7AB50AAB69C600065C78 /* A52Preferences.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -498,7 +498,7 @@
 			);
 			name = A52Preferences;
 			productName = Preferences;
-			productReference = F50B7AB50AAB69C600065C78 /* Preferences.app */;
+			productReference = F50B7AB50AAB69C600065C78 /* A52Preferences.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */ = {

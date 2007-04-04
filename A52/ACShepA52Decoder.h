@@ -81,6 +81,7 @@ private:
 	//Prefs
 	bool	useStereoOverDolby;
 	double	dynamicRangeCompression;
+	bool	passthrough;
 };
 
 #endif

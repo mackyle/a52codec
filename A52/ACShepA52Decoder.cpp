@@ -56,38 +56,6 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	kFloatPCMOutFormatFlag = kLinearPCMFormatFlagIsFloat		 | kLinearPCMFormatFlagIsPacked;
 #endif
 	
-	static int sample_rates[] = {48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 6000, 5512, 4000};
-	for (int sample_index = 0; sample_index < 12; sample_index ++)
-	{
-		for (int channels = 1; channels <= 6; channels++) {
-			//	This decoder only takes an A/52 or AC-3 stream as it's input
-			CAStreamBasicDescription theInputFormat1(sample_rates[sample_index], kAudioFormatAC3, 0, 256*6, 0, channels, 0, 0);
-			AddInputFormat(theInputFormat1);
-			CAStreamBasicDescription theInputFormat2(sample_rates[sample_index], kAudioFormatAVIAC3, 0, 256*6, 0, channels, 0, 0);
-			AddInputFormat(theInputFormat2);
-			
-			// Output 16-Bit Ints
-			CAStreamBasicDescription theOutputFormat1(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 16, kIntPCMOutFormatFlag);
-			AddOutputFormat(theOutputFormat1);
-			
-			// And 32-Bit
-			CAStreamBasicDescription theOutputFormat2(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 32, kIntPCMOutFormatFlag);
-			AddOutputFormat(theOutputFormat2);
-			
-			// And floats
-			CAStreamBasicDescription theOutputFormat3(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 32, kFloatPCMOutFormatFlag);
-			AddOutputFormat(theOutputFormat3);
-		}
-	}
-	
-	total_bytes = 0;
-	total_frames = 0;
-	decoder_state = NULL;
-	firstInput = true;
-	
-	remainingBytesFromLastFrame = 0;
-	beginningOfIncompleteHeaderSize = 0;
-	
 	CFPreferencesAppSynchronize(CFSTR("com.cod3r.a52codec"));
 	CFTypeRef dynRange = CFPreferencesCopyAppValue(CFSTR("dynamicRange"), CFSTR("com.cod3r.a52codec"));
 	if(dynRange != NULL)
@@ -114,11 +82,11 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	CFTypeRef stereo = CFPreferencesCopyAppValue(CFSTR("useStereoOverDolby"), CFSTR("com.cod3r.a52codec"));
 	if(stereo != NULL)
 	{
-		CFTypeID type = CFGetTypeID(dynRange);
+		CFTypeID type = CFGetTypeID(stereo);
 		if(type == CFStringGetTypeID())
-			useStereoOverDolby = CFStringGetIntValue((CFStringRef)dynRange);
+			useStereoOverDolby = CFStringGetIntValue((CFStringRef)stereo);
 		else if(type == CFNumberGetTypeID())
-			CFNumberGetValue((CFNumberRef)dynRange, kCFNumberIntType, &useStereoOverDolby);
+			CFNumberGetValue((CFNumberRef)stereo, kCFNumberIntType, &useStereoOverDolby);
 		else
 			useStereoOverDolby = 0;
 		CFRelease(stereo);
@@ -126,6 +94,74 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	else
 		useStereoOverDolby = 0;
 	
+	CFTypeRef pass = CFPreferencesCopyAppValue(CFSTR("attemptPassthrough"), CFSTR("com.cod3r.a52codec"));
+	if(pass != NULL)
+	{
+		CFTypeID type = CFGetTypeID(pass);
+		if(type == CFStringGetTypeID())
+			passthrough = CFStringGetIntValue((CFStringRef)pass);
+		else if(type == CFNumberGetTypeID())
+			CFNumberGetValue((CFNumberRef)pass, kCFNumberIntType, &passthrough);
+		else
+			passthrough = 0;
+		CFRelease(pass);
+	}
+	else
+		passthrough = 0;
+	
+	if(passthrough)
+	{
+		//begin our passthrough hack
+		static int sample_rates[] = {48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 6000, 5512, 4000};
+		for (int sample_index = 0; sample_index < 12; sample_index ++)
+		{
+			for (int channels = 1; channels <= 2; channels++) {
+				CAStreamBasicDescription theOutputFormat(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 16, kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked);
+				AddOutputFormat(theOutputFormat);
+				//	This decoder only takes an A/52 or AC-3 stream as it's input
+				CAStreamBasicDescription theInputFormat1(sample_rates[sample_index], kAudioFormatAC3, 0, 256*6, 0, channels, 0, 0);
+				AddInputFormat(theInputFormat1);
+				CAStreamBasicDescription theInputFormat2(sample_rates[sample_index], kAudioFormatAVIAC3, 0, 256*6, 0, channels, 0, 0);
+				AddInputFormat(theInputFormat2);
+			}
+		}
+			
+	}
+	else
+	{
+		static int sample_rates[] = {48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 6000, 5512, 4000};
+		for (int sample_index = 0; sample_index < 12; sample_index ++)
+		{
+			for (int channels = 1; channels <= 6; channels++) {
+				//	This decoder only takes an A/52 or AC-3 stream as it's input
+				CAStreamBasicDescription theInputFormat1(sample_rates[sample_index], kAudioFormatAC3, 0, 256*6, 0, channels, 0, 0);
+				AddInputFormat(theInputFormat1);
+				CAStreamBasicDescription theInputFormat2(sample_rates[sample_index], kAudioFormatAVIAC3, 0, 256*6, 0, channels, 0, 0);
+				AddInputFormat(theInputFormat2);
+				
+				// Output 16-Bit Ints
+				CAStreamBasicDescription theOutputFormat1(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 16, kIntPCMOutFormatFlag);
+				AddOutputFormat(theOutputFormat1);
+				
+				// And 32-Bit
+				CAStreamBasicDescription theOutputFormat2(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 32, kIntPCMOutFormatFlag);
+				AddOutputFormat(theOutputFormat2);
+				
+				// And floats
+				CAStreamBasicDescription theOutputFormat3(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 32, kFloatPCMOutFormatFlag);
+				AddOutputFormat(theOutputFormat3);
+			}
+		}
+	}
+	
+	total_bytes = 0;
+	total_frames = 0;
+	decoder_state = NULL;
+	firstInput = true;
+	
+	remainingBytesFromLastFrame = 0;
+	beginningOfIncompleteHeaderSize = 0;
+		
 	//fprintf(stderr, "ACShepA52Decoder::Constructor: Number of input formats supported: %lu\n", GetNumberSupportedInputFormats());
 	//fprintf(stderr, "ACShepA52Decoder::Constructor: Number of output formats supported: %lu\n", GetNumberSupportedOutputFormats());
 }
@@ -475,56 +511,81 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 
 		// Now ready to do a bit of processing...
 		
-		switch(mOutputFormat.mChannelsPerFrame) {
-			case 1:
-				// Just mono
-				a52_flags = A52_MONO | A52_ADJUST_LEVEL;
-				break;
-				
-			case 2:
-				// All we really need is stereophonic, baby
-				if(useStereoOverDolby)
-					a52_flags = A52_STEREO | A52_ADJUST_LEVEL;
-				else
-					a52_flags = A52_DOLBY | A52_ADJUST_LEVEL;
-				break;
-				
-			case 5:
-				// Try to get 5.0 channels
-				a52_flags = A52_3F2R | A52_ADJUST_LEVEL;	
-				break;
-				
-			case 6:
-				// Try to get 5.1 channels
-				a52_flags = A52_3F2R | A52_LFE | A52_ADJUST_LEVEL;
-				break;
-				
-			default:
-				fprintf(stderr, "ACShepA52Decoder::ProduceOutputPackets: Unknown output channel amount\n");
-				break;
-		}
-
-		readLength = bytes_to_read;
-		input_data = GetBytes(readLength);
-		a52_frame(decoder_state, input_data, &a52_flags, &level, bias);
-		a52_dynrng(decoder_state, dynrng_call, &dynamicRangeCompression);
-		
-		// Cycle through the blocks, and actually do stuff 
-		for (int j = 0; j < 6; j++) {
-			a52_block(decoder_state);
-			output_samples = a52_samples(decoder_state);
+		if(passthrough)
+		{
+			static const uint8_t p_sync_le[6] = { 0x72, 0xF8, 0x1F, 0x4E, 0x01, 0x00 };
 			
-			// Need to know what kind of output data to process	
-			if (mOutputFormat.mFormatFlags == kIntPCMOutFormatFlag) {
-				if (mOutputFormat.mBitsPerChannel == 16) {
-					output_offset += Process16BitSignedInts(outOutputData, output_offset, output_samples, a52_flags);
-				} else {
-					output_offset += Process32BitSignedInts(outOutputData, output_offset, output_samples, a52_flags);
-				}
-			} else {
-				output_offset += ProcessFloats(outOutputData, output_offset, output_samples, a52_flags);
+			uint8_t *myOutputData = (uint8_t *)(outOutputData);
+			
+			myOutputData += output_offset * output_sample_size;  //output_offset is in 16-bit ints
+			
+			memset(myOutputData, 0, 2 * 2 * 256 * 6);
+			memcpy(myOutputData, p_sync_le, 6);
+			input_data = GetBytes(bytes_to_read);
+			myOutputData[5] = input_data[5] & 0x7;
+			myOutputData[6] = (bytes_to_read << 4) & 0xff;
+			myOutputData[7] = (bytes_to_read >> 4) & 0xff;
+			unsigned int i;
+			for(i=0; i<bytes_to_read; i+=2)
+			{
+				myOutputData[i+8] = input_data[i+1];
+				myOutputData[i+9] = input_data[i];
 			}
-		
+			output_offset += mOutputFormat.mChannelsPerFrame * 256 * 6;	//Our framed hack
+		}
+		else
+		{
+			switch(mOutputFormat.mChannelsPerFrame) {
+				case 1:
+					// Just mono
+					a52_flags = A52_MONO | A52_ADJUST_LEVEL;
+					break;
+					
+				case 2:
+					// All we really need is stereophonic, baby
+					if(useStereoOverDolby)
+						a52_flags = A52_STEREO | A52_ADJUST_LEVEL;
+					else
+						a52_flags = A52_DOLBY | A52_ADJUST_LEVEL;
+					break;
+					
+				case 5:
+					// Try to get 5.0 channels
+					a52_flags = A52_3F2R | A52_ADJUST_LEVEL;	
+					break;
+					
+				case 6:
+					// Try to get 5.1 channels
+					a52_flags = A52_3F2R | A52_LFE | A52_ADJUST_LEVEL;
+					break;
+					
+				default:
+					fprintf(stderr, "ACShepA52Decoder::ProduceOutputPackets: Unknown output channel amount\n");
+					break;
+			}
+
+			readLength = bytes_to_read;
+			input_data = GetBytes(readLength);
+			a52_frame(decoder_state, input_data, &a52_flags, &level, bias);
+			a52_dynrng(decoder_state, dynrng_call, &dynamicRangeCompression);
+			
+			// Cycle through the blocks, and actually do stuff 
+			for (int j = 0; j < 6; j++) {
+				a52_block(decoder_state);
+				output_samples = a52_samples(decoder_state);
+				
+				// Need to know what kind of output data to process	
+				if (mOutputFormat.mFormatFlags == kIntPCMOutFormatFlag) {
+					if (mOutputFormat.mBitsPerChannel == 16) {
+						output_offset += Process16BitSignedInts(outOutputData, output_offset, output_samples, a52_flags);
+					} else {
+						output_offset += Process32BitSignedInts(outOutputData, output_offset, output_samples, a52_flags);
+					}
+				} else {
+					output_offset += ProcessFloats(outOutputData, output_offset, output_samples, a52_flags);
+				}
+			
+			}
 		}
 		
 		// move on in our data stream
