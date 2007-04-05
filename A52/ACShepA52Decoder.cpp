@@ -116,7 +116,7 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 		for (int sample_index = 0; sample_index < 12; sample_index ++)
 		{
 			for (int channels = 1; channels <= 2; channels++) {
-				CAStreamBasicDescription theOutputFormat(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 16, kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked);
+				CAStreamBasicDescription theOutputFormat(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 16, kIntPCMOutFormatFlag);
 				AddOutputFormat(theOutputFormat);
 				//	This decoder only takes an A/52 or AC-3 stream as it's input
 				CAStreamBasicDescription theInputFormat1(sample_rates[sample_index], kAudioFormatAC3, 0, 256*6, 0, channels, 0, 0);
@@ -514,22 +514,35 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 		if(passthrough)
 		{
 			static const uint8_t p_sync_le[6] = { 0x72, 0xF8, 0x1F, 0x4E, 0x01, 0x00 };
+			static const uint8_t p_sync_be[6] = { 0xF8, 0x72, 0x4E, 0x1F, 0x00, 0x01 };
 			
 			uint8_t *myOutputData = (uint8_t *)(outOutputData);
 			
 			myOutputData += output_offset * output_sample_size;  //output_offset is in 16-bit ints
 			
 			memset(myOutputData, 0, 2 * 2 * 256 * 6);
-			memcpy(myOutputData, p_sync_le, 6);
 			input_data = GetBytes(bytes_to_read);
-			myOutputData[5] = input_data[5] & 0x7;
-			myOutputData[6] = (bytes_to_read << 4) & 0xff;
-			myOutputData[7] = (bytes_to_read >> 4) & 0xff;
-			unsigned int i;
-			for(i=0; i<bytes_to_read; i+=2)
+			
+			if (mOutputFormat.mFormatFlags & kLinearPCMFormatFlagIsBigEndian)
 			{
-				myOutputData[i+8] = input_data[i+1];
-				myOutputData[i+9] = input_data[i];
+				memcpy(myOutputData, p_sync_be, 6);
+				myOutputData[4] = input_data[5] & 0x7;
+				myOutputData[6] = (bytes_to_read >> 4) & 0xff;
+				myOutputData[7] = (bytes_to_read << 4) & 0xff;
+				memcpy(&myOutputData[8], input_data, bytes_to_read);
+			} 
+			else
+			{
+				memcpy(myOutputData, p_sync_le, 6);
+				myOutputData[5] = input_data[5] & 0x7;
+				myOutputData[6] = (bytes_to_read << 4) & 0xff;
+				myOutputData[7] = (bytes_to_read >> 4) & 0xff;
+				unsigned int i;
+				for(i=0; i<bytes_to_read; i+=2)
+				{
+					myOutputData[i+8] = input_data[i+1];
+					myOutputData[i+9] = input_data[i];
+				}
 			}
 			output_offset += mOutputFormat.mChannelsPerFrame * 256 * 6;	//Our framed hack
 		}
