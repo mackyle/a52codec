@@ -1,10 +1,19 @@
 {
     IBClasses = (
         {
-            ACTIONS = {cancel = id; save = id; }; 
+            ACTIONS = {
+                cancel = id; 
+                save = id; 
+                setAC3DynamicRangeSlider = id; 
+                setAC3DynamicRangeValue = id; 
+            }; 
             CLASS = A52Preferences; 
             LANGUAGE = ObjC; 
-            OUTLETS = {"NSButton_dynamicRange" = NSButton; "NSButton_stereo" = NSButton; }; 
+            OUTLETS = {
+                "button_stereo" = NSButton; 
+                "slider_ac3DynamicRangeSlider" = NSSlider; 
+                "textField_ac3DynamicRangeValue" = NSTextField; 
+            }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }

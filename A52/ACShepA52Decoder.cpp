@@ -65,13 +65,6 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 			dynamicRangeCompression = CFStringGetDoubleValue((CFStringRef)dynRange);
 		else if(type == CFNumberGetTypeID())
 			CFNumberGetValue((CFNumberRef)dynRange, kCFNumberDoubleType, &dynamicRangeCompression);
-		else if(type == CFBooleanGetTypeID())
-        {
-            if(CFBooleanGetValue((CFBooleanRef)dynRange))
-                dynamicRangeCompression = 0.2;
-            else
-                dynamicRangeCompression = 1;            
-        }
         else
 			dynamicRangeCompression = 1;
 		CFRelease(dynRange);
@@ -342,10 +335,24 @@ void ACShepA52Decoder::SetCurrentOutputFormat(const AudioStreamBasicDescription&
 	//fprintf(stderr, "ACShepA52Decoder::SetCurrentOutputFormat: Exiting function\n");
 }
 
+/*
+ * Custom Dynamic range compression
+ * My logic here:
+ * Two cases
+ * 1) The user requested a compression of 1 or less
+ *		return the typical power rule
+ * 2) The user requested a compression of more than 1 (decompression)
+ *		If the stream's requested compression is less than 1.0 (loud sound), return the normal compression
+ *		If the stream's requested compression is more than 1.0 (soft sound), use power rule (which will make it louder in this case).
+ */
 static sample_t dynrng_call (sample_t c, void *data)
 {
 	double *level = (double *)data;
-	return pow((double)c, *level);
+	float levelToUse = (float)*level;
+	if(c > 1.0 || levelToUse <= 1.0)
+		return powf(c, levelToUse);
+	else
+		return c;
 }
 
 UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
