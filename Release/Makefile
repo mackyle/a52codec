@@ -1,4 +1,4 @@
-VERSION=1.7.2
+VERSION=1.7.5
 BETA=FALSE
 SRC_DIR=..
 BUILD_DIR=build
@@ -8,7 +8,7 @@ ADIUM_DIR=$(BUILD_DIR)/A52Codec
 ifeq ($(BETA),TRUE)
     BUILDSTYLE=Development
 else
-    BUILDSTYLE=Release
+    BUILDSTYLE=Deployment
 endif
 
 ifeq ($(strip $(PRODUCT_DIR)),)
