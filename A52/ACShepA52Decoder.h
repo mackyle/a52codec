@@ -79,7 +79,7 @@ private:
 	UInt32	beginningOfIncompleteHeaderSize;
 	
 	//Prefs
-	bool	useStereoOverDolby;
+	int		TwoChannelMode;
 	double	dynamicRangeCompression;
 	bool	passthrough;
 };

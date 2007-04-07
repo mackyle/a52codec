@@ -52,6 +52,10 @@ typedef struct a52_state_s a52_state_t;
 #define A52_LFE 16
 #define A52_ADJUST_LEVEL 32
 
+// this next constant can be ORed with A52_DOLBY to tell liba52 to use 5.0 DPLII matrix encoding,
+// rather than just 4.0 Dolby Surround matrix encoding
+#define A52_USE_DPLII 64
+
 a52_state_t * a52_init (uint32_t mm_accel);
 sample_t * a52_samples (a52_state_t * state);
 int a52_syncinfo (const uint8_t * buf, int * flags,

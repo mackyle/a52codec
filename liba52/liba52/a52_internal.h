@@ -93,6 +93,10 @@ struct a52_state_s {
 #define LEVEL_45DB 0.5946035575013605
 #define LEVEL_6DB 0.5
 
+// these next two constants are used for DPL matrix encoding in downmix.c
+#define LEVEL_SQRT_1_2 0.5
+#define LEVEL_SQRT_3_4 0.8660254037844386
+
 #define EXP_REUSE (0)
 #define EXP_D15   (1)
 #define EXP_D25   (2)

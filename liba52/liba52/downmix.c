@@ -34,6 +34,7 @@
 int a52_downmix_init (int input, int flags, sample_t * level,
 		      sample_t clev, sample_t slev)
 {
+
     static uint8_t table[11][8] = {
 	{A52_CHANNEL,	A52_DOLBY,	A52_STEREO,	A52_STEREO,
 	 A52_STEREO,	A52_STEREO,	A52_STEREO,	A52_STEREO},
@@ -147,6 +148,9 @@ int a52_downmix_init (int input, int flags, sample_t * level,
 	    *level *= 1 / (1 + 3 * LEVEL_3DB);
 	    break;
 	}
+
+	// add the DPLII flag back into the output if it was passed in
+	output = output | (flags & A52_USE_DPLII);
 
     return output;
 }
@@ -394,16 +398,36 @@ static void mix31toS (sample_t * samples, sample_t bias)
     }
 }
 
-static void mix22toS (sample_t * samples, sample_t bias)
+static void mix22toS (sample_t * samples, sample_t bias, int use_dpl2)
 {
-    int i;
-    sample_t surround;
+	if (use_dpl2 == 1) {
+		int i;
+		sample_t Lt, Rt, Ls, Rs, Lss, Rss;
+		
+		for (i = 0; i < 256; i++) {
+			
+			Lt = samples[i];
+			Rt = samples[i + 256];
+			
+			Ls = samples[i + 512];
+			Rs = samples[i + 768];
+			
+			Lss = (LEVEL_SQRT_3_4 * Ls) - (LEVEL_SQRT_1_2 * Rs);
+			Rss = -(LEVEL_SQRT_1_2 * Ls) + (LEVEL_SQRT_3_4 * Rs);
+			
+			samples[i] = Lt + Lss;
+			samples[i + 256] = Rt + Rss;
+		}
+	} else {
+		int i;
+		sample_t surround;
 
-    for (i = 0; i < 256; i++) {
-	surround = samples[i + 512] + samples[i + 768];
-	samples[i] += bias - surround;
-	samples[i + 256] += bias + surround;
-    }
+		for (i = 0; i < 256; i++) {
+		surround = samples[i + 512] + samples[i + 768];
+		samples[i] += bias - surround;
+		samples[i + 256] += bias + surround;
+		}
+	}
 }
 
 static void mix32to2 (sample_t * samples, sample_t bias)
@@ -418,17 +442,46 @@ static void mix32to2 (sample_t * samples, sample_t bias)
     }
 }
 
-static void mix32toS (sample_t * samples, sample_t bias)
+static void mix32toS (sample_t * samples, sample_t bias, int use_dpl2)
 {
-    int i;
-    sample_t common, surround;
 
-    for (i = 0; i < 256; i++) {
-	common = samples[i + 256] + bias;
-	surround = samples[i + 768] + samples[i + 1024];
-	samples[i] += common - surround;
-	samples[i + 256] = samples[i + 512] + common + surround;
-    }
+	if (use_dpl2 == 1) {
+
+		int i;
+		sample_t cc, Lt, Rt, Ls, Rs, Lss, Rss;
+	
+		for (i = 0; i < 256; i++) {
+	
+			cc = samples[i + 256] * LEVEL_3DB;
+		
+			Lt = samples[i] + cc;
+			Rt = samples[i + 512] + cc;
+		
+			Ls = samples[i + 768];
+			Rs = samples[i + 1024];
+			
+			Lss = (LEVEL_SQRT_3_4 * Ls) - (LEVEL_SQRT_1_2 * Rs);
+			Rss = -(LEVEL_SQRT_1_2 * Ls) + (LEVEL_SQRT_3_4 * Rs);
+		
+			samples[i] = Lt + Lss;
+			samples[i + 256] = Rt + Rss;
+	
+		}
+
+	} else {
+
+		int i;
+		sample_t common, surround;
+	
+		for (i = 0; i < 256; i++) {
+		common = samples[i + 256] + bias;
+		surround = samples[i + 768] + samples[i + 1024];
+		samples[i] += common - surround;
+		samples[i + 256] = samples[i + 512] + common + surround;
+		}
+
+	}
+
 }
 
 static void move2to1 (sample_t * src, sample_t * dest, sample_t bias)
@@ -523,7 +576,7 @@ void a52_downmix (sample_t * samples, int acmod, int output, sample_t bias,
 	break;
 
     case CONVERT (A52_2F2R, A52_DOLBY):
-	mix22toS (samples, bias);
+	mix22toS (samples, bias, ((output & A52_USE_DPLII) == A52_USE_DPLII));
 	break;
 
     case CONVERT (A52_3F2R, A52_STEREO):
@@ -533,7 +586,7 @@ void a52_downmix (sample_t * samples, int acmod, int output, sample_t bias,
 	break;
 
     case CONVERT (A52_3F2R, A52_DOLBY):
-	mix32toS (samples, bias);
+	mix32toS (samples, bias, ((output & A52_USE_DPLII) == A52_USE_DPLII));
 	break;
 
     case CONVERT (A52_3F1R, A52_3F):

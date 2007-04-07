@@ -72,6 +72,7 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	else
 		dynamicRangeCompression = 1;  //no compression
 	
+	int useStereoOverDolby = 0;
 	CFTypeRef stereo = CFPreferencesCopyAppValue(CFSTR("useStereoOverDolby"), CFSTR("com.cod3r.a52codec"));
 	if(stereo != NULL)
 	{
@@ -80,12 +81,31 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 			useStereoOverDolby = CFStringGetIntValue((CFStringRef)stereo);
 		else if(type == CFNumberGetTypeID())
 			CFNumberGetValue((CFNumberRef)stereo, kCFNumberIntType, &useStereoOverDolby);
-		else
-			useStereoOverDolby = 0;
+		else if(type == CFBooleanGetTypeID())
+			useStereoOverDolby = CFBooleanGetValue((CFBooleanRef)stereo);
 		CFRelease(stereo);
 	}
+
+	int useDPL2 = 0;
+	CFTypeRef dpl2 = CFPreferencesCopyAppValue(CFSTR("useDolbyProLogicII"), CFSTR("com.cod3r.a52codec"));
+	if(dpl2 != NULL)
+	{
+		CFTypeID type = CFGetTypeID(dpl2);
+		if(type == CFStringGetTypeID())
+			useDPL2 = CFStringGetIntValue((CFStringRef)dpl2);
+		else if(type == CFNumberGetTypeID())
+			CFNumberGetValue((CFNumberRef)dpl2, kCFNumberIntType, &useDPL2);
+		else if(type == CFBooleanGetTypeID())
+			useDPL2 = CFBooleanGetValue((CFBooleanRef)dpl2);
+		CFRelease(dpl2);
+	}
+	
+	if(useStereoOverDolby)
+		TwoChannelMode = A52_STEREO;
+	else if(useDPL2)
+		TwoChannelMode = A52_DOLBY | A52_USE_DPLII;
 	else
-		useStereoOverDolby = 0;
+		TwoChannelMode = A52_DOLBY;
 	
 	CFTypeRef pass = CFPreferencesCopyAppValue(CFSTR("attemptPassthrough"), CFSTR("com.cod3r.a52codec"));
 	if(pass != NULL)
@@ -563,10 +583,7 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 					
 				case 2:
 					// All we really need is stereophonic, baby
-					if(useStereoOverDolby)
-						a52_flags = A52_STEREO | A52_ADJUST_LEVEL;
-					else
-						a52_flags = A52_DOLBY | A52_ADJUST_LEVEL;
+					a52_flags = TwoChannelMode;
 					break;
 					
 				case 5:

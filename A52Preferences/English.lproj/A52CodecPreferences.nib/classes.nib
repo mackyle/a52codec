@@ -3,16 +3,23 @@
         {
             ACTIONS = {
                 cancel = id; 
+                cancelDynRangeSheet = id; 
                 save = id; 
+                saveDynRangeSheet = id; 
+                set2ChannelModePopup = id; 
+                setAC3DynamicRangePopup = id; 
                 setAC3DynamicRangeSlider = id; 
                 setAC3DynamicRangeValue = id; 
             }; 
             CLASS = A52Preferences; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                "button_stereo" = NSButton; 
+                "popup_2ChannelMode" = NSPopUpButton; 
+                "popup_ac3DynamicRangeType" = NSPopUpButton; 
                 "slider_ac3DynamicRangeSlider" = NSSlider; 
                 "textField_ac3DynamicRangeValue" = NSTextField; 
+                "window_dynRangeSheet" = NSWindow; 
+                "window_mainWindow" = NSWindow; 
             }; 
             SUPERCLASS = NSObject; 
         }, 

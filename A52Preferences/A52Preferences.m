@@ -23,15 +23,71 @@
 	else
 		[self setAC3DynamicRange:1.0];
 	if([defaults boolForKey:@"useStereoOverDolby"])
-		[button_stereo setIntValue:1];
+	{
+		useStereo = YES;
+		useDPL2 = NO;
+		[popup_2ChannelMode selectItemAtIndex:0];
+	}
+	else if([defaults boolForKey:@"useDolbyProLogicII"])
+	{
+		useStereo = NO;
+		useDPL2 = YES;
+		[popup_2ChannelMode selectItemAtIndex:2];
+	}
 	else
-		[button_stereo setIntValue:0];
+	{
+		useStereo = NO;
+		useDPL2 = NO;
+		[popup_2ChannelMode selectItemAtIndex:1];		
+	}
 }
 
 - (void)dealloc
 {
 	[defaults release];
 	[super dealloc];
+}
+
+- (IBAction)setAC3DynamicRangePopup:(id)sender
+{
+	int selected = [popup_ac3DynamicRangeType indexOfSelectedItem];
+	switch(selected)
+	{
+		case 0:
+			[self setAC3DynamicRange:1.0];
+			break;
+		case 1:
+			[self setAC3DynamicRange:2.0];
+			break;
+		case 2:
+			savedDynValue = dynValue;
+			[NSApp beginSheet:window_dynRangeSheet modalForWindow:window_mainWindow modalDelegate:nil didEndSelector:nil contextInfo:NULL];
+			break;
+		default:
+			break;
+	}
+}
+
+- (IBAction)set2ChannelModePopup:(id)sender;
+{
+	int selected = [popup_2ChannelMode indexOfSelectedItem];
+	switch(selected)
+	{
+		case 0:
+			useStereo = YES;
+			useDPL2 = NO;
+			break;
+		case 1:
+			useStereo = NO;
+			useDPL2 = NO;
+			break;
+		case 2:
+			useStereo = NO;
+			useDPL2 = YES;
+			break;
+		default:
+			break;
+	}	
 }
 
 - (void)setAC3DynamicRange:(float)newVal
@@ -44,6 +100,12 @@
     dynValue = newVal;
     [textField_ac3DynamicRangeValue setFloatValue:newVal];
     [slider_ac3DynamicRangeSlider setFloatValue:newVal];
+	if(newVal == 1.0)
+		[popup_ac3DynamicRangeType selectItemAtIndex:0];
+	else if(newVal == 2.0)
+		[popup_ac3DynamicRangeType selectItemAtIndex:1];
+	else
+		[popup_ac3DynamicRangeType selectItemAtIndex:2];
 }
 
 - (IBAction)setAC3DynamicRangeValue:(id)sender
@@ -60,6 +122,19 @@
     [self setAC3DynamicRange:newVal];
 }
 
+- (IBAction)cancelDynRangeSheet:(id)sender
+{
+	[self setAC3DynamicRange:savedDynValue];
+	[NSApp endSheet:window_dynRangeSheet];
+	[window_dynRangeSheet orderOut:self];
+}
+
+- (IBAction)saveDynRangeSheet:(id)sender;
+{
+	[NSApp endSheet:window_dynRangeSheet];
+	[window_dynRangeSheet orderOut:self];
+}
+
 - (IBAction)cancel:(id)sender
 {
 	[[NSApplication sharedApplication] terminate:nil];
@@ -68,10 +143,8 @@
 - (IBAction)save:(id)sender
 {
 	[defaults setFloat:dynValue forKey:@"dynamicRange"];
-	if([button_stereo intValue] != 0)
-		[defaults setBool:YES forKey:@"useStereoOverDolby"];
-	else
-		[defaults setBool:NO forKey:@"useStereoOverDolby"];
+	[defaults setBool:useStereo forKey:@"useStereoOverDolby"];
+	[defaults setBool:useDPL2 forKey:@"useDolbyProLogicII"];
 	[defaults synchronize];
 	[[NSApplication sharedApplication] terminate:nil];
 }
