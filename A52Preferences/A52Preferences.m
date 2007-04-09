@@ -59,7 +59,7 @@
 		case 1:
 			[self setAC3DynamicRange:2.0];
 			break;
-		case 2:
+		case 3:
 			savedDynValue = dynValue;
 			[NSApp beginSheet:window_dynRangeSheet modalForWindow:window_mainWindow modalDelegate:nil didEndSelector:nil contextInfo:NULL];
 			break;
@@ -105,7 +105,7 @@
 	else if(newVal == 2.0)
 		[popup_ac3DynamicRangeType selectItemAtIndex:1];
 	else
-		[popup_ac3DynamicRangeType selectItemAtIndex:2];
+		[popup_ac3DynamicRangeType selectItemAtIndex:3];
 }
 
 - (IBAction)setAC3DynamicRangeValue:(id)sender
