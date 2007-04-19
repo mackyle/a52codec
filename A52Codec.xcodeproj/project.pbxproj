@@ -739,28 +739,6 @@
 			};
 			name = Development;
 		};
-		F50B7ABB0AAB69C800065C78 /* Development-Unoptimized */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "A52Preferences/Preferences-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = Preferences;
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = YES;
-			};
-			name = "Development-Unoptimized";
-		};
 		F50B7ABC0AAB69C800065C78 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -782,6 +760,128 @@
 				ZERO_LINK = YES;
 			};
 			name = Default;
+		};
+		F529AD4A0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_CARBON=1";
+				HEADER_SEARCH_PATHS = (
+					liba52/include,
+					.,
+					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
+				);
+				INFOPLIST_FILE = "Info-A52Codec__Upgraded_.plist";
+				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
+				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
+				PRODUCT_NAME = A52Codec;
+				PROFILING_CODE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = component;
+			};
+			name = "Deployment+Debug";
+		};
+		F529AD4B0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				EXPORTED_SYMBOLS_FILE = AC3MovieImport/AC3MovieImport.exp;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_CARBON=1";
+				HEADER_SEARCH_PATHS = (
+					liba52/include,
+					.,
+					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
+				);
+				INFOPLIST_FILE = "Info-AC3MovieImport.plist";
+				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
+				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
+				PRODUCT_NAME = AC3MovieImport;
+				PROFILING_CODE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = component;
+			};
+			name = "Deployment+Debug";
+		};
+		F529AD4C0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "A52Preferences/Preferences-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = A52Preferences;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = "Deployment+Debug";
+		};
+		F529AD4D0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = "Build Both";
+				ZERO_LINK = NO;
+			};
+			name = "Deployment+Debug";
+		};
+		F529AD4E0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = Debug;
+				ZERO_LINK = NO;
+			};
+			name = "Deployment+Debug";
+		};
+		F529AD4F0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				STRIP_INSTALLED_PRODUCT = NO;
+			};
+			name = "Deployment+Debug";
 		};
 		F5525DF30A3BF78A00F36B86 /* Deployment */ = {
 			isa = XCBuildConfiguration;
@@ -849,37 +949,6 @@
 			};
 			name = Development;
 		};
-		F5525DF50A3BF78A00F36B86 /* Development-Unoptimized */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				EXPORTED_SYMBOLS_FILE = AC3MovieImport/AC3MovieImport.exp;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
-					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
-				);
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"TARGET_CARBON=1",
-					"CoreAudio_Debug=1",
-				);
-				HEADER_SEARCH_PATHS = (
-					liba52/include,
-					.,
-					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
-				);
-				INFOPLIST_FILE = "Info-AC3MovieImport.plist";
-				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
-				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
-				PRODUCT_NAME = AC3MovieImport;
-				PROFILING_CODE = NO;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = "-Wall";
-				WRAPPER_EXTENSION = component;
-			};
-			name = "Development-Unoptimized";
-		};
 		F5525DF60A3BF78A00F36B86 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -927,13 +996,6 @@
 				PRODUCT_NAME = Debug;
 			};
 			name = Development;
-		};
-		F583B2110A759C31005F8A5A /* Development-Unoptimized */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = Debug;
-			};
-			name = "Development-Unoptimized";
 		};
 		F583B2120A759C31005F8A5A /* Default */ = {
 			isa = XCBuildConfiguration;
@@ -1011,37 +1073,6 @@
 			};
 			name = Development;
 		};
-		F5BDACAA0A20A00000FF4884 /* Development-Unoptimized */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
-					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
-				);
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"TARGET_CARBON=1",
-					"CoreAudio_Debug=1",
-				);
-				HEADER_SEARCH_PATHS = (
-					liba52/include,
-					.,
-					/System/Library/Frameworks/AudioUnit.framework/Versions/A/Headers,
-				);
-				INFOPLIST_FILE = "Info-A52Codec__Upgraded_.plist";
-				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
-				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
-				PRODUCT_NAME = A52Codec;
-				PROFILING_CODE = NO;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = "-Wall";
-				WRAPPER_EXTENSION = component;
-			};
-			name = "Development-Unoptimized";
-		};
 		F5BDACAB0A20A00000FF4884 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1082,13 +1113,6 @@
 			};
 			name = Development;
 		};
-		F5BDACB20A20A00100FF4884 /* Development-Unoptimized */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-			};
-			name = "Development-Unoptimized";
-		};
 		F5BDACB30A20A00100FF4884 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1118,13 +1142,6 @@
 			};
 			name = Development;
 		};
-		F5DA8EEE0A54C713004A41D0 /* Development-Unoptimized */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "Build Both";
-			};
-			name = "Development-Unoptimized";
-		};
 		F5DA8EEF0A54C713004A41D0 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1139,8 +1156,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F50B7AB90AAB69C800065C78 /* Deployment */,
+				F529AD4C0BD7C40800F7A8D0 /* Deployment+Debug */,
 				F50B7ABA0AAB69C800065C78 /* Development */,
-				F50B7ABB0AAB69C800065C78 /* Development-Unoptimized */,
 				F50B7ABC0AAB69C800065C78 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1150,8 +1167,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5525DF30A3BF78A00F36B86 /* Deployment */,
+				F529AD4B0BD7C40800F7A8D0 /* Deployment+Debug */,
 				F5525DF40A3BF78A00F36B86 /* Development */,
-				F5525DF50A3BF78A00F36B86 /* Development-Unoptimized */,
 				F5525DF60A3BF78A00F36B86 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1161,8 +1178,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F583B20F0A759C31005F8A5A /* Deployment */,
+				F529AD4E0BD7C40800F7A8D0 /* Deployment+Debug */,
 				F583B2100A759C31005F8A5A /* Development */,
-				F583B2110A759C31005F8A5A /* Development-Unoptimized */,
 				F583B2120A759C31005F8A5A /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1172,8 +1189,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5BDACA80A20A00000FF4884 /* Deployment */,
+				F529AD4A0BD7C40800F7A8D0 /* Deployment+Debug */,
 				F5BDACA90A20A00000FF4884 /* Development */,
-				F5BDACAA0A20A00000FF4884 /* Development-Unoptimized */,
 				F5BDACAB0A20A00000FF4884 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1183,8 +1200,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5BDACB00A20A00100FF4884 /* Deployment */,
+				F529AD4F0BD7C40800F7A8D0 /* Deployment+Debug */,
 				F5BDACB10A20A00100FF4884 /* Development */,
-				F5BDACB20A20A00100FF4884 /* Development-Unoptimized */,
 				F5BDACB30A20A00100FF4884 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1194,8 +1211,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5DA8EEC0A54C713004A41D0 /* Deployment */,
+				F529AD4D0BD7C40800F7A8D0 /* Deployment+Debug */,
 				F5DA8EED0A54C713004A41D0 /* Development */,
-				F5DA8EEE0A54C713004A41D0 /* Development-Unoptimized */,
 				F5DA8EEF0A54C713004A41D0 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
