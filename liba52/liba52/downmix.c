@@ -415,8 +415,8 @@ static void mix22toS (sample_t * samples, sample_t bias, int use_dpl2)
 			Lss = (LEVEL_SQRT_3_4 * Ls) - (LEVEL_SQRT_1_2 * Rs);
 			Rss = -(LEVEL_SQRT_1_2 * Ls) + (LEVEL_SQRT_3_4 * Rs);
 			
-			samples[i] = Lt + Lss;
-			samples[i + 256] = Rt + Rss;
+			samples[i] = bias + Lt + Lss;
+			samples[i + 256] = bias + Rt + Rss;
 		}
 	} else {
 		int i;
@@ -463,8 +463,8 @@ static void mix32toS (sample_t * samples, sample_t bias, int use_dpl2)
 			Lss = (LEVEL_SQRT_3_4 * Ls) - (LEVEL_SQRT_1_2 * Rs);
 			Rss = -(LEVEL_SQRT_1_2 * Ls) + (LEVEL_SQRT_3_4 * Rs);
 		
-			samples[i] = Lt + Lss;
-			samples[i + 256] = Rt + Rss;
+			samples[i] = bias + Lt + Lss;
+			samples[i + 256] = bias + Rt + Rss;
 	
 		}
 
