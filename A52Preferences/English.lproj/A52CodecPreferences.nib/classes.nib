@@ -14,7 +14,7 @@
             CLASS = A52Preferences; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                "popup_2ChannelMode" = NSPopUpButton; 
+                "popup_OutputMode" = NSPopUpButton; 
                 "popup_ac3DynamicRangeType" = NSPopUpButton; 
                 "slider_ac3DynamicRangeSlider" = NSSlider; 
                 "textField_ac3DynamicRangeValue" = NSTextField; 

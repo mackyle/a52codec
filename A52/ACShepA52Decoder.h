@@ -56,6 +56,7 @@ public:
 
 //	Implementation
 private:
+	void	ACShepA52Decoder::UpgradeOldPrefs();
 	void	DetermineStreamParameters();
 	UInt32  SyncA52Stream(UInt32 &bytes_to_read, Byte *input_data, int &a52_flags, int &a52_samplerate, int &a52_bitrate, bool shouldResync);
 	UInt32	Process16BitSignedInts(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags);

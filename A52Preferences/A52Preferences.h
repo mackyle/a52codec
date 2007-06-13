@@ -6,7 +6,7 @@
 {
 	IBOutlet NSWindow					*window_mainWindow;
 	IBOutlet NSPopUpButton				*popup_ac3DynamicRangeType;
-	IBOutlet NSPopUpButton				*popup_2ChannelMode;
+	IBOutlet NSPopUpButton				*popup_OutputMode;
 	
 	IBOutlet NSWindow					*window_dynRangeSheet;
     IBOutlet NSTextField                *textField_ac3DynamicRangeValue;
@@ -15,8 +15,7 @@
 	NSUserDefaults						*defaults;
 	float								dynValue;
 	float								savedDynValue;
-	BOOL								useStereo;
-	BOOL								useDPL2;
+	int									twoChannelMode;
 }
 
 - (IBAction)setAC3DynamicRangePopup:(id)sender;

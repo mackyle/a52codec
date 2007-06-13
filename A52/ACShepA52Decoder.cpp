@@ -20,7 +20,59 @@
 //=============================================================================
 
 #define kAudioFormatAVIAC3	0x6D732000
+#define MY_APP_DOMAIN CFSTR("com.cod3r.a52codec")
 
+//Old
+#define USE_STEREO_KEY CFSTR("useStereoOverDolby")
+#define USE_DPLII_KEY CFSTR("useDolbyProLogicII")
+
+#define DYNAMIC_RANGE_KEY CFSTR("dynamicRange")
+#define PASSTHROUGH_KEY CFSTR("attemptPassthrough")
+#define TWO_CHANNEL_KEY CFSTR("twoChannelMode")
+
+void ACShepA52Decoder::UpgradeOldPrefs()
+{
+	CFStringRef myApp = MY_APP_DOMAIN;
+	int useStereoOverDolby = 0;
+	CFTypeRef stereo = CFPreferencesCopyAppValue(USE_STEREO_KEY, myApp);
+	if(stereo != NULL)
+	{
+		CFTypeID type = CFGetTypeID(stereo);
+		if(type == CFStringGetTypeID())
+			useStereoOverDolby = CFStringGetIntValue((CFStringRef)stereo);
+		else if(type == CFNumberGetTypeID())
+			CFNumberGetValue((CFNumberRef)stereo, kCFNumberIntType, &useStereoOverDolby);
+		else if(type == CFBooleanGetTypeID())
+			useStereoOverDolby = CFBooleanGetValue((CFBooleanRef)stereo);
+		CFRelease(stereo);
+	}
+	
+	int useDPL2 = 0;
+	CFTypeRef dpl2 = CFPreferencesCopyAppValue(USE_DPLII_KEY, myApp);
+	if(dpl2 != NULL)
+	{
+		CFTypeID type = CFGetTypeID(dpl2);
+		if(type == CFStringGetTypeID())
+			useDPL2 = CFStringGetIntValue((CFStringRef)dpl2);
+		else if(type == CFNumberGetTypeID())
+			CFNumberGetValue((CFNumberRef)dpl2, kCFNumberIntType, &useDPL2);
+		else if(type == CFBooleanGetTypeID())
+			useDPL2 = CFBooleanGetValue((CFBooleanRef)dpl2);
+		CFRelease(dpl2);
+	}
+	
+	if(useStereoOverDolby)
+		TwoChannelMode = A52_STEREO;
+	else if(useDPL2)
+		TwoChannelMode = A52_DOLBY | A52_USE_DPLII;
+	else
+		TwoChannelMode = A52_DOLBY;
+	
+	CFNumberRef resultingMode = CFNumberCreate(NULL, kCFNumberIntType, &TwoChannelMode);
+	CFPreferencesSetAppValue(TWO_CHANNEL_KEY, resultingMode, myApp);
+	CFRelease(resultingMode);
+	CFPreferencesAppSynchronize(myApp);
+}
 
 ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Codec(inInputBufferByteSize) {
 	
@@ -55,9 +107,10 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	kIntPCMOutFormatFlag   = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
 	kFloatPCMOutFormatFlag = kLinearPCMFormatFlagIsFloat		 | kLinearPCMFormatFlagIsPacked;
 #endif
+	CFStringRef myApp = MY_APP_DOMAIN;
 	
-	CFPreferencesAppSynchronize(CFSTR("com.cod3r.a52codec"));
-	CFTypeRef dynRange = CFPreferencesCopyAppValue(CFSTR("dynamicRange"), CFSTR("com.cod3r.a52codec"));
+	CFPreferencesAppSynchronize(myApp);
+	CFTypeRef dynRange = CFPreferencesCopyAppValue(DYNAMIC_RANGE_KEY, myApp);
 	if(dynRange != NULL)
 	{
 		CFTypeID type = CFGetTypeID(dynRange);
@@ -72,42 +125,7 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	else
 		dynamicRangeCompression = 1;  //no compression
 	
-	int useStereoOverDolby = 0;
-	CFTypeRef stereo = CFPreferencesCopyAppValue(CFSTR("useStereoOverDolby"), CFSTR("com.cod3r.a52codec"));
-	if(stereo != NULL)
-	{
-		CFTypeID type = CFGetTypeID(stereo);
-		if(type == CFStringGetTypeID())
-			useStereoOverDolby = CFStringGetIntValue((CFStringRef)stereo);
-		else if(type == CFNumberGetTypeID())
-			CFNumberGetValue((CFNumberRef)stereo, kCFNumberIntType, &useStereoOverDolby);
-		else if(type == CFBooleanGetTypeID())
-			useStereoOverDolby = CFBooleanGetValue((CFBooleanRef)stereo);
-		CFRelease(stereo);
-	}
-
-	int useDPL2 = 0;
-	CFTypeRef dpl2 = CFPreferencesCopyAppValue(CFSTR("useDolbyProLogicII"), CFSTR("com.cod3r.a52codec"));
-	if(dpl2 != NULL)
-	{
-		CFTypeID type = CFGetTypeID(dpl2);
-		if(type == CFStringGetTypeID())
-			useDPL2 = CFStringGetIntValue((CFStringRef)dpl2);
-		else if(type == CFNumberGetTypeID())
-			CFNumberGetValue((CFNumberRef)dpl2, kCFNumberIntType, &useDPL2);
-		else if(type == CFBooleanGetTypeID())
-			useDPL2 = CFBooleanGetValue((CFBooleanRef)dpl2);
-		CFRelease(dpl2);
-	}
-	
-	if(useStereoOverDolby)
-		TwoChannelMode = A52_STEREO;
-	else if(useDPL2)
-		TwoChannelMode = A52_DOLBY | A52_USE_DPLII;
-	else
-		TwoChannelMode = A52_DOLBY;
-	
-	CFTypeRef pass = CFPreferencesCopyAppValue(CFSTR("attemptPassthrough"), CFSTR("com.cod3r.a52codec"));
+	CFTypeRef pass = CFPreferencesCopyAppValue(PASSTHROUGH_KEY, myApp);
 	if(pass != NULL)
 	{
 		CFTypeID type = CFGetTypeID(pass);
@@ -122,15 +140,48 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	else
 		passthrough = 0;
 	
-	if(passthrough)
+	CFTypeRef twochan = CFPreferencesCopyAppValue(TWO_CHANNEL_KEY, myApp);
+	if(twochan != NULL)
+	{
+		CFTypeID type = CFGetTypeID(twochan);
+		if(type == CFStringGetTypeID())
+			TwoChannelMode = CFStringGetIntValue((CFStringRef)twochan);
+		else if(type == CFNumberGetTypeID())
+			CFNumberGetValue((CFNumberRef)twochan, kCFNumberIntType, &TwoChannelMode);
+		else
+			TwoChannelMode = 0;
+		/* sanity checks */
+		if(TwoChannelMode & A52_CHANNEL_MASK & 0xf7 != 2)
+		{
+			/* matches 2 and 10, which is Stereo and Dolby */
+			TwoChannelMode = A52_DOLBY;
+		}
+		TwoChannelMode &= ~A52_ADJUST_LEVEL & ~A52_LFE;
+		CFRelease(twochan);
+	}
+	else
+		UpgradeOldPrefs();
+	CFPreferencesSetAppValue(USE_STEREO_KEY, NULL, myApp);
+	CFPreferencesSetAppValue(USE_DPLII_KEY, NULL, myApp);
+
+	if(passthrough || TwoChannelMode)
 	{
 		//begin our passthrough hack
 		static int sample_rates[] = {48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 6000, 5512, 4000};
 		for (int sample_index = 0; sample_index < 12; sample_index ++)
 		{
-			for (int channels = 1; channels <= 2; channels++) {
-				CAStreamBasicDescription theOutputFormat(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 16, kIntPCMOutFormatFlag);
-				AddOutputFormat(theOutputFormat);
+			CAStreamBasicDescription theOutputFormat(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, 2, 16, kIntPCMOutFormatFlag);
+			AddOutputFormat(theOutputFormat);
+			if(!passthrough)
+			{
+				// 32 bit int
+				CAStreamBasicDescription theOutputFormat1(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, 2, 32, kIntPCMOutFormatFlag);
+				AddOutputFormat(theOutputFormat1);
+				// 32 bit float
+				CAStreamBasicDescription theOutputFormat2(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, 2, 32, kFloatPCMOutFormatFlag);
+				AddOutputFormat(theOutputFormat2);
+			}
+			for (int channels = 1; channels <= 6; channels++) {
 				//	This decoder only takes an A/52 or AC-3 stream as it's input
 				CAStreamBasicDescription theInputFormat1(sample_rates[sample_index], kAudioFormatAC3, 0, 256*6, 0, channels, 0, 0);
 				AddInputFormat(theInputFormat1);
@@ -138,7 +189,6 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 				AddInputFormat(theInputFormat2);
 			}
 		}
-			
 	}
 	else
 	{

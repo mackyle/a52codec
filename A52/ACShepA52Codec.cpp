@@ -40,8 +40,7 @@ void	ACShepA52Codec::Initialize(const AudioStreamBasicDescription* inInputFormat
 
 	//	make sure the sample rate and number of channels match between the input format and the output format
 		
-	if( (mInputFormat.mSampleRate != mOutputFormat.mSampleRate) ||
-		(mInputFormat.mChannelsPerFrame != mOutputFormat.mChannelsPerFrame))
+	if( (mInputFormat.mSampleRate != mOutputFormat.mSampleRate))
 	{
 		CODEC_THROW(kAudioCodecUnsupportedFormatError);
 	}

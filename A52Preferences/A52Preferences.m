@@ -1,5 +1,15 @@
 #import "A52Preferences.h"
 
+#include "a52.h"
+
+//Old
+#define USE_STEREO_KEY @"useStereoOverDolby"
+#define USE_DPLII_KEY @"useDolbyProLogicII"
+
+#define DYNAMIC_RANGE_KEY @"dynamicRange"
+#define PASSTHROUGH_KEY @"attemptPassthrough"
+#define TWO_CHANNEL_KEY @"twoChannelMode"
+
 @interface A52Preferences (private)
 - (void)setAC3DynamicRange:(float)newVal;
 @end
@@ -16,29 +26,56 @@
 	return self;
 }
 
+- (void)upgradeOldPrefs
+{
+	if([defaults boolForKey:USE_STEREO_KEY])
+		twoChannelMode = A52_STEREO;
+	else if([defaults boolForKey:USE_DPLII_KEY])
+		twoChannelMode = A52_DOLBY | A52_USE_DPLII;
+	else
+		twoChannelMode = A52_DOLBY;
+	
+	[defaults setInteger:twoChannelMode forKey:TWO_CHANNEL_KEY];
+}
+
 - (void)awakeFromNib
 {
-	if([defaults objectForKey:@"dynamicRange"] != nil)
-		[self setAC3DynamicRange:[defaults floatForKey:@"dynamicRange"]];
+	if([defaults objectForKey:DYNAMIC_RANGE_KEY] != nil)
+		[self setAC3DynamicRange:[defaults floatForKey:DYNAMIC_RANGE_KEY]];
 	else
 		[self setAC3DynamicRange:1.0];
-	if([defaults boolForKey:@"useStereoOverDolby"])
+	if([defaults objectForKey:TWO_CHANNEL_KEY] != nil)
 	{
-		useStereo = YES;
-		useDPL2 = NO;
-		[popup_2ChannelMode selectItemAtIndex:0];
-	}
-	else if([defaults boolForKey:@"useDolbyProLogicII"])
-	{
-		useStereo = NO;
-		useDPL2 = YES;
-		[popup_2ChannelMode selectItemAtIndex:2];
+		twoChannelMode = [defaults integerForKey:TWO_CHANNEL_KEY];
+
+		/* sanity checks */
+		if(twoChannelMode & A52_CHANNEL_MASK & 0xf7 != 2)
+		{
+			/* matches 2 and 10, which is Stereo and Dolby */
+			twoChannelMode = A52_DOLBY;
+		}
+		twoChannelMode &= ~A52_ADJUST_LEVEL & ~A52_LFE;
 	}
 	else
 	{
-		useStereo = NO;
-		useDPL2 = NO;
-		[popup_2ChannelMode selectItemAtIndex:1];		
+		[self upgradeOldPrefs];
+	}
+	[defaults removeObjectForKey:USE_STEREO_KEY];
+	[defaults removeObjectForKey:USE_DPLII_KEY];
+	switch(twoChannelMode)
+	{
+		case A52_STEREO:
+			[popup_OutputMode selectItemAtIndex:0];
+			break;
+		case A52_DOLBY:
+			[popup_OutputMode selectItemAtIndex:1];
+			break;
+		case A52_DOLBY | A52_USE_DPLII:
+			[popup_OutputMode selectItemAtIndex:2];
+			break;
+		default:
+			[popup_OutputMode selectItemAtIndex:3];
+			break;
 	}
 }
 
@@ -70,21 +107,20 @@
 
 - (IBAction)set2ChannelModePopup:(id)sender;
 {
-	int selected = [popup_2ChannelMode indexOfSelectedItem];
+	int selected = [popup_OutputMode indexOfSelectedItem];
 	switch(selected)
 	{
 		case 0:
-			useStereo = YES;
-			useDPL2 = NO;
+			twoChannelMode = A52_STEREO;
 			break;
 		case 1:
-			useStereo = NO;
-			useDPL2 = NO;
+			twoChannelMode = A52_DOLBY;
 			break;
 		case 2:
-			useStereo = NO;
-			useDPL2 = YES;
+			twoChannelMode = A52_DOLBY | A52_USE_DPLII;
 			break;
+		case 3:
+			twoChannelMode = 0;
 		default:
 			break;
 	}	
@@ -142,9 +178,8 @@
 
 - (IBAction)save:(id)sender
 {
-	[defaults setFloat:dynValue forKey:@"dynamicRange"];
-	[defaults setBool:useStereo forKey:@"useStereoOverDolby"];
-	[defaults setBool:useDPL2 forKey:@"useDolbyProLogicII"];
+	[defaults setFloat:dynValue forKey:DYNAMIC_RANGE_KEY];
+	[defaults setInteger:twoChannelMode forKey:TWO_CHANNEL_KEY];
 	[defaults synchronize];
 	[[NSApplication sharedApplication] terminate:nil];
 }
