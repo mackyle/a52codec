@@ -164,48 +164,25 @@ ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Code
 	CFPreferencesSetAppValue(USE_STEREO_KEY, NULL, myApp);
 	CFPreferencesSetAppValue(USE_DPLII_KEY, NULL, myApp);
 
-	if(passthrough || TwoChannelMode)
+	static int sample_rates[] = {48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 6000, 5512, 4000};
+	for (int sample_index = 0; sample_index < 12; sample_index ++)
 	{
-		//begin our passthrough hack
-		static int sample_rates[] = {48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 6000, 5512, 4000};
-		for (int sample_index = 0; sample_index < 12; sample_index ++)
-		{
-			CAStreamBasicDescription theOutputFormat(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, 2, 16, kIntPCMOutFormatFlag);
-			AddOutputFormat(theOutputFormat);
+		for (int channels = 1; channels <= 6; channels++) {
+			//	This decoder only takes an A/52 or AC-3 stream as it's input
+			CAStreamBasicDescription theInputFormat1(sample_rates[sample_index], kAudioFormatAC3, 0, 256*6, 0, channels, 0, 0);
+			AddInputFormat(theInputFormat1);
+			CAStreamBasicDescription theInputFormat2(sample_rates[sample_index], kAudioFormatAVIAC3, 0, 256*6, 0, channels, 0, 0);
+			AddInputFormat(theInputFormat2);
+			
+			// if two channel mode is engaged and we are not passing through, only set output for 2 channels
+			if(!passthrough && TwoChannelMode && channels != 2)
+				continue;
+			// Output 16-Bit Ints
+			CAStreamBasicDescription theOutputFormat1(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 16, kIntPCMOutFormatFlag);
+			AddOutputFormat(theOutputFormat1);
+			
 			if(!passthrough)
 			{
-				// 32 bit int
-				CAStreamBasicDescription theOutputFormat1(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, 2, 32, kIntPCMOutFormatFlag);
-				AddOutputFormat(theOutputFormat1);
-				// 32 bit float
-				CAStreamBasicDescription theOutputFormat2(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, 2, 32, kFloatPCMOutFormatFlag);
-				AddOutputFormat(theOutputFormat2);
-			}
-			for (int channels = 1; channels <= 6; channels++) {
-				//	This decoder only takes an A/52 or AC-3 stream as it's input
-				CAStreamBasicDescription theInputFormat1(sample_rates[sample_index], kAudioFormatAC3, 0, 256*6, 0, channels, 0, 0);
-				AddInputFormat(theInputFormat1);
-				CAStreamBasicDescription theInputFormat2(sample_rates[sample_index], kAudioFormatAVIAC3, 0, 256*6, 0, channels, 0, 0);
-				AddInputFormat(theInputFormat2);
-			}
-		}
-	}
-	else
-	{
-		static int sample_rates[] = {48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 6000, 5512, 4000};
-		for (int sample_index = 0; sample_index < 12; sample_index ++)
-		{
-			for (int channels = 1; channels <= 6; channels++) {
-				//	This decoder only takes an A/52 or AC-3 stream as it's input
-				CAStreamBasicDescription theInputFormat1(sample_rates[sample_index], kAudioFormatAC3, 0, 256*6, 0, channels, 0, 0);
-				AddInputFormat(theInputFormat1);
-				CAStreamBasicDescription theInputFormat2(sample_rates[sample_index], kAudioFormatAVIAC3, 0, 256*6, 0, channels, 0, 0);
-				AddInputFormat(theInputFormat2);
-				
-				// Output 16-Bit Ints
-				CAStreamBasicDescription theOutputFormat1(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 16, kIntPCMOutFormatFlag);
-				AddOutputFormat(theOutputFormat1);
-				
 				// And 32-Bit
 				CAStreamBasicDescription theOutputFormat2(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 32, kIntPCMOutFormatFlag);
 				AddOutputFormat(theOutputFormat2);
@@ -597,12 +574,26 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 			
 			myOutputData += output_offset * output_sample_size;  //output_offset is in 16-bit ints
 			
-			memset(myOutputData, 0, 2 * 2 * 256 * 6);
+			int frameSize = mOutputFormat.mChannelsPerFrame * 2;
+			memset(myOutputData, 0, frameSize * 256 * 6);
 			input_data = GetBytes(bytes_to_read);
 			
 			if (mOutputFormat.mFormatFlags & kLinearPCMFormatFlagIsBigEndian)
 			{
-				memcpy(myOutputData, p_sync_be, 6);
+				memcpy(myOutputData, p_sync_be, 4);
+				myOutputData[frameSize] = input_data[5] & 0x7;
+				myOutputData[frameSize+1] = p_sync_be[5];
+				myOutputData[frameSize+2] = (bytes_to_read >> 4) & 0xff;
+				myOutputData[frameSize+3] = (bytes_to_read << 4) & 0xff;
+				unsigned int i;
+				int frameNumber;
+				for(i=0, frameNumber = 2; i<bytes_to_read; i+=4, frameNumber++)
+				{
+					int offset = frameNumber * frameSize;
+					memcpy(&myOutputData[offset], input_data, 4);
+				}
+				
+				memcpy(myOutputData, p_sync_be, 4);
 				myOutputData[4] = input_data[5] & 0x7;
 				myOutputData[6] = (bytes_to_read >> 4) & 0xff;
 				myOutputData[7] = (bytes_to_read << 4) & 0xff;
@@ -610,15 +601,20 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 			} 
 			else
 			{
-				memcpy(myOutputData, p_sync_le, 6);
-				myOutputData[5] = input_data[5] & 0x7;
-				myOutputData[6] = (bytes_to_read << 4) & 0xff;
-				myOutputData[7] = (bytes_to_read >> 4) & 0xff;
+				memcpy(myOutputData, p_sync_le, 4);
+				myOutputData[frameSize] = p_sync_le[4];
+				myOutputData[frameSize+1] = input_data[5] & 0x7;
+				myOutputData[frameSize+2] = (bytes_to_read << 4) & 0xff;
+				myOutputData[frameSize+3] = (bytes_to_read >> 4) & 0xff;
 				unsigned int i;
-				for(i=0; i<bytes_to_read; i+=2)
+				int frameNumber;
+				for(i=0, frameNumber = 2; i<bytes_to_read; i+=4, frameNumber++)
 				{
-					myOutputData[i+8] = input_data[i+1];
-					myOutputData[i+9] = input_data[i];
+					int offset = frameNumber * frameSize;
+					myOutputData[offset] = input_data[i+1];
+					myOutputData[offset+1] = input_data[i];
+					myOutputData[offset+2] = input_data[i+3];
+					myOutputData[offset+3] = input_data[i+2];
 				}
 			}
 			output_offset += mOutputFormat.mChannelsPerFrame * 256 * 6;	//Our framed hack
