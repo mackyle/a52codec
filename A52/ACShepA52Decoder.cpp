@@ -590,14 +590,8 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 				for(i=0, frameNumber = 2; i<bytes_to_read; i+=4, frameNumber++)
 				{
 					int offset = frameNumber * frameSize;
-					memcpy(&myOutputData[offset], input_data, 4);
+					memcpy(&myOutputData[offset], &input_data[i], 4);
 				}
-				
-				memcpy(myOutputData, p_sync_be, 4);
-				myOutputData[4] = input_data[5] & 0x7;
-				myOutputData[6] = (bytes_to_read >> 4) & 0xff;
-				myOutputData[7] = (bytes_to_read << 4) & 0xff;
-				memcpy(&myOutputData[8], input_data, bytes_to_read);
 			} 
 			else
 			{
