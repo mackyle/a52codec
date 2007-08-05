@@ -382,6 +382,80 @@ void ACShepA52Decoder::SetCurrentOutputFormat(const AudioStreamBasicDescription&
 	//fprintf(stderr, "ACShepA52Decoder::SetCurrentOutputFormat: Exiting function\n");
 }
 
+static unsigned int ChannelCount(int a52_flags)
+{
+	int total_channels = 0;
+	
+	switch (a52_flags & A52_CHANNEL_MASK) {
+		
+		case A52_CHANNEL:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found two independant monaural audio\n");
+			total_channels = 2;
+			break;
+			
+		case A52_CHANNEL1:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found first of two independant monaural channel audio\n");
+			total_channels = 1;
+			break;
+			
+		case A52_CHANNEL2:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found second of two independant monaural channel audio\n");
+			total_channels = 1;
+			break;
+			
+		case A52_MONO:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found monaural audio\n");
+			total_channels = 1;
+			break;
+			
+		case A52_STEREO:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found stereo audio\n");
+			total_channels = 2;
+			break;
+			
+		case A52_DOLBY:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found Dolby Surround sound audio\n");
+			total_channels = 2;
+			break;
+			
+		case A52_3F:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found 3 front channel audio\n");
+			total_channels = 3;
+			break;
+			
+		case A52_2F1R:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found 2 front & 1 back channel audio\n");
+			total_channels = 3;
+			break;
+			
+		case A52_3F1R:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found 3 front & 1 back channel audio\n");
+			total_channels = 4;
+			break;
+			
+		case A52_2F2R:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found 2 front & 2 back channel audio\n");
+			total_channels = 4;
+			break;
+			
+		case A52_3F2R:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found 3 front & 2 back channel audio\n");
+			total_channels = 5;
+			break;
+
+		default:
+			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: No audio stream information found, probably not good!\n");
+			break;
+	}
+	
+	if (a52_flags & A52_LFE) {
+		//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found LFE channel in audio\n");
+		total_channels ++;
+	}
+	
+	return total_channels;
+}
+
 /*
  * Custom Dynamic range compression
  * My logic here:
@@ -401,6 +475,72 @@ static sample_t dynrng_call (sample_t c, void *data)
 	else
 		return c;
 }
+
+// Output order of liba52: LFE, left, center, right, left surround, right surround.
+// Channels missing are skipped
+// Supposed input to CoreAudio is: left, right, center, LFE, left surround, right surround
+
+void getChannelMap(int a52_flags, int chanMap[6])
+{
+	int defaultMap[] = {0, 1, 2, 3, 4, 5};
+	int frontChan = 0;
+	int lfe = a52_flags & A52_LFE ? 1 : 0;
+	
+	memcpy(chanMap, defaultMap, sizeof(defaultMap));
+	switch (a52_flags & A52_CHANNEL_MASK) {
+		case A52_STEREO:
+		case A52_DOLBY:
+		case A52_2F1R:
+		case A52_2F2R:
+			chanMap[1] = lfe + 1;
+			frontChan = 1;
+
+		case A52_CHANNEL:
+		case A52_CHANNEL1:
+		case A52_CHANNEL2:
+		case A52_MONO:
+			chanMap[0] = lfe;
+			frontChan++;
+			break;
+			
+		case A52_3F:
+		case A52_3F1R:
+		case A52_3F2R:
+			chanMap[0] = lfe;
+			chanMap[1] = lfe + 2;
+			chanMap[2] = lfe + 1;
+			frontChan = 3;
+			break;
+			
+		default:
+			break;
+	}
+	if(lfe)
+		chanMap[frontChan] = 0;
+}
+
+template <class outPtr, class inPtr>
+UInt32 InterleaveSamples(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags) {
+	inPtr  *cast_samples;
+	outPtr *output_data = (outPtr *)output_data_untyped;
+	
+	cast_samples = (inPtr *)output_samples;
+	
+	int chans = ChannelCount(a52_flags);
+	
+	// each element is the liba52 channel number of the CA channel number of the index
+	int chanMap[6];
+	getChannelMap(a52_flags, chanMap);
+	
+	for (int i = 0; i < 256; i++) {
+		for (int j = 0; j < chans; j++) {
+			output_data[chans*i + output_data_offset + j] = cast_samples[i + 256*chanMap[j]];
+		}
+	}
+	
+	return chans * 256; // Number of 'UInt16' we processed
+}
+
 
 UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 											   UInt32& ioOutputDataByteSize,
@@ -615,30 +755,37 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 		}
 		else
 		{
-			switch(mOutputFormat.mChannelsPerFrame) {
-				case 1:
+			if(mOutputFormat.mChannelsPerFrame <= 2)
+			{
+				if(mOutputFormat.mChannelsPerFrame == 1)
 					// Just mono
 					a52_flags = A52_MONO | A52_ADJUST_LEVEL;
-					break;
-					
-				case 2:
+				else
 					// All we really need is stereophonic, baby
 					a52_flags = TwoChannelMode;
-					break;
-					
-				case 5:
-					// Try to get 5.0 channels
-					a52_flags = A52_3F2R | A52_ADJUST_LEVEL;	
-					break;
-					
-				case 6:
-					// Try to get 5.1 channels
-					a52_flags = A52_3F2R | A52_LFE | A52_ADJUST_LEVEL;
-					break;
-					
-				default:
-					fprintf(stderr, "ACShepA52Decoder::ProduceOutputPackets: Unknown output channel amount\n");
-					break;
+			}
+			else if(mOutputFormat.mChannelsPerFrame == ChannelCount(a52_flags))
+				//Hope and pray that the channel layout is correct
+				a52_flags |= A52_ADJUST_LEVEL;
+			else
+			{
+				fprintf(stderr, "ACShepA52Decoder::ProduceOutputPackets: channel count doesn't match; expect odd results\n");
+				//Put in some guesses here
+				switch(mOutputFormat.mChannelsPerFrame)
+				{
+					case 3:
+						a52_flags = A52_2F1R | A52_ADJUST_LEVEL;
+						break;
+					case 4:
+						a52_flags = A52_2F2R | A52_ADJUST_LEVEL;
+						break;
+					case 5:
+						a52_flags = A52_3F2R | A52_ADJUST_LEVEL;
+						break;
+					case 6:
+						a52_flags = A52_3F2R | A52_LFE | A52_ADJUST_LEVEL;
+						break;
+				}
 			}
 
 			readLength = bytes_to_read;
@@ -654,12 +801,15 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 				// Need to know what kind of output data to process	
 				if (mOutputFormat.mFormatFlags == kIntPCMOutFormatFlag) {
 					if (mOutputFormat.mBitsPerChannel == 16) {
-						output_offset += Process16BitSignedInts(outOutputData, output_offset, output_samples, a52_flags);
+						/* Use a bias of 384 and a level of 1 to get the range, 383(+) to 385(-).
+						   In IEEE floating point, the range is 0x0x43bf8001 to 0x43bf7fff.
+						   If you cast these to ints, the range is -32767 to 32767*/
+						output_offset += InterleaveSamples<SInt16, SInt32>(outOutputData, output_offset, output_samples, a52_flags);
 					} else {
-						output_offset += Process32BitSignedInts(outOutputData, output_offset, output_samples, a52_flags);
+						output_offset += InterleaveSamples<SInt32, float>(outOutputData, output_offset, output_samples, a52_flags);
 					}
 				} else {
-					output_offset += ProcessFloats(outOutputData, output_offset, output_samples, a52_flags);
+					output_offset += InterleaveSamples<float, float>(outOutputData, output_offset, output_samples, a52_flags);
 				}
 			
 			}
@@ -692,237 +842,6 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 	 */
 	
 	return theAnswer;
-}
-
-
-// Output order of liba52: LFE, left, center, right, left surround, right surround.
-// Channels missing are skipped
-// Supposed input to CoreAudio is: left, right, center, LFE, left surround, right surround
-
-UInt32 ACShepA52Decoder::Process16BitSignedInts(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags) {
-	SInt32  *cast_samples;
-	SInt16 *output_data = (SInt16 *)output_data_untyped;
-	
-	cast_samples = (SInt32 *)output_samples;
-
-	// Weird things...
-	// As far as I can see, we take a float, cast it to an UInt32, then copy it to a UInt16
-	// The trick being: level = 1 and bias = 384
-	
-	// It is 256 samples
-	
-	// ME.f is using 16-bit
-	
-	switch(a52_flags & A52_CHANNEL_MASK) {		
-		
-		// 5 Channel
-		case A52_3F2R:
-			
-			// With LFE
-			if (a52_flags & A52_LFE) {
-				//fprintf(stderr, "ACShepA52Decoder::Process16BitSignedInts: Running 5.1\n");
-				
-				for (int k = 0; k < 256; k++) {
-					output_data[6*k + output_data_offset + 3] =  cast_samples[k + 256*0]; // LFE chan 
-					output_data[6*k + output_data_offset + 0] =  cast_samples[k + 256*1]; // left chan 
-					output_data[6*k + output_data_offset + 2] =  cast_samples[k + 256*2]; // center chan 
-					output_data[6*k + output_data_offset + 1] =  cast_samples[k + 256*3]; // right chan 
-					output_data[6*k + output_data_offset + 4] =  cast_samples[k + 256*4]; // left surround chan 
-					output_data[6*k + output_data_offset + 5] =  cast_samples[k + 256*5]; // right surround chan 
-				}
-				
-				return 6 * 256; // Number of 'UInt16' we processed
-				
-			} else {
-				//fprintf(stderr, "ACShepA52Decoder::Process16BitSignedInts: Running 5.0\n");
-				for (int k = 0; k < 256; k++) {
-					output_data[5*k + output_data_offset + 0] = cast_samples[k + 256*0]; // left chan 
-					output_data[5*k + output_data_offset + 2] = cast_samples[k + 256*1]; // center chan 
-					output_data[5*k + output_data_offset + 1] = cast_samples[k + 256*2]; // right chan 
-					output_data[5*k + output_data_offset + 3] = cast_samples[k + 256*3]; // left surround chan 
-					output_data[5*k + output_data_offset + 4] = cast_samples[k + 256*4]; // right surround chan 
-				}
-				
-				return 5 * 256; // Number of 'UInt16' we processed
-			}
-			break;
-			
-		// Stereo
-		case A52_STEREO:
-		case A52_DOLBY: 
-			//fprintf(stderr, "ACShepA52Decoder::Process16BitSignedInts: Running stereo\n");
-			
-			for (int k = 0; k < 256; k++) {
-				output_data[2*k + output_data_offset]     =  cast_samples[k];       // left chan 
-				output_data[2*k + output_data_offset + 1] =  cast_samples[k + 256]; // right chan 
-			}
-				
-			return 2 * 256; // Number of 'UInt16' we processed
-			
-			break;
-			
-		// Mono
-		case A52_MONO:
-			//fprintf(stderr, "ACShepA52Decoder::Process16BitSignedInts: Running mono\n");
-			
-			for (int k = 0; k < 256; k++) {
-				output_data[k + output_data_offset]     =  cast_samples[k];       // mono chan 
-			}
-			
-			return 256; // Number of 'UInt16' we processed
-			
-			break;
-			
-		default:
-			fprintf(stderr, "ACShepA52Decoder::Process16BitSignedInts: Failed to match output channels\n");
-	}
-	
-	return 0;
-}
-
-// Output order of liba52: LFE, left, center, right, left surround, right surround.
-// Channels missing are skipped
-// Supposed input to CoreAudio is: left, right, center, LFE, left surround, right surround
-
-UInt32 ACShepA52Decoder::Process32BitSignedInts(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags) {
-	SInt32 *output_data = (SInt32 *)output_data_untyped;
-	
-	//fprintf(stderr, "ACShepA52Decoder::Process32BitSignedInts: Flags are: 0x%08X\n", a52_flags);
-	
-	// PlayAudioFileLite uses SInt32
-	
-	switch(a52_flags & A52_CHANNEL_MASK) {		
-		
-		// 5 Channel
-		case A52_3F2R:
-			
-			// With LFE
-			if (a52_flags & A52_LFE) {
-				//fprintf(stderr, "ACShepA52Decoder::Process32BitSignedInts: Running 5.1\n");
-				
-				for (int k = 0; k < 256; k++) {
-					output_data[6*k + output_data_offset + 3] = (SInt32)output_samples[k + 256*0]; // LFE chan 
-					output_data[6*k + output_data_offset + 0] = (SInt32)output_samples[k + 256*1]; // left chan 
-					output_data[6*k + output_data_offset + 2] = (SInt32)output_samples[k + 256*2]; // center chan 
-					output_data[6*k + output_data_offset + 1] = (SInt32)output_samples[k + 256*3]; // right chan 
-					output_data[6*k + output_data_offset + 4] = (SInt32)output_samples[k + 256*4]; // left surround chan 
-					output_data[6*k + output_data_offset + 5] = (SInt32)output_samples[k + 256*5]; // right surround chan 
-				}
-				
-				return 6 * 256; // Number of 'UInt32' we processed
-			} else {
-				//fprintf(stderr, "ACShepA52Decoder::Process32BitSignedInts: Running 5.0\n");
-				for (int k = 0; k < 256; k++) {
-					output_data[5*k + output_data_offset + 0] = (SInt32)output_samples[k + 256*0]; // left chan 
-					output_data[5*k + output_data_offset + 2] = (SInt32)output_samples[k + 256*1]; // center chan 
-					output_data[5*k + output_data_offset + 1] = (SInt32)output_samples[k + 256*2]; // right chan 
-					output_data[5*k + output_data_offset + 3] = (SInt32)output_samples[k + 256*3]; // left surround chan 
-					output_data[5*k + output_data_offset + 4] = (SInt32)output_samples[k + 256*4]; // right surround chan 
-				}
-				
-				return 5 * 256; // Number of 'UInt32' we processed
-			}
-			break;
-			
-		// Stereo
-		case A52_STEREO:
-		case A52_DOLBY: 
-			//fprintf(stderr, "ACShepA52Decoder::Process32BitSignedInts: Running stereo\n");
-			
-			for (int k = 0; k < 256; k++) {
-				output_data[2*k + output_data_offset]     =  (SInt32)output_samples[k];       // left chan 
-				output_data[2*k + output_data_offset + 1] =  (SInt32)output_samples[k + 256]; // right chan 
-			}
-				
-			return 2 * 256; // Number of 'UInt32' we processed
-			break;
-			
-		// Mono
-		case A52_MONO:
-			//fprintf(stderr, "ACShepA52Decoder::Process32BitSignedInts: Running mono\n");
-			
-			for (int k = 0; k < 256; k++) {
-				output_data[k + output_data_offset]     =  (SInt32)output_samples[k];       // moon chan 
-			}
-			
-			return 256; // Number of 'UInt32' we processed
-			break;
-
-		default:
-			
-			fprintf(stderr, "ACShepA52Decoder::Process32BitSignedInts: Failed to match output channels\n");
-	}
-	
-	return 0;
-}
-
-
-UInt32 ACShepA52Decoder::ProcessFloats(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags) {
-	float *output_data = (float *)output_data_untyped;
-	
-	
-	switch(a52_flags & A52_CHANNEL_MASK) {		
-		
-		// 5 Channel
-		case A52_3F2R:
-			
-			// With LFE
-			if (a52_flags & A52_LFE) {
-				//fprintf(stderr, "ACShepA52Decoder::ProcessFloats: Running 5.1\n");
-				
-				for (int k = 0; k < 256; k++) {
-					output_data[6*k + output_data_offset + 3] = output_samples[k + 256*0]; // LFE chan 
-					output_data[6*k + output_data_offset + 0] = output_samples[k + 256*1]; // left chan 
-					output_data[6*k + output_data_offset + 2] = output_samples[k + 256*2]; // center chan 
-					output_data[6*k + output_data_offset + 1] = output_samples[k + 256*3]; // right chan 
-					output_data[6*k + output_data_offset + 4] = output_samples[k + 256*4]; // left surround chan 
-					output_data[6*k + output_data_offset + 5] = output_samples[k + 256*5]; // right surround chan 
-				}
-				
-				return 6 * 256; // Number of 'float' we processed
-			} else {
-				//fprintf(stderr, "ACShepA52Decoder::ProcessFloats: Running 5.0\n");
-				for (int k = 0; k < 256; k++) {
-					output_data[5*k + output_data_offset + 0] = output_samples[k + 256*0]; // left chan 
-					output_data[5*k + output_data_offset + 2] = output_samples[k + 256*1]; // center chan 
-					output_data[5*k + output_data_offset + 1] = output_samples[k + 256*2]; // right chan 
-					output_data[5*k + output_data_offset + 3] = output_samples[k + 256*3]; // left surround chan 
-					output_data[5*k + output_data_offset + 4] = output_samples[k + 256*4]; // right surround chan 
-				}
-				
-				return 5 * 256; // Number of 'UInt32' we processed
-			}
-			
-			break;
-			
-		// Stereo
-		case A52_STEREO:
-		case A52_DOLBY:
-			//fprintf(stderr, "ACShepA52Decoder::ProcessFloats: Running stereo\n");
-			
-			for (int k = 0; k < 256; k++) {
-				output_data[2*k + output_data_offset]     =  output_samples[k];       // left chan 
-				output_data[2*k + output_data_offset + 1] =  output_samples[k + 256]; // right chan 
-			}
-				
-			return 2 * 256; // Number of 'float' we processed
-			break;
-			
-		// Mono
-		case A52_MONO:
-			//fprintf(stderr, "ACShepA52Decoder::ProcessFloats: Running mono\n");
-			
-			for (int k = 0; k < 256; k++) {
-				output_data[k + output_data_offset]     =  output_samples[k];       // mono chan 
-			}
-			
-			return 256; // Number of 'float' we processed
-			break;
-			
-		default:
-			fprintf(stderr, "ACShepA52Decoder::ProcessFloats: Failed to match output channels\n");
-	}
-	return 0;
 }
 
 
@@ -1175,92 +1094,11 @@ void ACShepA52Decoder::DetermineStreamParameters() {
 	mInputFormat.mFramesPerPacket = 256*6;
 	mInputFormat.mBytesPerFrame = mInputFormat.mBytesPerPacket / mInputFormat.mFramesPerPacket;
 	
-	switch (a52_flags & A52_CHANNEL_MASK) {
-		
-		case (A52_CHANNEL): {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found two independant monaural audio\n");
-			total_channels += 2;
-			break;
-		}
-			
-		case (A52_CHANNEL1): {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found first of two independant monaural channel audio\n");
-			total_channels += 1;
-			break;
-		}			
-			
-		case (A52_CHANNEL2): {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found second of two independant monaural channel audio\n");
-			total_channels += 1;
-			break;
-		}
-			
-		case (A52_MONO): {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found monaural audio\n");
-			total_channels += 1;
-			break;
-		}
-			
-		case (A52_STEREO): {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found stereo audio\n");
-			total_channels += 2;
-			break;
-		}
-			
-		case (A52_DOLBY): {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found Dolby Surround sound audio\n");
-			total_channels += 2;
-			break;
-		}
-			
-		case (A52_3F): {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found 3 front channel audio\n");
-			total_channels += 3;
-			break;
-		}
-			
-		case (A52_2F1R): {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found 2 front & 1 back channel audio\n");
-			total_channels += 3;
-			break;
-		}
-			
-		case (A52_3F1R): {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found 3 front & 1 back channel audio\n");
-			total_channels += 4;
-			break;
-		}
-			
-		case (A52_2F2R): {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found 2 front & 2 back channel audio\n");
-			total_channels += 4;
-			break;
-		}
-			
-		case (A52_3F2R): {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found 3 front & 2 back channel audio\n");
-			total_channels += 5;
-			break;
-		}
-			
-		default: {
-			//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: No audio stream information found, probably not good!\n");
-			break;
-		}
-			
-			
-	}
-	
-	if (a52_flags & A52_LFE) {
-		//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found LFE channel in audio\n");
-		total_channels += 1;
-	}
+	total_channels = ChannelCount(a52_flags);
 	
 	//fprintf(stderr, "ACShepA52Decoder::DetermineStreamParameters: Found %d total channels\n", total_channels);
 	
 }
-
-
 
 UInt32	ACShepA52Decoder::GetVersion() const {
 	return 0x00015000;
