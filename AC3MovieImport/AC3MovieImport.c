@@ -41,6 +41,8 @@
  *
  */
 
+#define kAudioFormatAVIAC3	0x6D732000
+
 #include <QuickTime/QuickTime.h>
 #include <AudioToolbox/AudioToolbox.h>
 #include "versions.h"
@@ -462,7 +464,7 @@ COMPONENTFUNC AC3MovieImportDataRef(AC3MovieImportGlobals globals, Handle dataRe
 			
 			AudioStreamBasicDescription absd;
 			memset(&absd, 0, sizeof(absd));
-			absd.mFormatID = kAudioFormatAC3;
+			absd.mFormatID = kAudioFormatAVIAC3;
 			absd.mSampleRate = sample_rate;
 			if(flags & A52_LFE)
 				channels++;

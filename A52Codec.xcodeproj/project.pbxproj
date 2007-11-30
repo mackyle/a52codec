@@ -547,10 +547,12 @@
 		F5A548DE02879EB701000102 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = F5BDACAF0A20A00100FF4884 /* Build configuration list for PBXProject "A52Codec" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			mainGroup = F5A548DA02879EB701000102;
 			productRefGroup = F5A548E802879F3901000102 /* Products */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				F5DA8EE20A54C702004A41D0 /* Build All */,
 				F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */,

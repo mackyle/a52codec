@@ -11,7 +11,7 @@
 #define COMP_SUBTYPE					'ac-3'
 #define COMP_MANUF						'shep'
 #define VERSION							0x00010000
-#define NAME							"ATSC A/52 and AC-3 Decoder"
+#define NAME							"AC3"
 #define DESCRIPTION						"An AudioCodec that decodes A/52 and AC-3 into linear PCM data"
 #define ENTRY_POINT						"ACShepA52DecoderEntry"
 
@@ -21,7 +21,7 @@
 #define kComponentManufacturer           'shep'
 #define	kComponentFlags                  0
 #define kComponentVersion                0x00010000
-#define kComponentName                   "ATSC A/52 and AC-3 Decoder"
+#define kComponentName                   "AC3"
 #define kComponentInfo                   "An AudioCodec that decodes A/52 and AC-3 into linear PCM data"
 #define kComponentEntryPoint             "ACShepA52DecoderEntry"
 #define	kComponentPublicResourceMapType	 0
@@ -34,7 +34,7 @@
 #define COMP_SUBTYPE					0x6D732000
 #define COMP_MANUF						'shep'
 #define VERSION							0x00010000
-#define NAME							"ATSC A/52 and AC-3 Decoder"
+#define NAME							"AC3"
 #define DESCRIPTION						"An AudioCodec that decodes A/52 and AC-3 into linear PCM data"
 #define ENTRY_POINT						"ACShepA52DecoderEntry"
 
@@ -44,7 +44,7 @@
 #define kComponentManufacturer           'shep'
 #define	kComponentFlags                  0
 #define kComponentVersion                0x00010000
-#define kComponentName                   "ATSC A/52 and AC-3 Decoder"
+#define kComponentName                   "AC3"
 #define kComponentInfo                   "An AudioCodec that decodes A/52 and AC-3 into linear PCM data"
 #define kComponentEntryPoint             "ACShepA52DecoderEntry"
 #define	kComponentPublicResourceMapType	 0
