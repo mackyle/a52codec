@@ -67,6 +67,12 @@
 		F5525E080A3BF7D700F36B86 /* debug.h in Headers */ = {isa = PBXBuildFile; fileRef = F5525E020A3BF7D700F36B86 /* debug.h */; };
 		F5525E090A3BF7D700F36B86 /* versions.h in Headers */ = {isa = PBXBuildFile; fileRef = F5525E030A3BF7D700F36B86 /* versions.h */; };
 		F5536FB20A3BF8E800969CA8 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5536FB10A3BF8E800969CA8 /* QuickTime.framework */; };
+		F56BC7E40D773F63009A9DAE /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7E30D773F63009A9DAE /* crc.c */; };
+		F56BC7E50D773F63009A9DAE /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7E30D773F63009A9DAE /* crc.c */; };
+		F56BC7E80D773F77009A9DAE /* cpu_accel.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7E70D773F77009A9DAE /* cpu_accel.c */; };
+		F56BC7E90D773F77009A9DAE /* cpu_accel.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7E70D773F77009A9DAE /* cpu_accel.c */; };
+		F56BC7EC0D773F7F009A9DAE /* cpu_state.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7EB0D773F7F009A9DAE /* cpu_state.c */; };
+		F56BC7ED0D773F7F009A9DAE /* cpu_state.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7EB0D773F7F009A9DAE /* cpu_state.c */; };
 		F583B2070A759C1D005F8A5A /* AC3MovieImport.component in CopyFiles */ = {isa = PBXBuildFile; fileRef = F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */; };
 		F583B2150A759C4C005F8A5A /* A52Codec.component in CopyFiles */ = {isa = PBXBuildFile; fileRef = F5BDACAD0A20A00000FF4884 /* A52Codec.component */; };
 		F5BDAC870A20A00000FF4884 /* ACBaseCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93010287A1A201000102 /* ACBaseCodec.h */; };
@@ -209,6 +215,9 @@
 		F5525E030A3BF7D700F36B86 /* versions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = versions.h; sourceTree = "<group>"; };
 		F5536FA50A3BF89E00969CA8 /* AC3MovieImport.exp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.exports; path = AC3MovieImport.exp; sourceTree = "<group>"; };
 		F5536FB10A3BF8E800969CA8 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
+		F56BC7E30D773F63009A9DAE /* crc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc.c; sourceTree = "<group>"; };
+		F56BC7E70D773F77009A9DAE /* cpu_accel.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpu_accel.c; sourceTree = "<group>"; };
+		F56BC7EB0D773F7F009A9DAE /* cpu_state.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpu_state.c; sourceTree = "<group>"; };
 		F5A548EC0287A16D01000102 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		F5BDACAC0A20A00000FF4884 /* Info-A52Codec__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Info-A52Codec__Upgraded_.plist"; sourceTree = "<group>"; };
 		F5BDACAD0A20A00000FF4884 /* A52Codec.component */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = A52Codec.component; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -427,6 +436,9 @@
 				F5BDACC70A20A03200FF4884 /* bit_allocate.c */,
 				F5BDACC80A20A03200FF4884 /* bitstream.c */,
 				F5BDACC90A20A03200FF4884 /* bitstream.h */,
+				F56BC7E70D773F77009A9DAE /* cpu_accel.c */,
+				F56BC7EB0D773F7F009A9DAE /* cpu_state.c */,
+				F56BC7E30D773F63009A9DAE /* crc.c */,
 				F5BDACCB0A20A03200FF4884 /* downmix.c */,
 				F5BDACCC0A20A03200FF4884 /* imdct.c */,
 				F5BDACCF0A20A03200FF4884 /* parse.c */,
@@ -627,6 +639,9 @@
 				F5525DE70A3BF78A00F36B86 /* imdct.c in Sources */,
 				F5525DE80A3BF78A00F36B86 /* parse.c in Sources */,
 				F5525E040A3BF7D700F36B86 /* AC3MovieImport.c in Sources */,
+				F56BC7E50D773F63009A9DAE /* crc.c in Sources */,
+				F56BC7E90D773F77009A9DAE /* cpu_accel.c in Sources */,
+				F56BC7ED0D773F7F009A9DAE /* cpu_state.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,6 +662,9 @@
 				F5BDACE30A20A03200FF4884 /* parse.c in Sources */,
 				F5BDACFB0A20A11D00FF4884 /* ACShepA52Decoder.cpp in Sources */,
 				F508127A0A21251C0092BF70 /* ACSimpleCodec.cpp in Sources */,
+				F56BC7E40D773F63009A9DAE /* crc.c in Sources */,
+				F56BC7E80D773F77009A9DAE /* cpu_accel.c in Sources */,
+				F56BC7EC0D773F7F009A9DAE /* cpu_state.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

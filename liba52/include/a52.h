@@ -1,6 +1,6 @@
 /*
  * a52.h
- * Copyright (C) 2000-2002 Michel Lespinasse <walken@zoy.org>
+ * Copyright (C) 2000-2003 Michel Lespinasse <walken@zoy.org>
  * Copyright (C) 1999-2000 Aaron Holtzman <aholtzma@ess.engr.uvic.ca>
  *
  * This file is part of a52dec, a free ATSC A-52 stream decoder.
@@ -24,14 +24,19 @@
 #ifdef __cplusplus
 extern "C"{
 #endif
-
+	
 #ifndef A52_H
 #define A52_H
 
-#ifndef LIBA52_DOUBLE
-typedef float sample_t;
-#else
+#if defined(LIBA52_FIXED)
+typedef int32_t sample_t;
+typedef int32_t level_t;
+#elif defined(LIBA52_DOUBLE)
 typedef double sample_t;
+typedef double level_t;
+#else
+typedef float sample_t;
+typedef float level_t;
 #endif
 
 typedef struct a52_state_s a52_state_t;
@@ -54,16 +59,32 @@ typedef struct a52_state_s a52_state_t;
 
 // this next constant can be ORed with A52_DOLBY to tell liba52 to use 5.0 DPLII matrix encoding,
 // rather than just 4.0 Dolby Surround matrix encoding
-#define A52_USE_DPLII 64
+#define A52_USE_DPLII 64	
+	
+#define A52_ACCEL_DJBFFT 65536
 
-a52_state_t * a52_init (uint32_t mm_accel);
+#define A52_ACCEL_X86_MMX 1
+#define A52_ACCEL_X86_3DNOW 2
+#define A52_ACCEL_X86_MMXEXT 4
+#define A52_ACCEL_X86_SSE2 8
+#define A52_ACCEL_X86_SSE3 16
+#define A52_ACCEL_PPC_ALTIVEC 1
+#define A52_ACCEL_ALPHA 1
+#define A52_ACCEL_ALPHA_MVI 2
+#define A52_ACCEL_SPARC_VIS 1
+#define A52_ACCEL_SPARC_VIS2 2
+#define A52_ACCEL_DETECT 0x80000000
+
+uint32_t a52_accel (uint32_t accel);
+a52_state_t * a52_init (void);
 sample_t * a52_samples (a52_state_t * state);
 int a52_syncinfo (const uint8_t * buf, int * flags,
 		  int * sample_rate, int * bit_rate);
+int a52_crc (uint8_t * buf, int len);
 int a52_frame (a52_state_t * state, uint8_t * buf, int * flags,
-	       sample_t * level, sample_t bias);
+	       level_t * level, sample_t bias);
 void a52_dynrng (a52_state_t * state,
-		 sample_t (* call) (sample_t, void *), void * data);
+		 level_t (* call) (level_t, void *), void * data);
 int a52_block (a52_state_t * state);
 void a52_free (a52_state_t * state);
 
@@ -72,3 +93,4 @@ void a52_free (a52_state_t * state);
 #ifdef __cplusplus
 };
 #endif
+

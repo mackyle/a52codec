@@ -220,7 +220,8 @@ void ACShepA52Decoder::Initialize(const AudioStreamBasicDescription* inInputForm
 	//fprintf(stderr, "ACShepA52Decoder::Initialize: Initializing, magic cookie size is %lu\n", inMagicCookieByteSize);
 	
 	// Library setup
-	decoder_state = a52_init(0); // No optimizations here
+	a52_accel(A52_ACCEL_DJBFFT);
+	decoder_state = a52_init(); // No optimizations here
 	if (decoder_state == NULL) {
 		fprintf(stderr, "ACShepA52Decoder::Initialize: Umm... liba52 could not be loaded!\n");
 		fprintf(stderr, "ACShepA52Decoder::Initialize: I don't know what happens next...\n");
@@ -249,7 +250,8 @@ void ACShepA52Decoder::Reset() {
 	if (decoder_state != NULL) {
 		a52_free(decoder_state);
 	}
-	decoder_state = a52_init(0);
+	a52_accel(A52_ACCEL_DJBFFT);
+	decoder_state = a52_init();
 	
 	firstInput = true;
 	remainingBytesFromLastFrame = beginningOfIncompleteHeaderSize = 0;

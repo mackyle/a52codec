@@ -1,3 +1,3 @@
-pkginclude_HEADERS = a52.h attributes.h audio_out.h mm_accel.h
+pkginclude_HEADERS = a52.h attributes.h audio_out.h
 
-EXTRA_DIST = tendra.h
+EXTRA_DIST = mmx.h tendra.h
