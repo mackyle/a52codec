@@ -1,4 +1,4 @@
-/*	Copyright © 2007 Apple Inc. All Rights Reserved.
+/*	Copyright ï¿½ 2007 Apple Inc. All Rights Reserved.
 	
 	Disclaimer: IMPORTANT:  This Apple software is supplied to you by 
 			Apple Inc. ("Apple") in consideration of your agreement to the
@@ -38,62 +38,41 @@
 			STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 			POSSIBILITY OF SUCH DAMAGE.
 */
-#if !defined(__ACCodec_h__)
-#define __ACCodec_h__
+#include "CABundleLocker.h"
+#include <pthread.h>
 
-//=============================================================================
-//	Includes
-//=============================================================================
+/*
+some bundle operations are not thread safe, notably CFCopyLocalizedStringFromTableInBundle
+*/
 
+static pthread_mutex_t sCABundleLocker = PTHREAD_MUTEX_INITIALIZER;
 
+#define RECURSIVE_LOCK 0
 
-#if !defined(__COREAUDIO_USE_FLAT_INCLUDES__)
-	#include <AudioUnit/AudioCodec.h>
-#else
-	#include "AudioCodec.h"
-#endif
+#if RECURSIVE_LOCK
+static pthread_once_t sOnce = PTHREAD_ONCE_INIT;
 
-//=============================================================================
-//	ACCodec
-//
-//	A totally abstract base class for implementing components that conform to
-//	the AudioCodec API.
-//=============================================================================
-
-class ACCodec
+static void InitCABundleLocker()
 {
-
-//	Construction/Destruction
-public:
-					ACCodec();
-	virtual			~ACCodec();
-
-//	Property Management
-public:
-	virtual void	GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outSize, Boolean& outWritable) = 0;
-	virtual void	GetProperty(AudioCodecPropertyID inPropertyID, UInt32& ioPropertyDataSize, void* outPropertyData) = 0;
-	virtual void	SetProperty(AudioCodecPropertyID inPropertyID, UInt32 inPropertyDataSize, const void* inPropertyData) = 0;
-
-//	Data Handling
-public:
-	virtual void	Initialize(const AudioStreamBasicDescription* inInputFormat, const AudioStreamBasicDescription* inOutputFormat, const void* inMagicCookie, UInt32 inMagicCookieByteSize) = 0;
-	virtual void	Uninitialize() = 0;
-	virtual void	AppendInputData(const void* inInputData, UInt32& ioInputDataByteSize, UInt32& ioNumberPackets, const AudioStreamPacketDescription* inPacketDescription) = 0;
-	virtual UInt32	ProduceOutputPackets(void* outOutputData, UInt32& ioOutputDataByteSize, UInt32& ioNumberPackets, AudioStreamPacketDescription* outPacketDescription) = 0;
-	virtual void	Reset() = 0;
-
-//	Component Support
-public:
-	virtual bool	Register() const;
-	virtual UInt32	GetVersion() const;
-
-};
-
-// when throwing static_cast to ComponentResult so the catch will grab the error code correctly
-#define CODEC_THROW(err) \
-	throw static_cast<ComponentResult>(err)
-
-#define CODEC_THROW_IF(cond, err) \
-	if(bool(cond)) CODEC_THROW(err);
-
+	// have to do this because OS X lacks PTHREAD_MUTEX_RECURSIVE_INITIALIZER_NP
+	pthread_mutexattr_t attr;
+	pthread_mutexattr_init(&attr);
+	pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+	pthread_mutex_init(&sCABundleLocker, &attr);
+	pthread_mutexattr_destroy(&attr);
+}
 #endif
+
+CABundleLocker::CABundleLocker()
+{
+#if RECURSIVE_LOCK
+	pthread_once(&sOnce, InitCABundleLocker);
+#endif
+	pthread_mutex_lock(&sCABundleLocker);
+}
+
+CABundleLocker::~CABundleLocker()
+{
+	pthread_mutex_unlock(&sCABundleLocker);
+}
+

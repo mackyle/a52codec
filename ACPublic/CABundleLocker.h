@@ -38,62 +38,24 @@
 			STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 			POSSIBILITY OF SUCH DAMAGE.
 */
-#if !defined(__ACCodec_h__)
-#define __ACCodec_h__
+#ifndef _CABundleLocker_h_
+#define _CABundleLocker_h_
 
-//=============================================================================
-//	Includes
-//=============================================================================
+/*
+some bundle operations are not thread safe, notably CFCopyLocalizedStringFromTableInBundle
+*/
 
-
-
-#if !defined(__COREAUDIO_USE_FLAT_INCLUDES__)
-	#include <AudioUnit/AudioCodec.h>
-#else
-	#include "AudioCodec.h"
-#endif
-
-//=============================================================================
-//	ACCodec
-//
-//	A totally abstract base class for implementing components that conform to
-//	the AudioCodec API.
-//=============================================================================
-
-class ACCodec
+class CABundleLocker
 {
-
-//	Construction/Destruction
 public:
-					ACCodec();
-	virtual			~ACCodec();
 
-//	Property Management
-public:
-	virtual void	GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outSize, Boolean& outWritable) = 0;
-	virtual void	GetProperty(AudioCodecPropertyID inPropertyID, UInt32& ioPropertyDataSize, void* outPropertyData) = 0;
-	virtual void	SetProperty(AudioCodecPropertyID inPropertyID, UInt32 inPropertyDataSize, const void* inPropertyData) = 0;
-
-//	Data Handling
-public:
-	virtual void	Initialize(const AudioStreamBasicDescription* inInputFormat, const AudioStreamBasicDescription* inOutputFormat, const void* inMagicCookie, UInt32 inMagicCookieByteSize) = 0;
-	virtual void	Uninitialize() = 0;
-	virtual void	AppendInputData(const void* inInputData, UInt32& ioInputDataByteSize, UInt32& ioNumberPackets, const AudioStreamPacketDescription* inPacketDescription) = 0;
-	virtual UInt32	ProduceOutputPackets(void* outOutputData, UInt32& ioOutputDataByteSize, UInt32& ioNumberPackets, AudioStreamPacketDescription* outPacketDescription) = 0;
-	virtual void	Reset() = 0;
-
-//	Component Support
-public:
-	virtual bool	Register() const;
-	virtual UInt32	GetVersion() const;
-
+#if TARGET_OS_MAC
+	CABundleLocker();
+	~CABundleLocker();
+#else
+	CABundleLocker() {}
+	~CABundleLocker() {}
+#endif
 };
-
-// when throwing static_cast to ComponentResult so the catch will grab the error code correctly
-#define CODEC_THROW(err) \
-	throw static_cast<ComponentResult>(err)
-
-#define CODEC_THROW_IF(cond, err) \
-	if(bool(cond)) CODEC_THROW(err);
 
 #endif

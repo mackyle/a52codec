@@ -74,7 +74,7 @@ void ACShepA52Decoder::UpgradeOldPrefs()
 	CFPreferencesAppSynchronize(myApp);
 }
 
-ACShepA52Decoder::ACShepA52Decoder(UInt32 inInputBufferByteSize) : ACShepA52Codec(inInputBufferByteSize) {
+ACShepA52Decoder::ACShepA52Decoder(OSType theSubType) : ACShepA52Codec(76800, theSubType) {
 	
 	//еее	One issue to talk about here is how do we represent the fact that this
 	//еее	decoder doesn't care about the number of channels or the sample rate?
@@ -260,13 +260,13 @@ void ACShepA52Decoder::Reset() {
 	ACShepA52Codec::Reset();
 }
 
-void ACShepA52Decoder::GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, bool& outWritable) {
+void ACShepA52Decoder::GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, Boolean& outWritable) {
 	//fprintf(stderr, "ACShepA52Decoder::GetPropertyInfo: Asking for property %.*s\n", (int) sizeof(inPropertyID), (char*)&inPropertyID);
 	
 	switch(inPropertyID)
 	{
 		default:
-		ACShepA52Codec::GetPropertyInfo(inPropertyID, outPropertyDataSize, outWritable);
+			ACShepA52Codec::GetPropertyInfo(inPropertyID, outPropertyDataSize, outWritable);
 	}
 }
 
@@ -288,10 +288,7 @@ void ACShepA52Decoder::GetProperty(AudioCodecPropertyID inPropertyID, UInt32& io
 			break; 
 		}
 #endif
-
-			
 		default:
-			
 			ACShepA52Codec::GetProperty(inPropertyID, ioPropertyDataSize, outPropertyData);
 	}
 }
@@ -304,8 +301,7 @@ void ACShepA52Decoder::SetProperty(AudioCodecPropertyID inPropertyID, UInt32 inP
 
 	switch(inPropertyID) {
 		default:
-		
-		ACShepA52Codec::SetProperty(inPropertyID, inPropertyDataSize, inPropertyData);
+			ACShepA52Codec::SetProperty(inPropertyID, inPropertyDataSize, inPropertyData);
 	}
 }
 
@@ -509,8 +505,8 @@ void getChannelMap(int a52_flags, int chanMap[6])
 		case A52_3F1R:
 		case A52_3F2R:
 			chanMap[0] = lfe;
-			chanMap[1] = lfe + 2;
-			chanMap[2] = lfe + 1;
+			chanMap[1] = lfe+2;
+			chanMap[2] = lfe+1;
 			frontChan = 3;
 			break;
 			
@@ -1103,7 +1099,7 @@ void ACShepA52Decoder::DetermineStreamParameters() {
 }
 
 UInt32	ACShepA52Decoder::GetVersion() const {
-	return 0x00015000;
+	return 0x00017071;
 }
 
 extern "C"

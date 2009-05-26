@@ -1,45 +1,43 @@
-/*	Copyright: 	© Copyright 2004 Apple Computer, Inc. All rights reserved.
-
-	Disclaimer:	IMPORTANT:  This Apple software is supplied to you by Apple Computer, Inc.
-			("Apple") in consideration of your agreement to the following terms, and your
-			use, installation, modification or redistribution of this Apple software
-			constitutes acceptance of these terms.  If you do not agree with these terms,
-			please do not use, install, modify or redistribute this Apple software.
-
-			In consideration of your agreement to abide by the following terms, and subject
-			to these terms, Apple grants you a personal, non-exclusive license, under AppleÕs
-			copyrights in this original Apple software (the "Apple Software"), to use,
-			reproduce, modify and redistribute the Apple Software, with or without
-			modifications, in source and/or binary forms; provided that if you redistribute
-			the Apple Software in its entirety and without modifications, you must retain
-			this notice and the following text and disclaimers in all such redistributions of
-			the Apple Software.  Neither the name, trademarks, service marks or logos of
-			Apple Computer, Inc. may be used to endorse or promote products derived from the
-			Apple Software without specific prior written permission from Apple.  Except as
-			expressly stated in this notice, no other rights or licenses, express or implied,
-			are granted by Apple herein, including but not limited to any patent rights that
-			may be infringed by your derivative works or by other works in which the Apple
-			Software may be incorporated.
-
-			The Apple Software is provided by Apple on an "AS IS" basis.  APPLE MAKES NO
-			WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION THE IMPLIED
-			WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-			PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND OPERATION ALONE OR IN
-			COMBINATION WITH YOUR PRODUCTS.
-
-			IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL OR
-			CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
-			GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-			ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION, MODIFICATION AND/OR DISTRIBUTION
-			OF THE APPLE SOFTWARE, HOWEVER CAUSED AND WHETHER UNDER THEORY OF CONTRACT, TORT
-			(INCLUDING NEGLIGENCE), STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN
-			ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*	Copyright ï¿½ 2007 Apple Inc. All Rights Reserved.
+	
+	Disclaimer: IMPORTANT:  This Apple software is supplied to you by 
+			Apple Inc. ("Apple") in consideration of your agreement to the
+			following terms, and your use, installation, modification or
+			redistribution of this Apple software constitutes acceptance of these
+			terms.  If you do not agree with these terms, please do not use,
+			install, modify or redistribute this Apple software.
+			
+			In consideration of your agreement to abide by the following terms, and
+			subject to these terms, Apple grants you a personal, non-exclusive
+			license, under Apple's copyrights in this original Apple software (the
+			"Apple Software"), to use, reproduce, modify and redistribute the Apple
+			Software, with or without modifications, in source and/or binary forms;
+			provided that if you redistribute the Apple Software in its entirety and
+			without modifications, you must retain this notice and the following
+			text and disclaimers in all such redistributions of the Apple Software. 
+			Neither the name, trademarks, service marks or logos of Apple Inc. 
+			may be used to endorse or promote products derived from the Apple
+			Software without specific prior written permission from Apple.  Except
+			as expressly stated in this notice, no other rights or licenses, express
+			or implied, are granted by Apple herein, including but not limited to
+			any patent rights that may be infringed by your derivative works or by
+			other works in which the Apple Software may be incorporated.
+			
+			The Apple Software is provided by Apple on an "AS IS" basis.  APPLE
+			MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+			THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS
+			FOR A PARTICULAR PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND
+			OPERATION ALONE OR IN COMBINATION WITH YOUR PRODUCTS.
+			
+			IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL
+			OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+			SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+			INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION,
+			MODIFICATION AND/OR DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED
+			AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
+			STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
+			POSSIBILITY OF SUCH DAMAGE.
 */
-/*=============================================================================
-	ACSimpleCodec.cpp
-
-=============================================================================*/
-
 //=============================================================================
 //	Includes
 //=============================================================================
@@ -51,11 +49,11 @@
 //	ACSimpleCodec
 //=============================================================================
 
-static const UInt32 kBufferPad = 3840; // this is used to prevent end from passing start.
+static const UInt32 kBufferPad = 64; // this is used to prevent end from passing start.
 
-ACSimpleCodec::ACSimpleCodec(UInt32 inInputBufferByteSize)
+ACSimpleCodec::ACSimpleCodec(UInt32 inInputBufferByteSize, OSType theSubType)
 :
-	ACBaseCodec(),
+	ACBaseCodec(theSubType),
 	mInputBuffer(NULL),
 	mInputBufferByteSize(inInputBufferByteSize+kBufferPad),
 	mInputBufferStart(0),
@@ -125,6 +123,7 @@ UInt32	ACSimpleCodec::GetUsedInputBufferByteSize() const
 	
 	return theAnswer;
 }
+
 
 void	ACSimpleCodec::AppendInputBuffer(const void* inInputData, UInt32 inOffset, UInt32& ioInputDataByteSize)
 {
@@ -226,6 +225,57 @@ void	ACSimpleCodec::AppendInputData(const void* inInputData, UInt32& ioInputData
 	
 }
 
+
+void	ACSimpleCodec::ZeroPadInputData(UInt32& ioNumberPackets, const AudioStreamPacketDescription* inPacketDescription)
+{
+	//	this buffer handling code doesn't care about such things as the packet descriptions
+	if(!mIsInitialized) CODEC_THROW(kAudioCodecStateError);
+	
+	
+	//	this is a ring buffer we're dealing with, so we need to set up a few things
+	UInt32 theUsedByteSize = GetUsedInputBufferByteSize();
+	UInt32 theAvailableByteSize = GetInputBufferByteSize() - theUsedByteSize;
+	
+	// >>jamesmcc: added this because ioNumberPackets was not being updated if less was taken than given.
+	// THIS ASSUMES CBR!
+	UInt32 bytesPerPacketOfInput = mInputFormat.mBytesPerPacket;
+	UInt32 theAvailablePacketSize = theAvailableByteSize / bytesPerPacketOfInput;
+	
+	UInt32 minPacketSize = ioNumberPackets < theAvailablePacketSize ? ioNumberPackets : theAvailablePacketSize;
+	UInt32 minByteSize = minPacketSize * bytesPerPacketOfInput;
+	
+	//	we can copy only as much data as there is or up to how much space is availiable
+	ioNumberPackets = minPacketSize;
+	
+	// <<jamesmcc 
+	
+	//	now we have to copy the data taking into account the wrap around and where the start is
+	if(mInputBufferEnd + minByteSize < mInputBufferByteSize)
+	{
+		//	no wrap around here
+		memset(mInputBuffer + mInputBufferEnd, 0, minByteSize);
+		
+		//	adjust the end point
+		mInputBufferEnd += minByteSize;
+	}
+	else
+	{
+		//	the copy will wrap
+		
+		//	copy the first part
+		UInt32 theBeforeWrapByteSize = mInputBufferByteSize - mInputBufferEnd;
+		memset(mInputBuffer + mInputBufferEnd, 0, theBeforeWrapByteSize);
+		
+		//	and the rest
+		UInt32 theAfterWrapByteSize = minByteSize - theBeforeWrapByteSize;
+		memset(mInputBuffer, 0, theAfterWrapByteSize);
+		
+		//	adjust the end point
+		mInputBufferEnd = theAfterWrapByteSize;
+	}
+}
+
+
 void	ACSimpleCodec::ConsumeInputData(UInt32 inConsumedByteSize)
 {
 	//	this is a convenience routine to make maintaining the ring buffer state easy
@@ -280,7 +330,7 @@ Byte* ACSimpleCodec::GetBytes(UInt32& ioNumberBytes) const
 	{
 		// need to copy beginning of buffer to the end. 
 		// We cleverly over allocated our buffer space to make this possible.
-		memcpy(mInputBuffer + mInputBufferByteSize, mInputBuffer, leftOver);
+		memmove(mInputBuffer + mInputBufferByteSize, mInputBuffer, leftOver);
 	}
 	
 	return GetInputBufferStart();
@@ -304,4 +354,39 @@ void	ACSimpleCodec::ReallocateInputBuffer(UInt32 inInputBufferByteSize)
 	//	reset the ring buffer state
 	mInputBufferStart = 0;
 	mInputBufferEnd = 0;
+}
+
+void	ACSimpleCodec::GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, Boolean& outWritable)
+{
+	switch(inPropertyID)
+	{
+		case kAudioCodecPropertyInputBufferSize:
+			outPropertyDataSize = sizeof(UInt32);
+			outWritable = true;
+			break;
+		default:
+			ACBaseCodec::GetPropertyInfo(inPropertyID, outPropertyDataSize, outWritable);
+			break;
+	}
+
+}
+
+void	ACSimpleCodec::SetProperty(AudioCodecPropertyID inPropertyID, UInt32 inPropertyDataSize, const void* inPropertyData)
+{
+	switch(inPropertyID)
+	{
+		case kAudioCodecPropertyInputBufferSize:
+			if(inPropertyDataSize == sizeof(UInt32))
+			{
+				ReallocateInputBuffer(*reinterpret_cast<const UInt32*>(inPropertyData));
+			}
+			else
+			{
+				CODEC_THROW(kAudioCodecBadPropertySizeError);
+			}
+			break;
+		default:
+            ACBaseCodec::SetProperty(inPropertyID, inPropertyDataSize, inPropertyData);
+            break;            
+    }
 }

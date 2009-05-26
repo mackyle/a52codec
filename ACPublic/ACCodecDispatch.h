@@ -1,44 +1,43 @@
-/*	Copyright: 	© Copyright 2004 Apple Computer, Inc. All rights reserved.
-
-	Disclaimer:	IMPORTANT:  This Apple software is supplied to you by Apple Computer, Inc.
-			("Apple") in consideration of your agreement to the following terms, and your
-			use, installation, modification or redistribution of this Apple software
-			constitutes acceptance of these terms.  If you do not agree with these terms,
-			please do not use, install, modify or redistribute this Apple software.
-
-			In consideration of your agreement to abide by the following terms, and subject
-			to these terms, Apple grants you a personal, non-exclusive license, under AppleÕs
-			copyrights in this original Apple software (the "Apple Software"), to use,
-			reproduce, modify and redistribute the Apple Software, with or without
-			modifications, in source and/or binary forms; provided that if you redistribute
-			the Apple Software in its entirety and without modifications, you must retain
-			this notice and the following text and disclaimers in all such redistributions of
-			the Apple Software.  Neither the name, trademarks, service marks or logos of
-			Apple Computer, Inc. may be used to endorse or promote products derived from the
-			Apple Software without specific prior written permission from Apple.  Except as
-			expressly stated in this notice, no other rights or licenses, express or implied,
-			are granted by Apple herein, including but not limited to any patent rights that
-			may be infringed by your derivative works or by other works in which the Apple
-			Software may be incorporated.
-
-			The Apple Software is provided by Apple on an "AS IS" basis.  APPLE MAKES NO
-			WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION THE IMPLIED
-			WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-			PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND OPERATION ALONE OR IN
-			COMBINATION WITH YOUR PRODUCTS.
-
-			IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL OR
-			CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
-			GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-			ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION, MODIFICATION AND/OR DISTRIBUTION
-			OF THE APPLE SOFTWARE, HOWEVER CAUSED AND WHETHER UNDER THEORY OF CONTRACT, TORT
-			(INCLUDING NEGLIGENCE), STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN
-			ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*	Copyright ï¿½ 2007 Apple Inc. All Rights Reserved.
+	
+	Disclaimer: IMPORTANT:  This Apple software is supplied to you by 
+			Apple Inc. ("Apple") in consideration of your agreement to the
+			following terms, and your use, installation, modification or
+			redistribution of this Apple software constitutes acceptance of these
+			terms.  If you do not agree with these terms, please do not use,
+			install, modify or redistribute this Apple software.
+			
+			In consideration of your agreement to abide by the following terms, and
+			subject to these terms, Apple grants you a personal, non-exclusive
+			license, under Apple's copyrights in this original Apple software (the
+			"Apple Software"), to use, reproduce, modify and redistribute the Apple
+			Software, with or without modifications, in source and/or binary forms;
+			provided that if you redistribute the Apple Software in its entirety and
+			without modifications, you must retain this notice and the following
+			text and disclaimers in all such redistributions of the Apple Software. 
+			Neither the name, trademarks, service marks or logos of Apple Inc. 
+			may be used to endorse or promote products derived from the Apple
+			Software without specific prior written permission from Apple.  Except
+			as expressly stated in this notice, no other rights or licenses, express
+			or implied, are granted by Apple herein, including but not limited to
+			any patent rights that may be infringed by your derivative works or by
+			other works in which the Apple Software may be incorporated.
+			
+			The Apple Software is provided by Apple on an "AS IS" basis.  APPLE
+			MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+			THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS
+			FOR A PARTICULAR PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND
+			OPERATION ALONE OR IN COMBINATION WITH YOUR PRODUCTS.
+			
+			IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL
+			OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+			SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+			INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION,
+			MODIFICATION AND/OR DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED
+			AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
+			STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
+			POSSIBILITY OF SUCH DAMAGE.
 */
-/*=============================================================================
-	ACCodecDispatch.h
-
-=============================================================================*/
 #if !defined(__ACCodecDispatch_h__)
 #define __ACCodecDispatch_h__
 
@@ -47,7 +46,6 @@
 //=============================================================================
 
 #include "ACCodec.h"
-#include "ACCodecDispatchTypes.h"
 
 //=============================================================================
 //	ACCodecDispatch
@@ -67,6 +65,22 @@
 //	name for the entry point to put in the exported symbols file.
 //=============================================================================
 
+#if TARGET_OS_MAC
+	#if __LP64__
+		// comp instance, parameters in forward order
+		#define PARAM(_typ, _name, _index, _nparams) \
+			_typ _name = *(_typ *)&inParameters->params[_index + 1];
+	#else
+		// parameters in reverse order, then comp instance
+		#define PARAM(_typ, _name, _index, _nparams) \
+			_typ _name = *(_typ *)&inParameters->params[_nparams - 1 - _index];
+	#endif
+#elif TARGET_OS_WIN32
+		// (no comp instance), parameters in forward order
+		#define PARAM(_typ, _name, _index, _nparams) \
+			_typ _name = *(_typ *)&inParameters->params[_index];
+#endif
+
 template <class CodecClass>
 ComponentResult ACCodecDispatch(ComponentParameters* inParameters, CodecClass* inThis)
 {
@@ -80,8 +94,12 @@ ComponentResult ACCodecDispatch(ComponentParameters* inParameters, CodecClass* i
 			
 			case kComponentOpenSelect:
 				{
-					CodecClass*	theCodec = new CodecClass();
-					SetComponentInstanceStorage(((AudioCodecOpenGluePB*)inParameters)->inCodec, (Handle)theCodec);
+					Component codec = (Component)inParameters->params[0];
+					ComponentDescription cd;
+					
+					GetComponentInfo(codec, &cd, NULL, NULL, NULL);
+					CodecClass*	theCodec = new CodecClass(cd.componentSubType);
+					SetComponentInstanceStorage((ComponentInstance)codec, (Handle)theCodec);
 				}
 				break;
 	
@@ -128,29 +146,34 @@ ComponentResult ACCodecDispatch(ComponentParameters* inParameters, CodecClass* i
 						
 						case kAudioCodecGetPropertyInfoSelect:
 							{
-								AudioCodecGetPropertyInfoGluePB* thePB = (AudioCodecGetPropertyInfoGluePB*)inParameters;
-								UInt32 theSize = 0;
-								bool isWritable = false;
+								PARAM(AudioCodecPropertyID, inPropertyID, 0, 3);
+								PARAM(UInt32 *, outSize, 1, 3);
+								PARAM(Boolean *, outWritable, 2, 3);
 								
-								inThis->GetPropertyInfo(thePB->inPropertyID, theSize, isWritable);
-								if(thePB->outSize != NULL)
+								UInt32 theSize = 0;
+								Boolean isWritable = false;
+								
+								inThis->GetPropertyInfo(inPropertyID, theSize, isWritable);
+								if(outSize != NULL)
 								{
-									*(thePB->outSize) = theSize;
+									*outSize = theSize;
 								}
-								if(thePB->outWritable != NULL)
+								if(outWritable != NULL)
 								{
-									*(thePB->outWritable) = isWritable ? 1 : 0;
+									*outWritable = isWritable ? 1 : 0;
 								}
 							}
 							break;
 				
 						case kAudioCodecGetPropertySelect:
 							{
-								AudioCodecGetPropertyGluePB* thePB = (AudioCodecGetPropertyGluePB*)inParameters;
+								PARAM(AudioCodecPropertyID, inPropertyID, 0, 3);
+								PARAM(UInt32 *, ioPropertyDataSize, 1, 3);
+								PARAM(void *, outPropertyData, 2, 3);
 								
-								if((thePB->ioPropertyDataSize != NULL) && (thePB->outPropertyData != NULL))
+								if((ioPropertyDataSize != NULL) && (outPropertyData != NULL))
 								{
-									inThis->GetProperty(thePB->inPropertyID, *(thePB->ioPropertyDataSize), thePB->outPropertyData);
+									inThis->GetProperty(inPropertyID, *ioPropertyDataSize, outPropertyData);
 								}
 								else
 								{
@@ -161,11 +184,13 @@ ComponentResult ACCodecDispatch(ComponentParameters* inParameters, CodecClass* i
 				
 						case kAudioCodecSetPropertySelect:
 							{
-								AudioCodecSetPropertyGluePB* thePB = (AudioCodecSetPropertyGluePB*)inParameters;
+								PARAM(AudioCodecPropertyID, inPropertyID, 0, 3);
+								PARAM(UInt32, inPropertyDataSize, 1, 3);
+								PARAM(const void *, inPropertyData, 2, 3);
 								
-								if(thePB->inPropertyData != NULL)
+								if(inPropertyData != NULL)
 								{
-									inThis->SetProperty(thePB->inPropertyID, thePB->inPropertyDataSize, thePB->inPropertyData);
+									inThis->SetProperty(inPropertyID, inPropertyDataSize, inPropertyData);
 								}
 								else
 								{
@@ -176,34 +201,38 @@ ComponentResult ACCodecDispatch(ComponentParameters* inParameters, CodecClass* i
 				
 						case kAudioCodecInitializeSelect:
 							{
-								AudioCodecInitializeGluePB* thePB = (AudioCodecInitializeGluePB*)inParameters;
+								PARAM(const AudioStreamBasicDescription *, inInputFormat, 0, 4);
+								PARAM(const AudioStreamBasicDescription *, inOutputFormat, 1, 4);
+								PARAM(const void *, inMagicCookie, 2, 4);
+								PARAM(UInt32, inMagicCookieByteSize, 3, 4);
 								
-								inThis->Initialize(thePB->inInputFormat, thePB->inOutputFormat, thePB->inMagicCookie, thePB->inMagicCookieByteSize);
+								inThis->Initialize(inInputFormat, inOutputFormat, inMagicCookie, inMagicCookieByteSize);
 							}
 							break;
 				
 						case kAudioCodecUninitializeSelect:
 							{
-								//AudioCodecUninitializeGluePB* thePB = (AudioCodecUninitializeGluePB*)inParameters;
-								
 								inThis->Uninitialize();
 							}
 							break;
 				
 						case kAudioCodecAppendInputDataSelect:
 							{
-								AudioCodecAppendInputDataGluePB* thePB = (AudioCodecAppendInputDataGluePB*)inParameters;
+								PARAM(const void *, inInputData, 0, 4);
+								PARAM(UInt32 *, ioInputDataByteSize, 1, 4);
+								PARAM(UInt32 *, ioNumberPackets, 2, 4);
+								PARAM(const AudioStreamPacketDescription *, inPacketDescription, 3, 4);
 								
-								if((thePB->inInputData != NULL) && (thePB->ioInputDataByteSize != NULL))
+								if((inInputData != NULL) && (ioInputDataByteSize != NULL))
 								{
-									if(thePB->ioNumberPackets != NULL)
+									if(ioNumberPackets != NULL)
 									{
-										inThis->AppendInputData(thePB->inInputData, *(thePB->ioInputDataByteSize), *(thePB->ioNumberPackets), thePB->inPacketDescription);
+										inThis->AppendInputData(inInputData, *ioInputDataByteSize, *ioNumberPackets, inPacketDescription);
 									}
 									else
 									{
 										UInt32 theNumberPackets = 0;
-										inThis->AppendInputData(thePB->inInputData, *(thePB->ioInputDataByteSize), theNumberPackets, thePB->inPacketDescription);
+										inThis->AppendInputData(inInputData, *ioInputDataByteSize, theNumberPackets, inPacketDescription);
 									}
 								}
 								else
@@ -215,11 +244,19 @@ ComponentResult ACCodecDispatch(ComponentParameters* inParameters, CodecClass* i
 				
 						case kAudioCodecProduceOutputDataSelect:
 							{
-								AudioCodecProduceOutputPacketsGluePB* thePB = (AudioCodecProduceOutputPacketsGluePB*)inParameters;
+								PARAM(void *, outOutputData, 0, 5);
+								PARAM(UInt32 *, ioOutputDataByteSize, 1, 5);
+								PARAM(UInt32 *, ioNumberPackets, 2, 5);
+								PARAM(AudioStreamPacketDescription *, outPacketDescription, 3, 5);
+								PARAM(UInt32 *, outStatus, 4, 5);
 								
-								if((thePB->outOutputData != NULL) && (thePB->ioOutputDataByteSize != NULL) && (thePB->ioNumberPackets != NULL) && (thePB->outStatus != NULL))
+								if((outOutputData != NULL) && (ioOutputDataByteSize != NULL) && (ioNumberPackets != NULL) && (outStatus != NULL))
 								{
-									*(thePB->outStatus) = inThis->ProduceOutputPackets(thePB->outOutputData, *(thePB->ioOutputDataByteSize), *(thePB->ioNumberPackets), thePB->outPacketDescription);
+									*outStatus = inThis->ProduceOutputPackets(outOutputData, *ioOutputDataByteSize, *ioNumberPackets, outPacketDescription);
+									if(kAudioCodecProduceOutputPacketFailure == *outStatus)
+									{
+										theError = paramErr;
+									}
 								}
 								else
 								{
@@ -230,8 +267,6 @@ ComponentResult ACCodecDispatch(ComponentParameters* inParameters, CodecClass* i
 				
 						case kAudioCodecResetSelect:
 							{
-								//AudioCodecResetGluePB* thePB = (AudioCodecResetGluePB*)inParameters;
-								
 								inThis->Reset();
 							}
 							break;

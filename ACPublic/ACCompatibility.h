@@ -38,63 +38,72 @@
 			STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 			POSSIBILITY OF SUCH DAMAGE.
 */
-#if !defined(__ACSimpleCodec_h__)
-#define __ACSimpleCodec_h__
+#if !defined __ACCOMPATIBILITY_H__
+#define __ACCOMPATIBILITY_H__
 
-//=============================================================================
-//	Includes
-//=============================================================================
+#if TARGET_OS_MAC
 
-#include "ACBaseCodec.h"
+#include <AvailabilityMacros.h>
 
-//=============================================================================
-//	ACSimpleCodec
-//
-//	This extension of ACBaseCodec provides for a simple ring buffer to handle
-//	input data.
-//=============================================================================
-
-class ACSimpleCodec
-:
-	public ACBaseCodec
-{
-
-//	Construction/Destruction
-public:
-						ACSimpleCodec(UInt32 inInputBufferByteSize, OSType theSubType);
-	virtual				~ACSimpleCodec();
-
-//	Data Handling
-public:
-	virtual void		Initialize(const AudioStreamBasicDescription* inInputFormat, const AudioStreamBasicDescription* inOutputFormat, const void* inMagicCookie, UInt32 inMagicCookieByteSize) = 0;
-	virtual void		Uninitialize();
-	virtual void		Reset();
-
-	virtual void		AppendInputBuffer(const void* inInputData, UInt32 inOffset, UInt32& ioInputDataByteSize);
-	virtual void		AppendInputData(const void* inInputData, UInt32& ioInputDataByteSize, UInt32& ioNumberPackets, const AudioStreamPacketDescription* inPacketDescription);
-	virtual void		ZeroPadInputData(UInt32& ioNumberPackets, const AudioStreamPacketDescription* inPacketDescription);
-	virtual UInt32		GetInputBufferByteSize() const;
-	virtual UInt32		GetUsedInputBufferByteSize() const;
-	virtual void		GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, Boolean& outWritable);
-	virtual void		SetProperty(AudioCodecPropertyID inPropertyID, UInt32 inPropertyDataSize, const void* inPropertyData);
-
-protected:
-	void				ConsumeInputData(UInt32 inConsumedByteSize);	
-	Byte*				GetInputBufferStart() const { return mInputBuffer + mInputBufferStart; }
-	UInt32				GetInputBufferContiguousByteSize() const { return (mInputBufferStart <= mInputBufferEnd) ? (mInputBufferEnd - mInputBufferStart) : (mInputBufferByteSize - mInputBufferStart); }
-	virtual void		ReallocateInputBuffer(UInt32 inInputBufferByteSize);
-	
-	// returns a pointer to contiguous bytes. 
-	// will do some copying if the request wraps around the internal buffer.
-	// request must be less than available bytes
-	Byte*				GetBytes(UInt32& ioNumberBytes) const;
-
-private:	
-	Byte*				mInputBuffer;
-	UInt32				mInputBufferByteSize;
-	UInt32				mInputBufferStart;
-	UInt32				mInputBufferEnd;
-
-};
-
+#if !defined(__COREAUDIO_USE_FLAT_INCLUDES__)
+#include <CoreAudio/CoreAudioTypes.h>
+#include <AudioUnit/AudioCodec.h>
+#else
+#include "CoreAudioTypes.h"
+#include "AudioCodec.h"
 #endif
+
+/* Redefine the following symbols only for Tiger */
+#if COREAUDIOTYPES_VERSION < 1050// && !defined(MAC_OS_X_VERSION_10_5)
+
+struct AudioFormatInfo
+{
+	AudioStreamBasicDescription		mASBD;
+	const void*						mMagicCookie;
+	UInt32							mMagicCookieSize;
+};
+typedef struct AudioFormatInfo AudioFormatInfo;
+
+struct AudioFormatListItem
+{
+	AudioStreamBasicDescription		mASBD;
+	AudioChannelLayoutTag			mChannelLayoutTag;
+};
+typedef struct AudioFormatListItem AudioFormatListItem;
+
+struct AudioCodecMagicCookieInfo 
+{
+	UInt32			mMagicCookieSize;
+	const void*		mMagicCookie;
+};
+typedef struct AudioCodecMagicCookieInfo	AudioCodecMagicCookieInfo;
+typedef struct AudioCodecMagicCookieInfo	MagicCookieInfo;
+
+
+enum
+{
+	/* Renamed properties */
+	kAudioCodecPropertyCurrentInputChannelLayout	= kAudioCodecPropertyInputChannelLayout,
+	kAudioCodecPropertyCurrentOutputChannelLayout	= kAudioCodecPropertyOutputChannelLayout,
+	kAudioCodecPropertyAvailableInputChannelLayoutTags	= kAudioCodecPropertyAvailableInputChannelLayouts,
+	kAudioCodecPropertyAvailableOutputChannelLayoutTags	= kAudioCodecPropertyAvailableOutputChannelLayouts,
+	kAudioCodecPropertyBitRateControlMode			= kAudioCodecBitRateFormat,
+	kAudioCodecPropertyPaddedZeros					= kAudioCodecPropertyZeroFramesPadded,
+	kAudioCodecPropertyInputFormatsForOutputFormat	= kAudioCodecInputFormatsForOutputFormat,
+	kAudioCodecPropertyOutputFormatsForInputFormat	= kAudioCodecOutputFormatsForInputFormat,
+	kAudioCodecPropertyDoesSampleRateConversion		= kAudioCodecDoesSampleRateConversion
+};
+#else
+#if !defined(__COREAUDIO_USE_FLAT_INCLUDES__)
+#include <AudioToolbox/AudioFormat.h>
+#else
+#include "AudioFormat.h"
+#endif
+
+#endif	// #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4
+
+#else
+	#include "AudioFormat.h"
+#endif	// #if TARGET_OS_MAC
+
+#endif	// #if !defined __ACCOMPATIBILITY_H__

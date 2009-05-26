@@ -29,7 +29,7 @@ class ACShepA52Decoder
 
 //	Construction/Destruction
 public:
-					ACShepA52Decoder(UInt32 inInputBufferByteSize = 76800);
+					ACShepA52Decoder(OSType theSubType);
 	virtual			~ACShepA52Decoder();
 
 	virtual void	Initialize(const AudioStreamBasicDescription* inInputFormat, const AudioStreamBasicDescription* inOutputFormat, const void* inMagicCookie, UInt32 inMagicCookieByteSize);
@@ -38,7 +38,7 @@ public:
 
 // 	Information Gathering
 public:
-	virtual void 	GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, bool& outWritable);
+	virtual void 	GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, Boolean& outWritable);
 	virtual void	GetProperty(AudioCodecPropertyID inPropertyID, UInt32& ioPropertyDataSize, void* outPropertyData);
 	virtual void 	SetProperty(AudioCodecPropertyID inPropertyID, UInt32 inPropertyDataSize, const void* inPropertyData);
 
@@ -60,7 +60,7 @@ private:
 	void	DetermineStreamParameters();
 	UInt32  SyncA52Stream(UInt32 &bytes_to_read, Byte *input_data, int &a52_flags, int &a52_samplerate, int &a52_bitrate, bool shouldResync);
 	UInt32  AppendPacket(const void* inInputData, UInt32 inInputDataSize, UInt32 bufferStartOffset, UInt32 offset, UInt32& packetSize);		
-	
+
 	a52_state_t *decoder_state;
 	
 	UInt32  kIntPCMOutFormatFlag;

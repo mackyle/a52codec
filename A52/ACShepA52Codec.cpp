@@ -15,7 +15,7 @@
 //	ACShepA52Codec
 //=============================================================================
 
-ACShepA52Codec::ACShepA52Codec(UInt32 inInputBufferByteSize) : ACSimpleCodec(inInputBufferByteSize) {
+ACShepA52Codec::ACShepA52Codec(UInt32 inInputBufferByteSize, OSType theSubType) : ACSimpleCodec(inInputBufferByteSize, theSubType) {
 }
 
 ACShepA52Codec::~ACShepA52Codec() {
@@ -53,7 +53,7 @@ void	ACShepA52Codec::Reset() {
 	ACSimpleCodec::Reset();
 }
 
-void	ACShepA52Codec::GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, bool& outWritable) {
+void	ACShepA52Codec::GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, Boolean& outWritable) {
 	switch(inPropertyID)
 	{
 		case kAudioCodecPropertyMaximumPacketByteSize:

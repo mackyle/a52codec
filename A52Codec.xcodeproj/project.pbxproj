@@ -67,13 +67,13 @@
 		F5525E080A3BF7D700F36B86 /* debug.h in Headers */ = {isa = PBXBuildFile; fileRef = F5525E020A3BF7D700F36B86 /* debug.h */; };
 		F5525E090A3BF7D700F36B86 /* versions.h in Headers */ = {isa = PBXBuildFile; fileRef = F5525E030A3BF7D700F36B86 /* versions.h */; };
 		F5536FB20A3BF8E800969CA8 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5536FB10A3BF8E800969CA8 /* QuickTime.framework */; };
+		F55BD0360FCC4102001C4F2F /* AC3MovieImport.component in CopyFiles */ = {isa = PBXBuildFile; fileRef = F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */; };
 		F56BC7E40D773F63009A9DAE /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7E30D773F63009A9DAE /* crc.c */; };
 		F56BC7E50D773F63009A9DAE /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7E30D773F63009A9DAE /* crc.c */; };
 		F56BC7E80D773F77009A9DAE /* cpu_accel.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7E70D773F77009A9DAE /* cpu_accel.c */; };
 		F56BC7E90D773F77009A9DAE /* cpu_accel.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7E70D773F77009A9DAE /* cpu_accel.c */; };
 		F56BC7EC0D773F7F009A9DAE /* cpu_state.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7EB0D773F7F009A9DAE /* cpu_state.c */; };
 		F56BC7ED0D773F7F009A9DAE /* cpu_state.c in Sources */ = {isa = PBXBuildFile; fileRef = F56BC7EB0D773F7F009A9DAE /* cpu_state.c */; };
-		F583B2070A759C1D005F8A5A /* AC3MovieImport.component in CopyFiles */ = {isa = PBXBuildFile; fileRef = F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */; };
 		F583B2150A759C4C005F8A5A /* A52Codec.component in CopyFiles */ = {isa = PBXBuildFile; fileRef = F5BDACAD0A20A00000FF4884 /* A52Codec.component */; };
 		F5BDAC870A20A00000FF4884 /* ACBaseCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93010287A1A201000102 /* ACBaseCodec.h */; };
 		F5BDAC880A20A00000FF4884 /* ACCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = F51A93030287A1A201000102 /* ACCodec.h */; };
@@ -107,6 +107,9 @@
 		F5BDACE30A20A03200FF4884 /* parse.c in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACCF0A20A03200FF4884 /* parse.c */; };
 		F5BDACE40A20A03200FF4884 /* tables.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BDACD00A20A03200FF4884 /* tables.h */; };
 		F5BDACFB0A20A11D00FF4884 /* ACShepA52Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5BDACFA0A20A11D00FF4884 /* ACShepA52Decoder.cpp */; };
+		F5D1FBDA0E7826C20092B612 /* CABundleLocker.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D1FBD80E7826C20092B612 /* CABundleLocker.h */; };
+		F5D1FBDB0E7826C20092B612 /* ACCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D1FBD90E7826C20092B612 /* ACCompatibility.h */; };
+		F5D1FBE50E7827C30092B612 /* CABundleLocker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5D1FBE40E7827C30092B612 /* CABundleLocker.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,7 +150,7 @@
 			dstPath = "$(HOME)/Library/QuickTime";
 			dstSubfolderSpec = 0;
 			files = (
-				F583B2070A759C1D005F8A5A /* AC3MovieImport.component in CopyFiles */,
+				F55BD0360FCC4102001C4F2F /* AC3MovieImport.component in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,7 +192,7 @@
 		65CB364E066A1FA900A75A43 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		F50815870A2161180092BF70 /* XCAResources.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = XCAResources.r; sourceTree = "<group>"; };
 		F50B7AB50AAB69C600065C78 /* A52Preferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A52Preferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F50B7AB70AAB69C700065C78 /* Preferences-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Preferences-Info.plist"; sourceTree = "<group>"; };
+		F50B7AB70AAB69C700065C78 /* Preferences-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Preferences-Info.plist"; sourceTree = "<group>"; };
 		F50B7AC40AAB6E3F00065C78 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/A52CodecPreferences.nib; sourceTree = "<group>"; };
 		F50B7AC60AAB6E6000065C78 /* A52Preferences.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = A52Preferences.h; sourceTree = "<group>"; };
 		F50B7AC70AAB6E6000065C78 /* A52Preferences.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = A52Preferences.m; sourceTree = "<group>"; };
@@ -219,7 +222,7 @@
 		F56BC7E70D773F77009A9DAE /* cpu_accel.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpu_accel.c; sourceTree = "<group>"; };
 		F56BC7EB0D773F7F009A9DAE /* cpu_state.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpu_state.c; sourceTree = "<group>"; };
 		F5A548EC0287A16D01000102 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		F5BDACAC0A20A00000FF4884 /* Info-A52Codec__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Info-A52Codec__Upgraded_.plist"; sourceTree = "<group>"; };
+		F5BDACAC0A20A00000FF4884 /* Info-A52Codec__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-A52Codec__Upgraded_.plist"; sourceTree = "<group>"; };
 		F5BDACAD0A20A00000FF4884 /* A52Codec.component */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = A52Codec.component; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5BDACBC0A20A03200FF4884 /* a52.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = a52.h; sourceTree = "<group>"; };
 		F5BDACBD0A20A03200FF4884 /* attributes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = attributes.h; sourceTree = "<group>"; };
@@ -235,6 +238,9 @@
 		F5BDACCF0A20A03200FF4884 /* parse.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = parse.c; sourceTree = "<group>"; };
 		F5BDACD00A20A03200FF4884 /* tables.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tables.h; sourceTree = "<group>"; };
 		F5BDACFA0A20A11D00FF4884 /* ACShepA52Decoder.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ACShepA52Decoder.cpp; sourceTree = "<group>"; };
+		F5D1FBD80E7826C20092B612 /* CABundleLocker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CABundleLocker.h; sourceTree = "<group>"; };
+		F5D1FBD90E7826C20092B612 /* ACCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACCompatibility.h; sourceTree = "<group>"; };
+		F5D1FBE40E7827C30092B612 /* CABundleLocker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CABundleLocker.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +341,9 @@
 			isa = PBXGroup;
 			children = (
 				651243230832A21E0014F742 /* Base Classes */,
+				F5D1FBD80E7826C20092B612 /* CABundleLocker.h */,
+				F5D1FBE40E7827C30092B612 /* CABundleLocker.cpp */,
+				F5D1FBD90E7826C20092B612 /* ACCompatibility.h */,
 				0A9B063204D728440070DEF0 /* GetCodecBundle.h */,
 				0A9B063104D728440070DEF0 /* GetCodecBundle.cpp */,
 				F51A93040287A1A201000102 /* ACCodecDispatch.h */,
@@ -490,6 +499,8 @@
 				F5BDACDD0A20A03200FF4884 /* bitstream.h in Headers */,
 				F5BDACE40A20A03200FF4884 /* tables.h in Headers */,
 				F508127C0A21251F0092BF70 /* ACSimpleCodec.h in Headers */,
+				F5D1FBDA0E7826C20092B612 /* CABundleLocker.h in Headers */,
+				F5D1FBDB0E7826C20092B612 /* ACCompatibility.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,6 +676,7 @@
 				F56BC7E40D773F63009A9DAE /* crc.c in Sources */,
 				F56BC7E80D773F77009A9DAE /* cpu_accel.c in Sources */,
 				F56BC7EC0D773F7F009A9DAE /* cpu_state.c in Sources */,
+				F5D1FBE50E7827C30092B612 /* CABundleLocker.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,7 +786,10 @@
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_CARBON=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TARGET_OS_MAC=1",
+					"TARGET_CARBON=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					liba52/include,
 					.,
@@ -984,7 +999,10 @@
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_CARBON=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TARGET_OS_MAC=1",
+					"TARGET_CARBON=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					liba52/include,
 					.,
@@ -1015,6 +1033,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TARGET_OS_MAC=1",
 					"TARGET_CARBON=1",
 					"CoreAudio_Debug=1",
 				);

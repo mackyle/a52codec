@@ -26,7 +26,7 @@ class ACShepA52Codec : public ACSimpleCodec {
 
 //	Construction/Destruction
 public:
-						ACShepA52Codec(UInt32 inInputBufferByteSize);
+						ACShepA52Codec(UInt32 inInputBufferByteSize, OSType theSubType);
 	virtual				~ACShepA52Codec();
 
 //	Data Handling
@@ -35,7 +35,7 @@ public:
 	virtual void		Reset();
 
 	virtual void		GetProperty(AudioCodecPropertyID inPropertyID, UInt32& ioPropertyDataSize, void* outPropertyData);
-	virtual void		GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, bool& outWritable);
+	virtual void		GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, Boolean& outWritable);
 	virtual	void		ACShepA52Codec::ReallocateInputBuffer(UInt32 inInputBufferByteSize);
 
 
