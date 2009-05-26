@@ -202,6 +202,11 @@ ACShepA52Decoder::ACShepA52Decoder(OSType theSubType) : ACShepA52Codec(76800, th
 	remainingBytesFromLastFrame = 0;
 	beginningOfIncompleteHeaderSize = 0;
 		
+	layoutTag = kAudioChannelLayoutTag_MPEG_5_1_A;
+	int initialMap[6] = {3, 0, 2, 1, 4, 5};
+	memcpy(fullChannelMap, initialMap, sizeof(fullChannelMap));
+	//fprintf(stderr, "Instance %p alloced\n", this);
+
 	//fprintf(stderr, "ACShepA52Decoder::Constructor: Number of input formats supported: %lu\n", GetNumberSupportedInputFormats());
 	//fprintf(stderr, "ACShepA52Decoder::Constructor: Number of output formats supported: %lu\n", GetNumberSupportedOutputFormats());
 }
@@ -209,6 +214,7 @@ ACShepA52Decoder::ACShepA52Decoder(OSType theSubType) : ACShepA52Codec(76800, th
 ACShepA52Decoder::~ACShepA52Decoder() {
 	// fprintf(stderr, "ACShepA52Decoder::Destructor: Total Frames: %ld\n", total_frames);
 	// fprintf(stderr, "ACShepA52Decoder::Destructor: Total Output Bytes: %ld\n", total_bytes);
+	// fprintf(stderr, "Instance %p freed\n", this);
 }
 
 void ACShepA52Decoder::Initialize(const AudioStreamBasicDescription* inInputFormat,
@@ -227,7 +233,6 @@ void ACShepA52Decoder::Initialize(const AudioStreamBasicDescription* inInputForm
 		fprintf(stderr, "ACShepA52Decoder::Initialize: I don't know what happens next...\n");
 		//TODO: return some error
 	}
-	
 	firstInput = true;
 }
 
@@ -265,8 +270,16 @@ void ACShepA52Decoder::GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32
 	
 	switch(inPropertyID)
 	{
+		case kAudioCodecPropertyOutputChannelLayout:
+			outPropertyDataSize = sizeof(AudioChannelLayout);
+			outWritable = false;
+			break;
+		case kAudioCodecPropertyInputChannelLayout:
+			outPropertyDataSize = sizeof(AudioChannelLayout);
+			outWritable = true;
+			break;
 		default:
-			ACShepA52Codec::GetPropertyInfo(inPropertyID, outPropertyDataSize, outWritable);
+		ACShepA52Codec::GetPropertyInfo(inPropertyID, outPropertyDataSize, outWritable);
 	}
 }
 
@@ -288,7 +301,19 @@ void ACShepA52Decoder::GetProperty(AudioCodecPropertyID inPropertyID, UInt32& io
 			break; 
 		}
 #endif
+		case kAudioCodecPropertyOutputChannelLayout:
+			if(ioPropertyDataSize != sizeof(AudioChannelLayout))  CODEC_THROW(kAudioCodecBadPropertySizeError);
+			memset(outPropertyData, 0, sizeof(AudioChannelLayout));
+			(reinterpret_cast<AudioChannelLayout*>(outPropertyData))->mChannelLayoutTag = kAudioChannelLayoutTag_MPEG_5_1_A;
+			break;
+		case kAudioCodecPropertyInputChannelLayout:
+			if(ioPropertyDataSize != sizeof(AudioChannelLayout))  CODEC_THROW(kAudioCodecBadPropertySizeError);
+			memset(outPropertyData, 0, sizeof(AudioChannelLayout));
+			(reinterpret_cast<AudioChannelLayout*>(outPropertyData))->mChannelLayoutTag = layoutTag;
+			break;
+			
 		default:
+			
 			ACShepA52Codec::GetProperty(inPropertyID, ioPropertyDataSize, outPropertyData);
 	}
 }
@@ -300,8 +325,89 @@ void ACShepA52Decoder::SetProperty(AudioCodecPropertyID inPropertyID, UInt32 inP
 	//fprintf(stderr, "ACShepA52Decoder::SetProperty: Asking for property %.*s\n", (int) sizeof(inPropertyID), (char*)&inPropertyID);
 
 	switch(inPropertyID) {
+		case kAudioCodecPropertyInputChannelLayout:
+		//This doesn't work because Apple's use of Core Audio is broken: http://openradar.appspot.com/6921431
+		//It is here in case Apple fixes it, then we don't have to do another release.
+		{
+			AudioChannelLayoutTag tag = (reinterpret_cast<const AudioChannelLayout*>(inPropertyData))->mChannelLayoutTag;
+			//fprintf(stderr, "Instance %p told that input tag is %lx\n", this, tag);
+			switch(tag)
+			{
+				/* These are all the up to 5.1 layout tags defined in core audio
+				 * In layouts, missing channels are skiped.
+				 * Center surround is listed as left surround since a52 has at most 2 rear channels*/
+				//A52's layout is LFE, left, center, right, left surround, right surround.
+				case kAudioChannelLayoutTag_MPEG_1_0:
+				case kAudioChannelLayoutTag_MPEG_3_0_B:
+				case kAudioChannelLayoutTag_MPEG_4_0_B:
+				case kAudioChannelLayoutTag_MPEG_5_0_D:
+				case kAudioChannelLayoutTag_MPEG_5_1_D:
+				//center, left, right, left surround, right surround, LFE
+				{
+					int layout[6] = {5, 1, 0, 2, 3, 4};
+					memcpy(fullChannelMap, layout, sizeof(fullChannelMap));
+					break;
+				}
+				case kAudioChannelLayoutTag_MPEG_2_0:
+				case kAudioChannelLayoutTag_MPEG_3_0_A:
+				case kAudioChannelLayoutTag_MPEG_4_0_A:
+				case kAudioChannelLayoutTag_MPEG_5_0_A:
+				//left, right, center, left surround, right surround, (LFE)
+				{
+					int layout[6] = {5, 0, 2, 1, 3, 4};
+					memcpy(fullChannelMap, layout, sizeof(fullChannelMap));
+					break;
+				}
+				case kAudioChannelLayoutTag_MPEG_5_0_B:
+				case kAudioChannelLayoutTag_MPEG_5_1_B:
+				case kAudioChannelLayoutTag_DVD_18:
+				//left, right, left surround, right surround, center, LFE
+				{
+					int layout[6] = {5, 0, 4, 1, 2, 3};
+					memcpy(fullChannelMap, layout, sizeof(fullChannelMap));
+					break;
+				}
+				case kAudioChannelLayoutTag_MPEG_5_0_C:
+				case kAudioChannelLayoutTag_MPEG_5_1_C:
+				//left, center, right, left surround, right surround, LFE
+				{
+					int layout[6] = {5, 0, 1, 2, 3, 4};
+					memcpy(fullChannelMap, layout, sizeof(fullChannelMap));
+					break;
+				}
+				case kAudioChannelLayoutTag_MPEG_5_1_A:
+				case kAudioChannelLayoutTag_DVD_10:
+				case kAudioChannelLayoutTag_DVD_11:
+				//left, right, center, LFE, left surround, right surround
+				{
+					int layout[6] = {3, 0, 2, 1, 4, 5};
+					memcpy(fullChannelMap, layout, sizeof(fullChannelMap));
+					break;
+				}
+				case kAudioChannelLayoutTag_ITU_2_1:
+				case kAudioChannelLayoutTag_ITU_2_2:
+				//left, right, left surround, right surround, (center, LFE)
+				{
+					int layout[6] = {5, 0, 4, 1, 2, 3};
+					memcpy(fullChannelMap, layout, sizeof(fullChannelMap));
+					break;
+				}
+				case kAudioChannelLayoutTag_DVD_4:
+				case kAudioChannelLayoutTag_DVD_5:
+				case kAudioChannelLayoutTag_DVD_6:
+				//left, right, LFE, left surround, right surround, (center)
+				{
+					int layout[6] = {2, 0, 5, 1, 3, 4};
+					memcpy(fullChannelMap, layout, sizeof(fullChannelMap));
+					break;
+				}
+			}
+			layoutTag = tag;
+			break;
+		}
 		default:
-			ACShepA52Codec::SetProperty(inPropertyID, inPropertyDataSize, inPropertyData);
+		
+		ACShepA52Codec::SetProperty(inPropertyID, inPropertyDataSize, inPropertyData);
 	}
 }
 
@@ -330,6 +436,8 @@ void ACShepA52Decoder::SetCurrentInputFormat(const AudioStreamBasicDescription& 
 		CODEC_THROW(kAudioCodecUnsupportedFormatError);
 	}
 	
+	//fprintf(stderr, "ACShepA52Decoder::SetFormats: input set to %lx, channels: %ld\n", inInputFormat.mFormatID, inInputFormat.mChannelsPerFrame);
+	
 	//	tell our base class about the new format
 	ACShepA52Codec::SetCurrentInputFormat(inInputFormat);
 	
@@ -354,6 +462,8 @@ void ACShepA52Decoder::SetCurrentOutputFormat(const AudioStreamBasicDescription&
 	*/
 	
 	
+	//fprintf(stderr, "ACShepA52Decoder::SetFormats: output set to %lx, channels: %ld\n", inOutputFormat.mFormatID, inOutputFormat.mChannelsPerFrame);
+
 	if(mIsInitialized) {
 		CODEC_THROW(kAudioCodecStateError);
 	}
@@ -476,37 +586,37 @@ static sample_t dynrng_call (sample_t c, void *data)
 
 // Output order of liba52: LFE, left, center, right, left surround, right surround.
 // Channels missing are skipped
-// Supposed input to CoreAudio is: left, right, center, LFE, left surround, right surround
 
-void getChannelMap(int a52_flags, int chanMap[6])
+void ACShepA52Decoder::getChannelMap(int a52_flags, int chanMap[6])
 {
-	int defaultMap[] = {0, 1, 2, 3, 4, 5};
 	int frontChan = 0;
 	int lfe = a52_flags & A52_LFE ? 1 : 0;
 	
-	memcpy(chanMap, defaultMap, sizeof(defaultMap));
 	switch (a52_flags & A52_CHANNEL_MASK) {
 		case A52_STEREO:
 		case A52_DOLBY:
 		case A52_2F1R:
 		case A52_2F2R:
-			chanMap[1] = lfe + 1;
+			//Handle right channel with no center
+			chanMap[lfe+1] = fullChannelMap[3];
 			frontChan = 1;
 
 		case A52_CHANNEL:
 		case A52_CHANNEL1:
 		case A52_CHANNEL2:
 		case A52_MONO:
-			chanMap[0] = lfe;
+			//Handle left channel
+			chanMap[lfe] = fullChannelMap[1];
 			frontChan++;
 			break;
 			
 		case A52_3F:
 		case A52_3F1R:
 		case A52_3F2R:
-			chanMap[0] = lfe;
-			chanMap[1] = lfe+2;
-			chanMap[2] = lfe+1;
+			//Three front channels
+			chanMap[lfe] = fullChannelMap[1];
+			chanMap[lfe+1] = fullChannelMap[2];
+			chanMap[lfe+2] = fullChannelMap[3];
 			frontChan = 3;
 			break;
 			
@@ -514,11 +624,13 @@ void getChannelMap(int a52_flags, int chanMap[6])
 			break;
 	}
 	if(lfe)
-		chanMap[frontChan] = 0;
+		chanMap[0] = fullChannelMap[0];
+	chanMap[frontChan+lfe] = fullChannelMap[4];
+	chanMap[frontChan+lfe+1] = fullChannelMap[5];
 }
 
 template <class outPtr, class inPtr>
-UInt32 InterleaveSamples(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags) {
+UInt32 ACShepA52Decoder::InterleaveSamples(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags) {
 	inPtr  *cast_samples;
 	outPtr *output_data = (outPtr *)output_data_untyped;
 	
@@ -532,7 +644,7 @@ UInt32 InterleaveSamples(void *output_data_untyped, UInt32 output_data_offset, s
 	
 	for (int i = 0; i < 256; i++) {
 		for (int j = 0; j < chans; j++) {
-			output_data[chans*i + output_data_offset + j] = cast_samples[i + 256*chanMap[j]];
+			output_data[chans*i + output_data_offset + chanMap[j]] = cast_samples[i + 256*j];
 		}
 	}
 	
@@ -715,38 +827,50 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 			int frameSize = mOutputFormat.mChannelsPerFrame * 2;
 			memset(myOutputData, 0, frameSize * 256 * 6);
 			input_data = GetBytes(bytes_to_read);
+			//Get the locations of the left and right channels in the output
+			int leftOffset = fullChannelMap[1] * 2;
+			int rightOffset = fullChannelMap[3] * 2;
 			
 			if (mOutputFormat.mFormatFlags & kLinearPCMFormatFlagIsBigEndian)
 			{
-				memcpy(myOutputData, p_sync_be, 4);
-				myOutputData[frameSize] = input_data[5] & 0x7;
-				myOutputData[frameSize+1] = p_sync_be[5];
-				myOutputData[frameSize+2] = (bytes_to_read >> 4) & 0xff;
-				myOutputData[frameSize+3] = (bytes_to_read << 4) & 0xff;
+				myOutputData[leftOffset] = p_sync_be[0];
+				myOutputData[leftOffset+1] = p_sync_be[1];
+				myOutputData[rightOffset] = p_sync_be[2];
+				myOutputData[rightOffset+1] = p_sync_be[3];
+				myOutputData[frameSize+leftOffset] = input_data[5] & 0x7;
+				myOutputData[frameSize+leftOffset+1] = p_sync_be[5];
+				myOutputData[frameSize+rightOffset] = (bytes_to_read >> 4) & 0xff;
+				myOutputData[frameSize+rightOffset+1] = (bytes_to_read << 4) & 0xff;
 				unsigned int i;
 				int frameNumber;
 				for(i=0, frameNumber = 2; i<bytes_to_read; i+=4, frameNumber++)
 				{
 					int offset = frameNumber * frameSize;
-					memcpy(&myOutputData[offset], &input_data[i], 4);
+					myOutputData[offset+leftOffset] = input_data[i];
+					myOutputData[offset+leftOffset+1] = input_data[i+1];
+					myOutputData[offset+rightOffset] = input_data[i+2];
+					myOutputData[offset+rightOffset+1] = input_data[i+3];
 				}
 			} 
 			else
 			{
-				memcpy(myOutputData, p_sync_le, 4);
-				myOutputData[frameSize] = p_sync_le[4];
-				myOutputData[frameSize+1] = input_data[5] & 0x7;
-				myOutputData[frameSize+2] = (bytes_to_read << 4) & 0xff;
-				myOutputData[frameSize+3] = (bytes_to_read >> 4) & 0xff;
+				myOutputData[leftOffset] = p_sync_le[0];
+				myOutputData[leftOffset+1] = p_sync_le[1];
+				myOutputData[rightOffset] = p_sync_le[2];
+				myOutputData[rightOffset+1] = p_sync_le[3];
+				myOutputData[frameSize+leftOffset] = p_sync_le[4];
+				myOutputData[frameSize+leftOffset+1] = input_data[5] & 0x7;
+				myOutputData[frameSize+rightOffset] = (bytes_to_read << 4) & 0xff;
+				myOutputData[frameSize+rightOffset+1] = (bytes_to_read >> 4) & 0xff;
 				unsigned int i;
 				int frameNumber;
 				for(i=0, frameNumber = 2; i<bytes_to_read; i+=4, frameNumber++)
 				{
 					int offset = frameNumber * frameSize;
-					myOutputData[offset] = input_data[i+1];
-					myOutputData[offset+1] = input_data[i];
-					myOutputData[offset+2] = input_data[i+3];
-					myOutputData[offset+3] = input_data[i+2];
+					myOutputData[offset+leftOffset] = input_data[i+1];
+					myOutputData[offset+leftOffset+1] = input_data[i];
+					myOutputData[offset+rightOffset] = input_data[i+3];
+					myOutputData[offset+rightOffset+1] = input_data[i+2];
 				}
 			}
 			output_offset += mOutputFormat.mChannelsPerFrame * 256 * 6;	//Our framed hack
