@@ -93,7 +93,7 @@
 resource 'thng' (kImporterResID, AC3MovieImporterName, purgeable) {
     kImporterComponentType, 
     kAC3MovieFormat, 
-    'vide', 
+    'soun', 
     0, 0, 0, 0,
     'STR ', kImporterNameStringResID,
     'STR ', kImporterInfoStringResID,
@@ -158,7 +158,7 @@ resource 'thng' (kImporterResID, AC3MovieImporterName, purgeable) {
 resource 'thga' (kImporterResID, AC3MovieImporterName, purgeable) {
     kImporterComponentType,                    // Type
     'AC3 ',                             // Subtype - this must be in uppercase. It will match an ".ac3" suffix case-insensitively.
-    'vide',                             // media type supported
+    'soun',                             // media type supported
     kImporterFlags | movieImportSubTypeIsFileExtension,	// The subtype is a file name suffix
     0,                                  // Component Flags Mask
     0,                                  // Code Type
@@ -172,7 +172,7 @@ resource 'thga' (kImporterResID, AC3MovieImporterName, purgeable) {
                 // TARGET COMPONENT ---------------
     kImporterComponentType,                    // Type
     kAC3MovieFormat,                    // SubType
-    'vide',                             // Manufaturer
+    'soun',                             // Manufaturer
     kImporterFlags,                     // Component Flags
     0,                                  // Component Flags Mask
     'thnr', kImporterResID, 0

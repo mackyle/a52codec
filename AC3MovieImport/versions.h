@@ -34,7 +34,7 @@
 #ifdef DEBUG
 #define kAC3Movie_eat__Version		(0x00FF0100)
 #else
-#define kAC3Movie_eat__Version		(0x00000100)
+#define kAC3Movie_eat__Version		(0x00070005)
 #endif /* DEBUG */
 
 
@@ -45,13 +45,13 @@
 #define kImporterInfoStringResID        4001
 
 #define kMovieComponentManufacturer     'cod3'	
-#define kAC3MovieFormat                 'Ac3A' 
+#define kAC3MovieFormat                 'ac-3' 
 
 
 #ifdef _DEBUG
 #define AC3MovieImporterName        "AC3 Importer"
 #else
-#define AC3MovieImporterName        ""
+#define AC3MovieImporterName        "AC3 Importer"
 #endif
 
 #endif /* __versions_h__ */
