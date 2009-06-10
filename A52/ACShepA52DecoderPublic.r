@@ -14,7 +14,7 @@
 #define DESCRIPTION						"An AudioCodec that decodes A/52 and AC-3 into linear PCM data"
 #define ENTRY_POINT						"ACShepA52DecoderEntry"
 
-#include "/Developer/Examples/CoreAudio/AudioUnits/AUPublic/AUBase/AUResources.r"
+#include "AUResources.r"
 
 #define RES_ID							-17133
 #define COMP_TYPE						'adec'
@@ -25,4 +25,4 @@
 #define DESCRIPTION						"An AudioCodec that decodes A/52 and AC-3 into linear PCM data"
 #define ENTRY_POINT						"ACShepA52DecoderEntry"
 
-#include "/Developer/Examples/CoreAudio/AudioUnits/AUPublic/AUBase/AUResources.r"
+#include "AUResources.r"
