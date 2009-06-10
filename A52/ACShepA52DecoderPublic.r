@@ -10,7 +10,7 @@
 #define COMP_SUBTYPE					'ac-3'
 #define COMP_MANUF						'cd3r'
 #define VERSION							0x00017071
-#define NAME							"Cod3r.com: AC3"
+#define NAME							"AC3"
 #define DESCRIPTION						"An AudioCodec that decodes A/52 and AC-3 into linear PCM data"
 #define ENTRY_POINT						"ACShepA52DecoderEntry"
 
@@ -21,7 +21,7 @@
 #define COMP_SUBTYPE					0x6D732000
 #define COMP_MANUF						'cd3r'
 #define VERSION							0x00017071
-#define NAME							"Cod3r.com: AVI AC3"
+#define NAME							"AC3"
 #define DESCRIPTION						"An AudioCodec that decodes A/52 and AC-3 into linear PCM data"
 #define ENTRY_POINT						"ACShepA52DecoderEntry"
 
