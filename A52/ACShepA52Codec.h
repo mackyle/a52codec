@@ -36,7 +36,7 @@ public:
 
 	virtual void		GetProperty(AudioCodecPropertyID inPropertyID, UInt32& ioPropertyDataSize, void* outPropertyData);
 	virtual void		GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, Boolean& outWritable);
-	virtual	void		ACShepA52Codec::ReallocateInputBuffer(UInt32 inInputBufferByteSize);
+	virtual	void		ReallocateInputBuffer(UInt32 inInputBufferByteSize);
 
 
 //	Implementation

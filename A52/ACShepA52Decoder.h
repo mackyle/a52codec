@@ -56,13 +56,13 @@ public:
 
 //	Implementation
 private:
-	void	ACShepA52Decoder::UpgradeOldPrefs();
+	void	UpgradeOldPrefs();
 	void	DetermineStreamParameters();
 	UInt32  SyncA52Stream(UInt32 &bytes_to_read, Byte *input_data, int &a52_flags, int &a52_samplerate, int &a52_bitrate, bool shouldResync);
 	UInt32  AppendPacket(const void* inInputData, UInt32 inInputDataSize, UInt32 bufferStartOffset, UInt32 offset, UInt32& packetSize);		
-	void ACShepA52Decoder::getChannelMap(int a52_flags, int chanMap[6]);
+	void getChannelMap(int a52_flags, int chanMap[6]);
 	template <class outPtr, class inPtr>
-	UInt32 ACShepA52Decoder::InterleaveSamples(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags);
+	UInt32 InterleaveSamples(void *output_data_untyped, UInt32 output_data_offset, sample_t *output_samples, int a52_flags);
 
 	a52_state_t *decoder_state;
 	
