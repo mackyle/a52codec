@@ -1074,6 +1074,10 @@ void ACShepA52Decoder::AppendInputData(const void* inInputData,
 	
 	
 	// fprintf(stderr, "ACShepA52Codec::AppendInputData: Told to copy in %ld:%ld new bytes\n", ioNumberPackets, ioInputDataByteSize);
+	if(ioInputDataByteSize == 0)
+		//Nothing to do!
+		return;
+	
 	UInt32 totalSize = GetInputBufferByteSize();
     UInt32 bytes_can_copy = totalSize - GetUsedInputBufferByteSize();
 
