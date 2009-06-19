@@ -790,6 +790,7 @@
 					"TARGET_OS_MAC=1",
 					"TARGET_CARBON=1",
 				);
+				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = (
 					liba52/include,
 					.,
@@ -822,6 +823,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_CARBON=1";
+				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = (
 					liba52/include,
 					.,
@@ -912,6 +914,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_CARBON=1";
+				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = (
 					liba52/include,
 					.,
@@ -945,6 +948,7 @@
 					"TARGET_CARBON=1",
 					"CoreAudio_Debug=1",
 				);
+				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = (
 					liba52/include,
 					.,
@@ -1003,6 +1007,7 @@
 					"TARGET_OS_MAC=1",
 					"TARGET_CARBON=1",
 				);
+				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = (
 					liba52/include,
 					.,
@@ -1037,6 +1042,7 @@
 					"TARGET_CARBON=1",
 					"CoreAudio_Debug=1",
 				);
+				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = (
 					liba52/include,
 					.,
