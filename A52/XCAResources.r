@@ -60,6 +60,7 @@
     #define TARGET_REZ_FAT_COMPONENTS 1
     #define Target_PlatformType       platformPowerPCNativeEntryPoint
     #define Target_SecondPlatformType platformIA32NativeEntryPoint
+    #define Target_ThirdPlatformType  8
   #elif TARGET_CPU_X86
     #define Target_PlatformType       platformIA32NativeEntryPoint
   #else
@@ -131,6 +132,9 @@ resource 'thng' (kPrimaryResourceID, kComponentName)
         COMPONENT_FLAGS,
         'dlle', kPrimaryResourceID,
         Target_SecondPlatformType,
+        COMPONENT_FLAGS,
+        'dlle', kPrimaryResourceID,
+        Target_ThirdPlatformType,
 #endif
     },
 #if thng_RezTemplateVersion >= 2
@@ -181,4 +185,5 @@ resource 'thga' (kPrimaryResourceID) {
 
 #undef TARGET_REZ_FAT_COMPONENTS
 #undef Target_SecondPlatformType
+#undef Target_ThirdPlatformType
 #undef GEN_MISSING
