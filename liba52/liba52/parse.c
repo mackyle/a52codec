@@ -142,7 +142,7 @@ int a52_syncinfo (const uint8_t * buf, int * flags,
 
 int a52_crc (uint8_t * buf, int len)
 {
-    int len58 = ((len>>2) + (len>>4) << 1);
+    int len58 = (((len>>2) + (len>>4)) << 1);
     uint16_t crc1 = a52_crc16_block(&(buf[2]), len58-2);
     uint16_t crc2 = a52_crc16_block(&(buf[len58]), len-len58);
     if (crc1 == 0 && crc2 == 0) { return 0; }
