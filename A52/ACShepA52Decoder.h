@@ -57,8 +57,8 @@ public:
 //	Implementation
 private:
 	void	UpgradeOldPrefs();
-	UInt32	ACShepA52Decoder::parseCookieAtom(const uint8_t* inAtom, UInt32 inAtomMaxSize);
-	void	ACShepA52Decoder::parseCookie(const uint8_t* inMagicCookie, UInt32 inMagicCookieByteSize);
+	UInt32	parseCookieAtom(const uint8_t* inAtom, UInt32 inAtomMaxSize);
+	void	parseCookie(const uint8_t* inMagicCookie, UInt32 inMagicCookieByteSize);
 	void	DetermineStreamParameters();
 	UInt32  SyncA52Stream(UInt32 &bytes_to_read, Byte *input_data, int &a52_flags, int &a52_samplerate, int &a52_bitrate, bool shouldResync);
 	UInt32  AppendPacket(const void* inInputData, UInt32 inInputDataSize, UInt32 bufferStartOffset, UInt32 offset, UInt32& packetSize);		
