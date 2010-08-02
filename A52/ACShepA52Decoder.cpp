@@ -1079,7 +1079,7 @@ UInt32 ACShepA52Decoder::AppendPacket(const void* inInputData,
 		
 		Byte newHeader[7];
 		memcpy(newHeader, strippedHeader, strippedHeaderSize);
-		memcpy(newHeader + strippedHeaderSize, inInputData, 7-strippedHeaderSize);
+		memcpy(newHeader + strippedHeaderSize, static_cast<const uint8_t*>(inInputData) + bufferStartOffset + offset, 7-strippedHeaderSize);
 		
 		bytes_to_read = a52_syncinfo(newHeader, &packetFlags, &packetSampleRate, &packetBitrate);
 	}
