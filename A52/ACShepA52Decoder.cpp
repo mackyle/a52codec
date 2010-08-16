@@ -217,47 +217,11 @@ ACShepA52Decoder::~ACShepA52Decoder() {
 	// fprintf(stderr, "Instance %p freed\n", this);
 }
 
-UInt32 ACShepA52Decoder::parseCookieAtom(const uint8_t* inAtom, UInt32 inAtomMaxSize) {
-	if(inAtomMaxSize < 8)
-		//Invalid; atom must be at least 8 bytes.
-		return inAtomMaxSize;
-	const UInt32 *atomElements = reinterpret_cast<const UInt32 *>(inAtom);
-	UInt32 atomSize = EndianU32_BtoN(atomElements[0]);
-	UInt32 atomType = EndianU32_BtoN(atomElements[1]);
-	
-	if(atomSize > inAtomMaxSize)
-		return inAtomMaxSize;
-	
-	switch (atomType) {
-		case 'CpSt': {
-			//Stripped header
-			UInt32 headerSize = atomSize - 8;
-			if(headerSize > 7 || headerSize == 0)
-				break;
-			strippedHeaderSize = headerSize;
-			memcpy(strippedHeader, inAtom+8, headerSize);
-		}
-			break;
-		default:
-			break;
-	}
-	
-	return atomSize;
-}
-
-void ACShepA52Decoder::parseCookie(const uint8_t* inMagicCookie, UInt32 inMagicCookieByteSize) {
-	UInt32 offset = 0;
-	while(offset < inMagicCookieByteSize) {
-		offset += parseCookieAtom(inMagicCookie + offset, inMagicCookieByteSize - offset);
-	}
-}
-
 void ACShepA52Decoder::Initialize(const AudioStreamBasicDescription* inInputFormat,
 									 const AudioStreamBasicDescription* inOutputFormat,
 									 const void* inMagicCookie, UInt32 inMagicCookieByteSize) {
 	
 	ACShepA52Codec::Initialize(inInputFormat, inOutputFormat, inMagicCookie, inMagicCookieByteSize);
-	parseCookie(static_cast<const uint8_t *>(inMagicCookie), inMagicCookieByteSize);
 	
 	//fprintf(stderr, "ACShepA52Decoder::Initialize: Initializing, magic cookie size is %lu\n", inMagicCookieByteSize);
 	
@@ -1074,29 +1038,21 @@ UInt32 ACShepA52Decoder::AppendPacket(const void* inInputData,
 		int packetBitrate;
 		
 		offset++;
-		if(offset + 7 - strippedHeaderSize > inInputDataSize)
+		if(offset + 7 > inInputDataSize)
 			break;
-		
-		Byte newHeader[7];
-		memcpy(newHeader, strippedHeader, strippedHeaderSize);
-		memcpy(newHeader + strippedHeaderSize, static_cast<const uint8_t*>(inInputData) + bufferStartOffset + offset, 7-strippedHeaderSize);
-		
-		bytes_to_read = a52_syncinfo(newHeader, &packetFlags, &packetSampleRate, &packetBitrate);
+		bytes_to_read = a52_syncinfo(static_cast<const uint8_t*>(inInputData) + bufferStartOffset + offset, &packetFlags, &packetSampleRate, &packetBitrate);
 	}
 	if(bytes_to_read == 0)
 		//Broke out of previous loop
 		return offset;
 	
 	packetSize = bytes_to_read;
-	if(bytes_to_read + offset - strippedHeaderSize > inInputDataSize)
+	if(bytes_to_read + offset > inInputDataSize)
 		return offset;
 	UInt32 bytes_can_copy = GetInputBufferByteSize() - GetUsedInputBufferByteSize();
 	if(bytes_to_read > bytes_can_copy)
 		return offset;
 	
-	if(strippedHeaderSize != 0)
-		ACSimpleCodec::AppendInputBuffer(strippedHeader, 0, strippedHeaderSize);
-	bytes_to_read -= strippedHeaderSize;
 	ACSimpleCodec::AppendInputBuffer(inInputData, bufferStartOffset + offset, bytes_to_read);
 	// fprintf(stderr, "ACShepA52Codec::AppendInputData: Copied in %ld:%ld new bytes\n", bytes_to_read, offset);
 	
