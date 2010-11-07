@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -544,9 +544,9 @@
 			productReference = F5525DF70A3BF78A00F36B86 /* AC3MovieImport.component */;
 			productType = "com.apple.product-type.bundle";
 		};
-		F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */ = {
+		F5BDAC850A20A00000FF4884 /* A52Codec */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F5BDACA70A20A00000FF4884 /* Build configuration list for PBXNativeTarget "A52Codec (Upgraded)" */;
+			buildConfigurationList = F5BDACA70A20A00000FF4884 /* Build configuration list for PBXNativeTarget "A52Codec" */;
 			buildPhases = (
 				F5BDAC860A20A00000FF4884 /* Headers */,
 				F5BDAC940A20A00000FF4884 /* Resources */,
@@ -558,7 +558,7 @@
 			);
 			dependencies = (
 			);
-			name = "A52Codec (Upgraded)";
+			name = A52Codec;
 			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
 			productName = AudioCodecSDK;
 			productReference = F5BDACAD0A20A00000FF4884 /* A52Codec.component */;
@@ -570,7 +570,7 @@
 		F5A548DE02879EB701000102 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = F5BDACAF0A20A00100FF4884 /* Build configuration list for PBXProject "A52Codec" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = F5A548DA02879EB701000102;
 			productRefGroup = F5A548E802879F3901000102 /* Products */;
@@ -578,7 +578,7 @@
 			projectRoot = "";
 			targets = (
 				F5DA8EE20A54C702004A41D0 /* Build All */,
-				F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */,
+				F5BDAC850A20A00000FF4884 /* A52Codec */,
 				F5525DCA0A3BF78A00F36B86 /* AC3MovieImport */,
 				F50B7AB40AAB69C600065C78 /* A52Preferences */,
 				F583B2030A759C09005F8A5A /* Debug */,
@@ -695,7 +695,7 @@
 		};
 		F5DA8EE40A54C708004A41D0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F5BDAC850A20A00000FF4884 /* A52Codec (Upgraded) */;
+			target = F5BDAC850A20A00000FF4884 /* A52Codec */;
 			targetProxy = F5DA8EE30A54C708004A41D0 /* PBXContainerItemProxy */;
 		};
 		F5DA8EE60A54C708004A41D0 /* PBXTargetDependency */ = {
@@ -762,25 +762,19 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = A52Preferences;
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = YES;
 			};
 			name = Development;
 		};
 		F529AD4A0BD7C40800F7A8D0 /* Deployment+Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
 				);
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"TARGET_OS_MAC=1",
 					"TARGET_CARBON=1",
@@ -794,7 +788,6 @@
 				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d x86_64_$x86_64 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
 				PRODUCT_NAME = A52Codec;
-				PROFILING_CODE = NO;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = component;
@@ -804,18 +797,12 @@
 		F529AD4B0BD7C40800F7A8D0 /* Deployment+Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				COPY_PHASE_STRIP = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				EXPORTED_SYMBOLS_FILE = AC3MovieImport/AC3MovieImport.exp;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
 				);
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_CARBON=1";
 				HEADER_SEARCH_PATHS = (
 					liba52/include,
@@ -826,9 +813,6 @@
 				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d x86_64_$x86_64 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
 				PRODUCT_NAME = AC3MovieImport;
-				PROFILING_CODE = NO;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = component;
 			};
 			name = "Deployment+Debug";
@@ -857,7 +841,6 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = A52Preferences;
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
 			};
 			name = "Deployment+Debug";
 		};
@@ -886,17 +869,39 @@
 		F529AD4F0BD7C40800F7A8D0 /* Deployment+Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_VERSION = 4.0;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_DYNAMIC_NO_PIC = YES;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_FORCE_CPU_SUBTYPE_ALL = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
+				OTHER_LDFLAGS_i386 = "-read_only_relocs suppress";
+				OTHER_LDFLAGS_ppc = "-read_only_relocs suppress";
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
+				SDKROOT = macosx10.5;
 				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = debugging;
+				WARNING_CFLAGS = "-Wimplicit";
 			};
 			name = "Deployment+Debug";
 		};
 		F5525DF30A3BF78A00F36B86 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				EXPORTED_SYMBOLS_FILE = AC3MovieImport/AC3MovieImport.exp;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
@@ -912,8 +917,6 @@
 				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d x86_64_$x86_64 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
 				PRODUCT_NAME = AC3MovieImport;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = component;
 			};
 			name = Deployment;
@@ -921,16 +924,12 @@
 		F5525DF40A3BF78A00F36B86 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				EXPORTED_SYMBOLS_FILE = AC3MovieImport/AC3MovieImport.exp;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
 				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"TARGET_CARBON=1",
 					"CoreAudio_Debug=1",
@@ -944,11 +943,7 @@
 				OTHER_CFLAGS = "-DIS_COMPILER_WORKING=0";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d x86_64_$x86_64 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
 				PRODUCT_NAME = AC3MovieImport;
-				PROFILING_CODE = NO;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = component;
-				ZERO_LINK = YES;
 			};
 			name = Development;
 		};
@@ -977,8 +972,7 @@
 		F5BDACA80A20A00000FF4884 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
@@ -1006,16 +1000,13 @@
 		F5BDACA90A20A00000FF4884 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Versions/A/Frameworks",
 				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"TARGET_OS_MAC=1",
 					"TARGET_CARBON=1",
@@ -1033,32 +1024,72 @@
 				);
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d x86_64_$x86_64 -i / -i /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CarbonSound.framework/Versions/A/Headers -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers";
 				PRODUCT_NAME = A52Codec;
-				PROFILING_CODE = NO;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = component;
-				ZERO_LINK = YES;
 			};
 			name = Development;
 		};
 		F5BDACB00A20A00100FF4884 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = YES;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_FORCE_CPU_SUBTYPE_ALL = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
+				OTHER_LDFLAGS_i386 = "-read_only_relocs suppress";
+				OTHER_LDFLAGS_ppc = "-read_only_relocs suppress";
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
+				SDKROOT = macosx10.5;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = debugging;
+				WARNING_CFLAGS = "-Wimplicit";
 			};
 			name = Deployment;
 		};
 		F5BDACB10A20A00100FF4884 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_VERSION = 4.0;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_DYNAMIC_NO_PIC = YES;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_FORCE_CPU_SUBTYPE_ALL = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
+				OTHER_LDFLAGS_i386 = "-read_only_relocs suppress";
+				OTHER_LDFLAGS_ppc = "-read_only_relocs suppress";
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
+				SDKROOT = macosx10.5;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = debugging;
+				WARNING_CFLAGS = "-Wimplicit";
 			};
 			name = Development;
 		};
@@ -1117,7 +1148,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Deployment;
 		};
-		F5BDACA70A20A00000FF4884 /* Build configuration list for PBXNativeTarget "A52Codec (Upgraded)" */ = {
+		F5BDACA70A20A00000FF4884 /* Build configuration list for PBXNativeTarget "A52Codec" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5BDACA80A20A00000FF4884 /* Deployment */,

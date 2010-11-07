@@ -73,9 +73,9 @@ void CAStreamBasicDescription::PrintFormat(FILE *f, const char *indent, const ch
 	char formatID[5];
 	*(UInt32 *)formatID = EndianU32_NtoB(mFormatID);
 	formatID[4] = '\0';
-	fprintf(f, "%2ld ch, %6.0f Hz, '%-4.4s' (0x%08lX) ",		
-				NumberChannels(), mSampleRate, formatID,
-				mFormatFlags);
+	fprintf(f, "%2d ch, %6.0f Hz, '%-4.4s' (0x%08X) ",
+				(int)NumberChannels(), mSampleRate, formatID,
+				(unsigned)mFormatFlags);
 	if (mFormatID == kAudioFormatLinearPCM) {
 		bool isInt = !(mFormatFlags & kLinearPCMFormatFlagIsFloat);
 		int wordSize = SampleWordSize();
@@ -97,12 +97,12 @@ void CAStreamBasicDescription::PrintFormat(FILE *f, const char *indent, const ch
 		const char *deinter = (mFormatFlags & kAudioFormatFlagIsNonInterleaved) ? ", deinterleaved" : "";
 		const char *commaSpace = (packed[0]!='\0') || (align[0]!='\0') ? ", " : "";
 		
-		fprintf(f, "%ld-bit%s%s %s%s%s%s%s\n",
-			mBitsPerChannel, endian, sign, floatInt, 
+		fprintf(f, "%d-bit%s%s %s%s%s%s%s\n",
+			(int)mBitsPerChannel, endian, sign, floatInt,
 			commaSpace, packed, align, deinter);
 	} else
-		fprintf(f, "%ld bits/channel, %ld bytes/packet, %ld frames/packet, %ld bytes/frame\n", 
-			mBitsPerChannel, mBytesPerPacket, mFramesPerPacket, mBytesPerFrame);
+		fprintf(f, "%d bits/channel, %d bytes/packet, %d frames/packet, %d bytes/frame\n",
+			(int)mBitsPerChannel, (int)mBytesPerPacket, (int)mFramesPerPacket, (int)mBytesPerFrame);
 }
 
 void	CAStreamBasicDescription::NormalizeLinearPCMFormat(AudioStreamBasicDescription& ioDescription)

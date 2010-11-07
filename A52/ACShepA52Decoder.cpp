@@ -1016,7 +1016,7 @@ UInt32 ACShepA52Decoder::SyncA52Stream(UInt32 &bytes_to_read,
 	
 	if (retries != 0) {
 		fprintf(stderr, "ACShepA52Decoder::SyncA52Stream: Frame boundary problem\n");
-		fprintf(stderr, "ACShepA52Decoder::SyncA52Stream: Took %ld retries.\n", retries);
+		fprintf(stderr, "ACShepA52Decoder::SyncA52Stream: Took %d retries.\n", (int)retries);
 	}
 	
 	return kAudioCodecProduceOutputPacketSuccess;
