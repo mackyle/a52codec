@@ -38,6 +38,8 @@ public:
 
 // 	Information Gathering
 public:
+	UInt32 ParseCookieAtom(const uint8_t* inAtom, UInt32 inAtomMaxSize);
+	void ParseCookie(const uint8_t* inMagicCookie, UInt32 inMagicCookieByteSize);
 	virtual void 	GetPropertyInfo(AudioCodecPropertyID inPropertyID, UInt32& outPropertyDataSize, Boolean& outWritable);
 	virtual void	GetProperty(AudioCodecPropertyID inPropertyID, UInt32& ioPropertyDataSize, void* outPropertyData);
 	virtual void 	SetProperty(AudioCodecPropertyID inPropertyID, UInt32 inPropertyDataSize, const void* inPropertyData);

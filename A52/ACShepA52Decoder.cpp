@@ -217,6 +217,42 @@ ACShepA52Decoder::~ACShepA52Decoder() {
 	// fprintf(stderr, "Instance %p freed\n", this);
 }
 
+UInt32 ACShepA52Decoder::ParseCookieAtom(const uint8_t* inAtom, UInt32 inAtomMaxSize)
+{
+	if(inAtomMaxSize < 8)
+		//Invalid; atom must be at least 8 bytes.
+		return inAtomMaxSize;
+	const UInt32 *atomElements = reinterpret_cast<const UInt32 *>(inAtom);
+	UInt32 atomSize = EndianU32_BtoN(atomElements[0]);
+	UInt32 atomType = EndianU32_BtoN(atomElements[1]);
+	
+	if(atomSize > inAtomMaxSize)
+		return inAtomMaxSize;
+	
+	switch (atomType) {
+		case 'dac3': {
+			//Cookie only found in .mp4, so set layout
+			//A52's layout is LFE, left, center, right, left surround, right surround.
+			//Apple's .mp4 sets a layout of L C R Ls Rs LFE
+			int layout[6] = {5, 0, 1, 2, 3, 4};
+			memcpy(fullChannelMap, layout, sizeof(fullChannelMap));
+		}
+			break;
+		default:
+			break;
+	}
+	
+	return atomSize;
+}
+
+void ACShepA52Decoder::ParseCookie(const uint8_t* inMagicCookie, UInt32 inMagicCookieByteSize)
+{
+	UInt32 offset = 0;
+	while(offset < inMagicCookieByteSize) {
+		offset += ParseCookieAtom(inMagicCookie + offset, inMagicCookieByteSize - offset);
+	}
+}
+
 void ACShepA52Decoder::Initialize(const AudioStreamBasicDescription* inInputFormat,
 									 const AudioStreamBasicDescription* inOutputFormat,
 									 const void* inMagicCookie, UInt32 inMagicCookieByteSize) {
@@ -224,6 +260,8 @@ void ACShepA52Decoder::Initialize(const AudioStreamBasicDescription* inInputForm
 	ACShepA52Codec::Initialize(inInputFormat, inOutputFormat, inMagicCookie, inMagicCookieByteSize);
 	
 	//fprintf(stderr, "ACShepA52Decoder::Initialize: Initializing, magic cookie size is %lu\n", inMagicCookieByteSize);
+	if(inMagicCookie)
+		ParseCookie(static_cast<const uint8_t *> (inMagicCookie), inMagicCookieByteSize);
 	
 	// Library setup
 	a52_accel(A52_ACCEL_DJBFFT);
