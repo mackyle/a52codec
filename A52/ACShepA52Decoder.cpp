@@ -231,10 +231,30 @@ UInt32 ACShepA52Decoder::ParseCookieAtom(const uint8_t* inAtom, UInt32 inAtomMax
 	
 	switch (atomType) {
 		case 'dac3': {
+			if(atomSize < 11)
+				//dac3 is at least 3 bytes in size
+				break;
 			//Cookie only found in .mp4, so set layout
 			//A52's layout is LFE, left, center, right, left surround, right surround.
 			//Apple's .mp4 sets a layout of L C R Ls Rs LFE
+			int acmod = (inAtom[9] & 0x3f) >> 3;
 			int layout[6] = {5, 0, 1, 2, 3, 4};
+			switch (acmod) {
+				case 0:	//2 channels
+				case 2: //L R
+				case 3: //L R S
+				case 6: //L R Ls Rs
+					//No Center
+					layout[3] = 1;
+					break;
+				case 1:
+					//Center only
+					layout[2] = 0;
+					break;
+				default:
+					//All others correct
+					break;
+			}
 			memcpy(fullChannelMap, layout, sizeof(fullChannelMap));
 		}
 			break;
