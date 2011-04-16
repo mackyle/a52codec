@@ -175,7 +175,7 @@ ACShepA52Decoder::ACShepA52Decoder(OSType theSubType) : ACShepA52Codec(76800, th
 			AddInputFormat(theInputFormat2);
 			
 			// if two channel mode is engaged and we are not passing through, only set output for 2 channels
-			if(!passthrough && TwoChannelMode && channels != 2)
+			if(!passthrough && TwoChannelMode != 0 && channels != 2)
 				continue;
 			// Output 16-Bit Ints
 			CAStreamBasicDescription theOutputFormat1(sample_rates[sample_index], kAudioFormatLinearPCM, 0, 1, 0, channels, 16, kIntPCMOutFormatFlag);
