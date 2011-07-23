@@ -26,3 +26,14 @@
 #define ENTRY_POINT						"ACShepA52DecoderEntry"
 
 #include "AUResources.r"
+
+#define RES_ID							-17135
+#define COMP_TYPE						'adec'
+#define COMP_SUBTYPE					'AC-3'
+#define COMP_MANUF						'cd3r'
+#define VERSION							0x00017071
+#define NAME							"AC3"
+#define DESCRIPTION						"An AudioCodec that decodes A/52 and AC-3 into linear PCM data"
+#define ENTRY_POINT						"ACShepA52DecoderEntry"
+
+#include "AUResources.r"

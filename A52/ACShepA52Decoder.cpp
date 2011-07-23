@@ -173,6 +173,8 @@ ACShepA52Decoder::ACShepA52Decoder(OSType theSubType) : ACShepA52Codec(76800, th
 			AddInputFormat(theInputFormat1);
 			CAStreamBasicDescription theInputFormat2(sample_rates[sample_index], kAudioFormatAVIAC3, 0, 256*6, 0, channels, 0, 0);
 			AddInputFormat(theInputFormat2);
+			CAStreamBasicDescription theInputFormat3(sample_rates[sample_index], 'AC-3', 0, 256*6, 0, channels, 0, 0);
+			AddInputFormat(theInputFormat3);
 			
 			// if two channel mode is engaged and we are not passing through, only set output for 2 channels
 			if(!passthrough && TwoChannelMode != 0 && channels != 2)
@@ -489,7 +491,7 @@ void ACShepA52Decoder::SetCurrentInputFormat(const AudioStreamBasicDescription& 
 	}
 	
 	//	check to make sure the input format is legal
-	if(inInputFormat.mFormatID != kAudioFormatAC3 && inInputFormat.mFormatID != kAudioFormatAVIAC3) {
+	if(inInputFormat.mFormatID != kAudioFormatAC3 && inInputFormat.mFormatID != kAudioFormatAVIAC3 && inInputFormat.mFormatID != 'AC-3') {
 		DebugMessage("ACShepA52Decoder::SetFormats: only support A/52 and AC-3 for input");
 		CODEC_THROW(kAudioCodecUnsupportedFormatError);
 	}
@@ -695,18 +697,20 @@ UInt32 ACShepA52Decoder::InterleaveSamples(void *output_data_untyped, UInt32 out
 	cast_samples = (inPtr *)output_samples;
 	
 	int chans = ChannelCount(a52_flags);
+	int outputChans = mOutputFormat.mChannelsPerFrame;
 	
 	// each element is the liba52 channel number of the CA channel number of the index
 	int chanMap[6];
 	getChannelMap(a52_flags, chanMap);
+	memset(output_data + output_data_offset, 0, outputChans * 256 * sizeof(outPtr));
 	
 	for (int i = 0; i < 256; i++) {
 		for (int j = 0; j < chans; j++) {
-			output_data[chans*i + output_data_offset + chanMap[j]] = cast_samples[i + 256*j];
+			output_data[outputChans*i + output_data_offset + chanMap[j]] = cast_samples[i + 256*j];
 		}
 	}
 	
-	return chans * 256; // Number of 'UInt16' we processed
+	return outputChans * 256; // Number of 'UInt16' we processed
 }
 
 
@@ -883,7 +887,7 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 			myOutputData += output_offset * output_sample_size;  //output_offset is in 16-bit ints
 			
 			int frameSize = mOutputFormat.mChannelsPerFrame * 2;
-			memset(myOutputData, 0, frameSize * 256 * 6);
+			memset(myOutputData, 0, mOutputFormat.mChannelsPerFrame * output_sample_size * 256 * 6);
 			input_data = GetBytes(bytes_to_read);
 			//Get the locations of the left and right channels in the output
 			int leftOffset = fullChannelMap[1] * 2;
@@ -949,7 +953,8 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 				a52_flags |= A52_ADJUST_LEVEL;
 			else
 			{
-				fprintf(stderr, "ACShepA52Decoder::ProduceOutputPackets: channel count doesn't match; expect odd results\n");
+				//Lion likes to use the largest number of channels even on stereo input; so let's not print this anymore
+//				fprintf(stderr, "ACShepA52Decoder::ProduceOutputPackets: channel count doesn't match; expect odd results\n");
 				//Put in some guesses here
 				switch(mOutputFormat.mChannelsPerFrame)
 				{
