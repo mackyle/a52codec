@@ -837,7 +837,7 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 			level = 1;
 			bias = 384;
 		} else {
-			level = 0x7FFFFFFF;
+			level = 1 << 30;
 			bias = 0;
 		}
 	} else {
