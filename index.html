@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset='utf-8' />
+
+  <title>mackyle/a52codec @ GitHub</title>
+
+  <style type="text/css">
+    body {
+      margin-top: 1.0em;
+      background-color: white;
+      font-family: Times, "Times New Roman", serif;
+      color: black;
+    }
+    #container {
+      margin: 0 auto;
+      max-width: 90ex;
+    }
+    h1 { font-size: 3.8em; color: black; margin-bottom: 0.1em; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none; }
+    h2 { font-size: 1.5em; color: black; }
+    h3 { /* text-align: center;*/ color: black; }
+    h1, h2, h3 { font-family: Helvetica, Arial, FreeSans, sans-serif; font-weight: normal; }
+    a { color: black; }
+    .description { font-size: 1.2em; margin-bottom: 2em; margin-top: 2em; font-style: italic; }
+    .download { float: right; }
+    tt, .nowrap { white-space: nowrap; }
+    pre { font-family: Menlo, Monaco, Consolas, Courier, "Courier New", monospace; font-size: 90%;}
+    pre { padding: 0.5em 1ex; border: thin dotted silver; }
+    hr { border: 0; width: 80%; border-bottom: thin solid silver; }
+    p { text-align: justify; }
+    p.left { text-align: left; }
+    .footer { text-align:center; padding-top:2em; font-style: italic; }
+    ul.ulnone { list-style-type: none; }
+    li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .indent { display: block; margin-left: 5ex; margin-right: 5ex; text-align: left; }
+  </style>
+</head>
+
+<body>
+  <a href="http://github.com/mackyle/a52codec"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+<div id="container">
+
+<div class="download">
+  <a href="http://github.com/mackyle/a52codec/zipball/master">
+    <img border="0" width="90" src="http://github.com/images/modules/download/zip.png" /></a>
+  <a href="http://github.com/mackyle/a52codec/tarball/master">
+    <img border="0" width="90" src="http://github.com/images/modules/download/tar.png" /></a>
+</div>
+
+<h1><a href="http://github.com/mackyle/a52codec">a52codec</a>
+  <!--<span class="small">by <a href="http://github.com/mackyle">mackyle</a></span>--></h1>
+
+<div class="description">
+  ATSC A/52 and AC-3 Decoder
+</div>
+
+<p>A fork/clone of the subversion repository at &#104;&#116;&#116;&#112;&#58;&#47;&#47;svn&#46;cod3r&#46;com&#47;a52codec for the a52codec included as part of the <a href="http://www.perian.org/">Perian</a> releases.  Although <a href="http://www.perian.org/">Perian</a> has been retired, the source code and downloads continue to be available.
+
+</p><p>
+
+The trunk branch represents the latest code from the subversion repository.  The master branch represents the version that was released with Perian 1.2.3 plus some Xcode project updates and a
+<a href="https://github.com/mackyle/a52codec/commit/7a09e9caf686c68a0ebbaf0471e9a7151e6127ab">fix for an incorrect header</a>
+generated while performing AC-3 pass through.
+
+The various <tt>perian-*</tt> tags indicate which version of the a52codec source was included with each Perian release.
+
+</p><p>
+If you are not using AC-3 pass through (see <a href="http://www.cod3r.com/2008/02/the-correct-way-to-enable-ac3-passthrough-with-quicktime/">here</a>) then there’s nothing for you to see here so move along and install the standard
+<a href="http://perian.cachefly.net/Perian_1.2.3.dmg">Perian 1.2.3 release</a>.
+</p>
+
+<h2>Links</h2>
+
+<ul>
+<li><a href="http://perian.cachefly.net/Perian_1.2.3.dmg">Perian 1.2.3 Installer</a></li>
+<li><a href="http://groups.google.com/group/perian-discuss">Perian mailing list</a></li>
+<li><a href="http://www.perian.org/">Perian website</a> (with note about Perian being retired)</li>
+<li><a href="http://www.cod3r.com/2008/02/the-correct-way-to-enable-ac3-passthrough-with-quicktime/">How to enable AC-3 passthrough</a></li>
+<li><a href="http://perian.cachefly.net/Perian_1.2.3-src.zip">Perian 1.2.3 source zipball</a></li>
+<li>Perian subversion repository: &#104;&#116;&#116;&#112;&#58;&#47;&#47;svn&#46;perian&#46;org</li>
+<li>A52Codec subversion repository: &#104;&#116;&#116;&#112;&#58;&#47;&#47;svn&#46;cod3r&#46;com&#47;a52codec</li>
+</ul>
+
+<h2>Install</h2>
+<ol>
+<li>Install Perian using the <a href="http://perian.cachefly.net/Perian_1.2.3.dmg">Perian 1.2.3 Installer</a></li>
+<li>If you really need the
+<a href="https://github.com/mackyle/a52codec/commit/7a09e9caf686c68a0ebbaf0471e9a7151e6127ab">AC-3 pass through fix</a>
+either build the A52Codec.component yourself from the master branch sources or retrieve a pre-built copy from
+<a href="https://github.com/mackyle/a52codec/downloads">the a52codec project&#x2019;s downloads area</a></li>
+<li>Replace the <tt>/Library/Audio/Plug-Ins/Components/A52Codec.component</tt> from the Perian installation with the one you just built or downloaded</li>
+</ol>
+
+<h2>Download</h2>
+<p>
+  You can download this project&#x2019;s source code in either
+  <a href="http://github.com/mackyle/a52codec/zipball/master">zip</a> or
+  <a href="http://github.com/mackyle/a52codec/tarball/master">tar</a> formats.
+</p>
+<p>You can also clone the project with <a href="http://git-scm.com">Git</a>
+  by running:
+  <pre>$ git clone git://github.com/mackyle/a52codec</pre>
+</p>
+<p>Pre-built universal binaries of the <tt>A52Codec.component</tt> software
+runnable on Mac OS X 10.4 or later which include the AC-3 pass through fix
+are available from <a href="https://github.com/mackyle/a52codec/downloads">the
+a52codec project&#x2019;s downloads area</a>.
+</p>
+
+<h2>GitHub</h2>
+<p class="left">
+  Visit the GitHub project page (source code etc.) at <a href="http://github.com/mackyle/a52codec">http://github.com/mackyle/a52codec</a>.
+</p>
+
+<!--
+<div class="footer">
+  get the source code on GitHub : <a href="http://github.com/mackyle/a52codec">mackyle/a52codec</a>
+</div>
+-->
+
+</div>
+
+  
+</body>
+</html>
