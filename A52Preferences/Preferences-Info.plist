@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>English</string>
+	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
+	<string>A52Preferences</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.cod3r.a52codec</string>
 	<key>CFBundleInfoDictionaryVersion</key>

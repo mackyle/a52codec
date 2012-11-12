@@ -193,7 +193,7 @@
 		F50815870A2161180092BF70 /* XCAResources.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = XCAResources.r; sourceTree = "<group>"; };
 		F50B7AB50AAB69C600065C78 /* A52Preferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A52Preferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F50B7AB70AAB69C700065C78 /* Preferences-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Preferences-Info.plist"; sourceTree = "<group>"; };
-		F50B7AC40AAB6E3F00065C78 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/A52CodecPreferences.nib; sourceTree = "<group>"; };
+		F50B7AC40AAB6E3F00065C78 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/A52CodecPreferences.nib; sourceTree = "<group>"; };
 		F50B7AC60AAB6E6000065C78 /* A52Preferences.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = A52Preferences.h; sourceTree = "<group>"; };
 		F50B7AC70AAB6E6000065C78 /* A52Preferences.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = A52Preferences.m; sourceTree = "<group>"; };
 		F50B7AD60AAB6EBA00065C78 /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -571,13 +571,14 @@
 			isa = PBXProject;
 			buildConfigurationList = F5BDACAF0A20A00100FF4884 /* Build configuration list for PBXProject "A52Codec" */;
 			compatibilityVersion = "Xcode 3.1";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
 				Japanese,
 				French,
 				German,
+				en,
 			);
 			mainGroup = F5A548DA02879EB701000102;
 			productRefGroup = F5A548E802879F3901000102 /* Products */;
@@ -716,7 +717,7 @@
 		F50B7AD40AAB6E9500065C78 /* A52CodecPreferences.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F50B7AC40AAB6E3F00065C78 /* English */,
+				F50B7AC40AAB6E3F00065C78 /* en */,
 			);
 			name = A52CodecPreferences.nib;
 			sourceTree = "<group>";
@@ -724,7 +725,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		F50B7AB90AAB69C800065C78 /* Deployment */ = {
+		F50B7AB90AAB69C800065C78 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -745,9 +746,9 @@
 				PRODUCT_NAME = A52Preferences;
 				WRAPPER_EXTENSION = app;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		F50B7ABA0AAB69C800065C78 /* Development */ = {
+		F50B7ABA0AAB69C800065C78 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -770,12 +771,11 @@
 				PRODUCT_NAME = A52Preferences;
 				WRAPPER_EXTENSION = app;
 			};
-			name = Development;
+			name = Debug;
 		};
-		F529AD4A0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+		F529AD4A0BD7C40800F7A8D0 /* Release+Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -799,9 +799,9 @@
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = component;
 			};
-			name = "Deployment+Debug";
+			name = "Release+Debug";
 		};
-		F529AD4B0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+		F529AD4B0BD7C40800F7A8D0 /* Release+Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -822,9 +822,9 @@
 				PRODUCT_NAME = AC3MovieImport;
 				WRAPPER_EXTENSION = component;
 			};
-			name = "Deployment+Debug";
+			name = "Release+Debug";
 		};
-		F529AD4C0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+		F529AD4C0BD7C40800F7A8D0 /* Release+Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
@@ -849,9 +849,9 @@
 				PRODUCT_NAME = A52Preferences;
 				WRAPPER_EXTENSION = app;
 			};
-			name = "Deployment+Debug";
+			name = "Release+Debug";
 		};
-		F529AD4D0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+		F529AD4D0BD7C40800F7A8D0 /* Release+Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -860,9 +860,9 @@
 				PRODUCT_NAME = "Build Both";
 				ZERO_LINK = NO;
 			};
-			name = "Deployment+Debug";
+			name = "Release+Debug";
 		};
-		F529AD4E0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+		F529AD4E0BD7C40800F7A8D0 /* Release+Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -871,30 +871,33 @@
 				PRODUCT_NAME = Debug;
 				ZERO_LINK = NO;
 			};
-			name = "Deployment+Debug";
+			name = "Release+Debug";
 		};
-		F529AD4F0BD7C40800F7A8D0 /* Deployment+Debug */ = {
+		F529AD4F0BD7C40800F7A8D0 /* Release+Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_FORCE_CPU_SUBTYPE_ALL = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
+				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS_i386 = "-read_only_relocs suppress";
 				OTHER_LDFLAGS_ppc = "-read_only_relocs suppress";
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
@@ -903,9 +906,9 @@
 				STRIP_STYLE = debugging;
 				WARNING_CFLAGS = "-Wimplicit";
 			};
-			name = "Deployment+Debug";
+			name = "Release+Debug";
 		};
-		F5525DF30A3BF78A00F36B86 /* Deployment */ = {
+		F5525DF30A3BF78A00F36B86 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -926,9 +929,9 @@
 				PRODUCT_NAME = AC3MovieImport;
 				WRAPPER_EXTENSION = component;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		F5525DF40A3BF78A00F36B86 /* Development */ = {
+		F5525DF40A3BF78A00F36B86 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -952,9 +955,9 @@
 				PRODUCT_NAME = AC3MovieImport;
 				WRAPPER_EXTENSION = component;
 			};
-			name = Development;
+			name = Debug;
 		};
-		F583B20F0A759C31005F8A5A /* Deployment */ = {
+		F583B20F0A759C31005F8A5A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -963,9 +966,9 @@
 				PRODUCT_NAME = Debug;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		F583B2100A759C31005F8A5A /* Development */ = {
+		F583B2100A759C31005F8A5A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -974,12 +977,11 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = Debug;
 			};
-			name = Development;
+			name = Debug;
 		};
-		F5BDACA80A20A00000FF4884 /* Deployment */ = {
+		F5BDACA80A20A00000FF4884 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
@@ -1002,12 +1004,11 @@
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = component;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		F5BDACA90A20A00000FF4884 /* Development */ = {
+		F5BDACA90A20A00000FF4884 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				EXPORTED_SYMBOLS_FILE = A52/ACShepA52Codec.exp;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1035,30 +1036,33 @@
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = component;
 			};
-			name = Development;
+			name = Debug;
 		};
-		F5BDACB00A20A00100FF4884 /* Deployment */ = {
+		F5BDACB00A20A00100FF4884 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_FORCE_CPU_SUBTYPE_ALL = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
+				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS_i386 = "-read_only_relocs suppress";
 				OTHER_LDFLAGS_ppc = "-read_only_relocs suppress";
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
@@ -1067,29 +1071,32 @@
 				STRIP_STYLE = debugging;
 				WARNING_CFLAGS = "-Wimplicit";
 			};
-			name = Deployment;
+			name = Release;
 		};
-		F5BDACB10A20A00100FF4884 /* Development */ = {
+		F5BDACB10A20A00100FF4884 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_FORCE_CPU_SUBTYPE_ALL = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_MODEL_TUNING = G5;
+				GCC_VERSION_i386 = 4.0;
+				GCC_VERSION_ppc = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
+				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS_i386 = "-read_only_relocs suppress";
 				OTHER_LDFLAGS_ppc = "-read_only_relocs suppress";
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
@@ -1098,9 +1105,9 @@
 				STRIP_STYLE = debugging;
 				WARNING_CFLAGS = "-Wimplicit";
 			};
-			name = Development;
+			name = Debug;
 		};
-		F5DA8EEC0A54C713004A41D0 /* Deployment */ = {
+		F5DA8EEC0A54C713004A41D0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -1109,9 +1116,9 @@
 				PRODUCT_NAME = "Build Both";
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		F5DA8EED0A54C713004A41D0 /* Development */ = {
+		F5DA8EED0A54C713004A41D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -1120,7 +1127,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = "Build Both";
 			};
-			name = Development;
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1128,62 +1135,62 @@
 		F50B7AB80AAB69C800065C78 /* Build configuration list for PBXNativeTarget "A52Preferences" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F50B7AB90AAB69C800065C78 /* Deployment */,
-				F529AD4C0BD7C40800F7A8D0 /* Deployment+Debug */,
-				F50B7ABA0AAB69C800065C78 /* Development */,
+				F50B7AB90AAB69C800065C78 /* Release */,
+				F529AD4C0BD7C40800F7A8D0 /* Release+Debug */,
+				F50B7ABA0AAB69C800065C78 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Deployment;
+			defaultConfigurationName = Release;
 		};
 		F5525DF20A3BF78A00F36B86 /* Build configuration list for PBXNativeTarget "AC3MovieImport" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F5525DF30A3BF78A00F36B86 /* Deployment */,
-				F529AD4B0BD7C40800F7A8D0 /* Deployment+Debug */,
-				F5525DF40A3BF78A00F36B86 /* Development */,
+				F5525DF30A3BF78A00F36B86 /* Release */,
+				F529AD4B0BD7C40800F7A8D0 /* Release+Debug */,
+				F5525DF40A3BF78A00F36B86 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Deployment;
+			defaultConfigurationName = Release;
 		};
 		F583B20E0A759C31005F8A5A /* Build configuration list for PBXAggregateTarget "Debug" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F583B20F0A759C31005F8A5A /* Deployment */,
-				F529AD4E0BD7C40800F7A8D0 /* Deployment+Debug */,
-				F583B2100A759C31005F8A5A /* Development */,
+				F583B20F0A759C31005F8A5A /* Release */,
+				F529AD4E0BD7C40800F7A8D0 /* Release+Debug */,
+				F583B2100A759C31005F8A5A /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Deployment;
+			defaultConfigurationName = Release;
 		};
 		F5BDACA70A20A00000FF4884 /* Build configuration list for PBXNativeTarget "A52Codec" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F5BDACA80A20A00000FF4884 /* Deployment */,
-				F529AD4A0BD7C40800F7A8D0 /* Deployment+Debug */,
-				F5BDACA90A20A00000FF4884 /* Development */,
+				F5BDACA80A20A00000FF4884 /* Release */,
+				F529AD4A0BD7C40800F7A8D0 /* Release+Debug */,
+				F5BDACA90A20A00000FF4884 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Deployment;
+			defaultConfigurationName = Release;
 		};
 		F5BDACAF0A20A00100FF4884 /* Build configuration list for PBXProject "A52Codec" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F5BDACB00A20A00100FF4884 /* Deployment */,
-				F529AD4F0BD7C40800F7A8D0 /* Deployment+Debug */,
-				F5BDACB10A20A00100FF4884 /* Development */,
+				F5BDACB00A20A00100FF4884 /* Release */,
+				F529AD4F0BD7C40800F7A8D0 /* Release+Debug */,
+				F5BDACB10A20A00100FF4884 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Deployment;
+			defaultConfigurationName = Release;
 		};
 		F5DA8EEB0A54C713004A41D0 /* Build configuration list for PBXAggregateTarget "Build All" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F5DA8EEC0A54C713004A41D0 /* Deployment */,
-				F529AD4D0BD7C40800F7A8D0 /* Deployment+Debug */,
-				F5DA8EED0A54C713004A41D0 /* Development */,
+				F5DA8EEC0A54C713004A41D0 /* Release */,
+				F529AD4D0BD7C40800F7A8D0 /* Release+Debug */,
+				F5DA8EED0A54C713004A41D0 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Deployment;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
