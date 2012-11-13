@@ -901,8 +901,8 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 				myOutputData[rightOffset+1] = p_sync_be[3];
 				myOutputData[frameSize+leftOffset] = input_data[5] & 0x7;
 				myOutputData[frameSize+leftOffset+1] = p_sync_be[5];
-				myOutputData[frameSize+rightOffset] = (bytes_to_read >> 4) & 0xff;
-				myOutputData[frameSize+rightOffset+1] = (bytes_to_read << 4) & 0xff;
+				myOutputData[frameSize+rightOffset] = (bytes_to_read >> 5) & 0xff;
+				myOutputData[frameSize+rightOffset+1] = (bytes_to_read << 3) & 0xff;
 				unsigned int i;
 				int frameNumber;
 				for(i=0, frameNumber = 2; i<bytes_to_read; i+=4, frameNumber++)
@@ -922,8 +922,8 @@ UInt32 ACShepA52Decoder::ProduceOutputPackets(void* outOutputData,
 				myOutputData[rightOffset+1] = p_sync_le[3];
 				myOutputData[frameSize+leftOffset] = p_sync_le[4];
 				myOutputData[frameSize+leftOffset+1] = input_data[5] & 0x7;
-				myOutputData[frameSize+rightOffset] = (bytes_to_read << 4) & 0xff;
-				myOutputData[frameSize+rightOffset+1] = (bytes_to_read >> 4) & 0xff;
+				myOutputData[frameSize+rightOffset] = (bytes_to_read << 3) & 0xff;
+				myOutputData[frameSize+rightOffset+1] = (bytes_to_read >> 5) & 0xff;
 				unsigned int i;
 				int frameNumber;
 				for(i=0, frameNumber = 2; i<bytes_to_read; i+=4, frameNumber++)
